@@ -1,14 +1,19 @@
 package explore.topics.optional;
 
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OptionalCases {
 
     public static void main(String[] args) {
 
 
-        // empty Optional object:
+/*        // empty Optional object:
         Optional<String> emptyOpt = Optional.empty();
         System.out.println("value = " + emptyOpt.toString() + " and isPresent="  + emptyOpt.isPresent());
 
@@ -42,13 +47,54 @@ public class OptionalCases {
 
         defaultText = Optional.ofNullable(text).orElse(callDefaultMethod());
         System.out.println("value = " + defaultText);
+
+         String nullName = null;
+        String nameException = Optional.ofNullable(nullName).orElseThrow(
+                IllegalArgumentException::new);
+
+        Optional<String> opt = Optional.ofNullable(null);
+        String name = opt.get(); // java.util.NoSuchElementException: No value present
+
+                */
+
+
     }
 
+
+    public boolean priceIsInRange1(Modem modem) {
+        return Optional.ofNullable(modem).map(Modem::getPrice).filter(p -> p>10).filter(p -> p < 15).isPresent();
+    }
 
     public static String callDefaultMethod() {
         System.out.println("Getting Default Value");
         return "Default Value";
     }
 
+    @Test
+    public void whenFiltersWithoutOptional_thenCorrect() {
+        assertTrue(priceIsInRange1(new Modem(10.1)));
+        assertFalse(priceIsInRange1(new Modem(9.9)));
+        assertFalse(priceIsInRange1(new Modem(null)));
+        assertFalse(priceIsInRange1(new Modem(15.5)));
+        assertFalse(priceIsInRange1(null));
+    }
 
+}
+
+
+
+class Modem {
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    private Double price;
+
+    public Modem(Double price) {
+        this.price = price;
+    }
 }

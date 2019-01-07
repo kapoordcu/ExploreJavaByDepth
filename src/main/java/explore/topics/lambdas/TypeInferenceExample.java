@@ -1,4 +1,4 @@
-package explore.topics.optional;
+package explore.topics.lambdas;
 
 public class TypeInferenceExample {
     public static void main(String[] args) {

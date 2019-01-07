@@ -1,4 +1,4 @@
-package explore.topics.optional;
+package explore.topics.lambdas;
 
 public class HelloGreetable implements Greetable {
     @Override
