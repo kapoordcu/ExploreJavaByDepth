@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Unit1Exercise {
     public static void main(String[] args) {
@@ -19,8 +21,18 @@ public class Unit1Exercise {
 
         Collections.sort(personList, (Person o1, Person o2) ->  o1.getLastName().compareTo(o2.getLastName()));
 
-        printCondition(personList, p -> true);
-        printCondition(personList, (Person p) -> p.getLastName().startsWith("O"));
+        // printCondition(personList, p -> true);
+        System.out.println("person sorted");
+        performConditionUsingPredicate(personList, p -> true, p -> System.out.println(p));
+        System.out.println("-------------------------");
+        System.out.println("p.getLastName().startsWith(\"O\")");
+        //printConditionUsingPredicate(personList, (Person p) -> p.getLastName().startsWith("O"));
+        performConditionUsingPredicate(personList, (Person p) -> p.getLastName().startsWith("O"), p -> System.out.println(p));
+        System.out.println("-------------------------");
+        System.out.println("p.getFirstName().startsWith(\"A\")");
+        performConditionUsingPredicate(personList, (Person p) -> p.getFirstName().startsWith("A"), p -> System.out.println(p.getFirstName()));
+
+
     }
 
     private static void printCondition(List<Person> personList, ConditionName conditionName) {
@@ -30,7 +42,21 @@ public class Unit1Exercise {
             }
         }
     }
-
+    private static void printConditionUsingPredicate(List<Person> personList, Predicate<Person> predicate) {
+        for(Person p : personList) {
+            if(predicate.test(p)) {
+                System.out.println(p);
+            }
+        }
+    }
+    private static void performConditionUsingPredicate(List<Person> personList, Predicate<Person> predicate
+                                            , Consumer<Person> consumer) {
+        for(Person p : personList) {
+            if(predicate.test(p)) {
+                consumer.accept(p);
+            }
+        }
+    }
 }
 
 interface ConditionName {
