@@ -49,5 +49,53 @@ public class OpenClose {
     //List<Event> eventList = List.of(event1, event2, event3, event4, event5);
 
     EventFilter eventFilter = new EventFilter();
+}
 
+//////////////OPEN CLOSE IN ACTION /////////////
+interface Specification<T> {
+    boolean specificationMet(T spec);
+}
+
+interface Filter<T> {
+    Stream<T> checkFilter(List<T> types, Specification<T> specs);
+}
+
+class ConfidenceSpecification implements Specification<Event> {
+    private Confidence confidence;
+    public ConfidenceSpecification(Confidence confidence) {
+        this.confidence = confidence;
+    }
+
+    @Override
+    public boolean specificationMet(Event spec) {
+        return spec.confidence == confidence;
+    }
+}
+
+class SportsTypeSpecification implements Specification<Event> {
+    private SportsType sportsType;
+    public SportsTypeSpecification(SportsType sportsType) {
+        this.sportsType = sportsType;
+    }
+
+    @Override
+    public boolean specificationMet(Event spec) {
+        return spec.sportsType == sportsType;
+    }
+}
+
+class ANDSpecification implements Specification<Event> {
+    private SportsType sportsType;
+    private Confidence confidence;
+
+    ANDSpecification(SportsType sportsType, Confidence confidence) {
+        this.sportsType = sportsType;
+        this.confidence = confidence;
+    }
+
+
+    @Override
+    public boolean specificationMet(Event spec) {
+        return spec.confidence==confidence && spec.sportsType==sportsType;
+    }
 }
