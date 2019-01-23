@@ -4,16 +4,16 @@ package explore.topics.design.dip;
 public class DependencyInjection {
     public static void main(String[] args) {
         MessageServiceInjector injector = null;
-        Consumer app = null;
+        MyDIApplication app = null;
 
         //Send email
         injector = new EmailServiceInjector();
-        app = injector.getConsumer();
+        app = injector.getMyDIApplication();
         app.processMessages();
 
         //Send SMS
         injector = new SMSServiceInjector();
-        app = injector.getConsumer();
+        app = injector.getMyDIApplication();
         app.processMessages();
     }
 }
@@ -37,18 +37,11 @@ class SMSServiceImpl implements MessageService {
 }
 
 // Java Dependency Injection – Service Consumer
-interface Consumer {
-    void processMessages();
-}
-
-class MyDIApplication implements Consumer {
+class MyDIApplication {
     private MessageService messageService;
-
     public MyDIApplication(MessageService messageService) {
         this.messageService = messageService;
     }
-
-    @Override
     public void processMessages() {
         messageService.sendMessage();
     }
@@ -56,13 +49,13 @@ class MyDIApplication implements Consumer {
 
 // Java Dependency Injection – Injectors Classes
 interface MessageServiceInjector {
-    Consumer getConsumer();
+    MyDIApplication getMyDIApplication();
 }
 
 class EmailServiceInjector implements MessageServiceInjector {
 
     @Override
-    public Consumer getConsumer() {
+    public MyDIApplication getMyDIApplication() {
         return new MyDIApplication(new EmailServiceImpl());
     }
 
@@ -71,7 +64,7 @@ class EmailServiceInjector implements MessageServiceInjector {
 class SMSServiceInjector implements MessageServiceInjector {
 
     @Override
-    public Consumer getConsumer() {
+    public MyDIApplication getMyDIApplication() {
         return new MyDIApplication(new SMSServiceImpl());
     }
 

@@ -38,6 +38,7 @@ class BackEndDeveloper {
 class Project {
     FrontEndDeveloper fe = new FrontEndDeveloper();
     BackEndDeveloper be = new BackEndDeveloper();
+    // What if a new full stack developer join
 
     public void makeApplication() {
         fe.writeJavaScript();
