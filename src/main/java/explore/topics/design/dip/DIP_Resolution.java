@@ -3,6 +3,7 @@ package explore.topics.design.dip;
 import java.util.Arrays;
 import java.util.List;
 
+// Proximity to Dependency Injection Principle
 public class DIP_Resolution {
     public static void main(String[] args) {
         List<Developer> developers = Arrays.asList(new BackEndDeveloper_1(), new FrontEndDeveloper_1());

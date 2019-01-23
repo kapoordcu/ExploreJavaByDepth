@@ -1,5 +1,6 @@
 package explore.topics.design.dip;
 
+// Proximity to Dependency Inversion Principle
 public class DependencyInjection {
     public static void main(String[] args) {
         MessageServiceInjector injector = null;
