@@ -1,4 +1,4 @@
-package explore.topics.design;
+package explore.topics.design.isp;
 
 // Correct abstraction is the key to Interface Segregation Principle
 // Adaptor

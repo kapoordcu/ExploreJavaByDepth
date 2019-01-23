@@ -1,4 +1,4 @@
-package explore.topics.design;
+package explore.topics.design.srp;
 
 import java.io.File;
 import java.io.FileNotFoundException;

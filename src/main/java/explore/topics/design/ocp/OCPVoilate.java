@@ -1,4 +1,4 @@
-package explore.topics.design;
+package explore.topics.design.ocp;
 
 public class OCPVoilate {
 

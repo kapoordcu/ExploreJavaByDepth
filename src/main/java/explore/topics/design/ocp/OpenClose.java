@@ -1,4 +1,4 @@
-package explore.topics.design;
+package explore.topics.design.ocp;
 
 import java.util.Arrays;
 import java.util.List;
