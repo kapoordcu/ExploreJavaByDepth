@@ -16,3 +16,15 @@ public class AdaptorApp {
 
     }
 }
+
+
+/*
+    Advantages of Adapter design pattern
+        It allows more flexibility in design.
+        They handle logic by wrapping a new interface around that of an existing class so you can use new APIs (with different interfaces)
+            and avoid breaking existing implementations.
+        It absolutely interconnects two incompatible interfaces.
+    Disadvantages of Adapter design pattern
+        It unnecessarily increases the size of the code as class inheritance is less used and lot of code is needlessly duplicated between classes.
+        Sometimes many adaptations are required along an adapter chain to reach the type which is required.
+*/

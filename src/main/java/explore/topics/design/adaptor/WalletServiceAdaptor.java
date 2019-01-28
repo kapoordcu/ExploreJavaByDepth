@@ -24,7 +24,7 @@ public class WalletServiceAdaptor implements WalletService {
 
     @Override
     public Optional<TpiTransactionSequenceDTOHLP> payout(ExternalSystemIdHLP externalSystemIdHLP, CustomerHLP customerHLP, String transactionSequenceId, int win) {
-        return Optional.empty();
+        return walletService(customerHLP).purchase(externalSystemIdHLP, customerHLP, transactionSequenceId, win);
     }
 
     private WalletService walletService(CustomerHLP customer) {
