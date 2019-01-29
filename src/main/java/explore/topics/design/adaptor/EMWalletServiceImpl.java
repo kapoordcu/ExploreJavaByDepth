@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public class EMWalletServiceImpl implements EMWalletService {
     @Override
-    public Optional<TpiTransactionSequenceDTOHLP> emPurchase(CustomerHLP customerHLP, int stake) {
-        return Optional.of(new TpiTransactionSequenceDTOHLP(customerHLP.getEmToken()));
+    public Optional<TpiTransactionSequenceDTOHLP> emPurchase(String emToken, int stake) {
+        return Optional.of(new TpiTransactionSequenceDTOHLP(emToken));
     }
 }
