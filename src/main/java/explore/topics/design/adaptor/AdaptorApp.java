@@ -27,7 +27,7 @@ public class AdaptorApp {
         String emToken = "764d-4d65";
         WalletAdaptor adaptor = new WalletAdaptor(emToken, service);
         customer.setEmToken(emToken);
-        Optional<TpiTransactionSequenceDTOHLP> transactionSequence = adaptor.purchase(ExternalSystemIdHLP.SWIPE_IN_ROULETTE, customer, "uuid-3", 40);
+        Optional<TpiTransactionSequenceDTOHLP> transactionSequence = adaptor.purchase(ExternalSystemIdHLP.SWIPE_IN_ROULETTE, customer, "uuid-4", 40);
         System.out.println(transactionSequence.toString());
 
     }
