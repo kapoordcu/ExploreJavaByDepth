@@ -11,10 +11,25 @@ By doing that, the adapter class fulfills the expected contract by implementing 
 
 */
 
+import java.util.Optional;
+
 public class AdaptorApp {
     public static void main(String[] args) {
-        WalletService service = new TPIImplementation();
-        service.purchase(ExternalSystemIdHLP.SWIPE_IN_SLOTS, null, "uuid", 10);
+        TpiWalletService service = new TpiWalletServiceImpl();
+        CustomerHLP customer = new CustomerHLP("4932be6a-764d-4d65-be57-3e282cf0bcd8", null);
+        Optional<TpiTransactionSequenceDTOHLP> transactionSequenceSlots = service.purchase(ExternalSystemIdHLP.SWIPE_IN_SLOTS, customer, "uuid-1", 10);
+        Optional<TpiTransactionSequenceDTOHLP> transactionSequenceBJ = service.purchase(ExternalSystemIdHLP.SWIPE_IN_BLACKJACK, customer, "uuid-2", 20);
+        Optional<TpiTransactionSequenceDTOHLP> transactionSequenceRoulette = service.purchase(ExternalSystemIdHLP.SWIPE_IN_ROULETTE, customer, "uuid-3", 30);
+        System.out.println(transactionSequenceSlots.toString());
+        System.out.println(transactionSequenceBJ.toString());
+        System.out.println(transactionSequenceRoulette.toString());
+
+        String emToken = "764d-4d65";
+        WalletAdaptor adaptor = new WalletAdaptor(emToken, service);
+        customer.setEmToken(emToken);
+        Optional<TpiTransactionSequenceDTOHLP> transactionSequence = adaptor.purchase(ExternalSystemIdHLP.SWIPE_IN_ROULETTE, customer, "uuid-3", 40);
+        System.out.println(transactionSequence.toString());
+
     }
 }
 

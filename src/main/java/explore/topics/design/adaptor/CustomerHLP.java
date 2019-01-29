@@ -2,11 +2,21 @@ package explore.topics.design.adaptor;
 
 import java.util.Objects;
 
-public class CustomerHLP {
+public class    CustomerHLP {
+    private String customerID;
     private String emToken;
 
-    public CustomerHLP(String emToken) {
+    public CustomerHLP(String customerID, String emToken) {
+        this.customerID = customerID;
         this.emToken = emToken;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
     public String getEmToken() {
@@ -15,23 +25,5 @@ public class CustomerHLP {
 
     public void setEmToken(String emToken) {
         this.emToken = emToken;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CustomerHLP customerHLP = (CustomerHLP) o;
-        return Objects.equals(emToken, customerHLP.emToken);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(emToken);
     }
 }

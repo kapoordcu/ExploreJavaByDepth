@@ -14,4 +14,10 @@ public class TpiTransactionSequenceDTOHLP {
     public String getResourceId() {
         return resourceId;
     }
+
+    @Override
+    public String toString() {
+        return "resourceId='" + resourceId + '\'' +
+                '}';
+    }
 }
