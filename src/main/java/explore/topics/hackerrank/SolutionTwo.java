@@ -39,6 +39,11 @@ public class SolutionTwo {
             try {
                 managerEmployeenMap.put(tokens[1], tokens[0]);
             } catch(Exception ex) {
+                if("".equalsIgnoreCase(tokens[0])) {
+                    System.out.println("line management relations saved in the format EmployeeX EmployeeY");
+                } else if(tokens.length < 2) {
+                    System.out.println("Please provide line management relations in the format EmployeeX EmployeeY, The program execution ends when you enter new line");
+                }
                 break;
             }
         }
