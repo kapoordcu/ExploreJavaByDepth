@@ -2,9 +2,7 @@ package explore.topics.design.adaptor;
 
 import java.util.Optional;
 
-public interface WalletService {
-
-    Optional<TpiTransactionSequenceDTOHLP> purchase(ExternalSystemIdHLP externalSystemIdHLP, CustomerHLP customerHLP,
+public interface EMWalletService {
+    Optional<TpiTransactionSequenceDTOHLP> emPurchase(ExternalSystemIdHLP externalSystemIdHLP, String emToken,
                                                     String transactionSequenceId, int stake);
-
 }

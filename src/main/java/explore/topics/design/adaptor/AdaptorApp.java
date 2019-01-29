@@ -13,7 +13,8 @@ By doing that, the adapter class fulfills the expected contract by implementing 
 
 public class AdaptorApp {
     public static void main(String[] args) {
-
+        WalletService service = new TPIImplementation();
+        service.purchase(ExternalSystemIdHLP.SWIPE_IN_SLOTS, null, "uuid", 10);
     }
 }
 

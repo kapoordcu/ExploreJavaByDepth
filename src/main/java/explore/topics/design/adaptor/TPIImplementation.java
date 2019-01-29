@@ -6,11 +6,7 @@ public class TPIImplementation implements WalletService {
 
     @Override
     public Optional<TpiTransactionSequenceDTOHLP> purchase(ExternalSystemIdHLP externalSystemIdHLP, CustomerHLP customerHLP, String transactionSequenceId, int stake) {
-        return Optional.empty();
+        return Optional.of(new TpiTransactionSequenceDTOHLP(externalSystemIdHLP.name() + ":" + transactionSequenceId));
     }
 
-    @Override
-    public Optional<TpiTransactionSequenceDTOHLP> payout(ExternalSystemIdHLP externalSystemIdHLP, CustomerHLP customerHLP, String transactionSequenceId, int win) {
-        return Optional.empty();
-    }
 }
