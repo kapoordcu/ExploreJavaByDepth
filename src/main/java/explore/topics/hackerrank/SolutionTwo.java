@@ -13,10 +13,18 @@ public class SolutionTwo {
         int _count = Integer.parseInt(in.nextLine());
 
         OutputCommonManager(_count, in);
-
+        //        6
+        //        Hilary
+        //        James
+        //        Sarah Fred
+        //        Sarah Paul
+        //        Fred Hilary
+        //        Fred Jenny
+        //        Jenny James
     }
 
     static void OutputCommonManager(int count, Scanner in) {
+        Long start = System.currentTimeMillis();
         String employee = null;
         String firstEmployee = in.nextLine(); // Hillary
         String secondEmployee = in.nextLine();  // James
@@ -24,19 +32,17 @@ public class SolutionTwo {
         Map<String, String> managerEmployeenMap = new LinkedHashMap<String, String>();
         Set<String> heirarchyManagerSet = new LinkedHashSet<String>();
 
-        String[] emplyeeManagerArray;
-        if(in.hasNextLine()) {
-            employee = in.nextLine();
-        }
-
         // Iterate Manager employee relationship
-        while(!employee.isEmpty()){
-            emplyeeManagerArray = employee.trim().split(" ");
-            managerEmployeenMap.put(emplyeeManagerArray[1], emplyeeManagerArray[0]);
-            if(in.hasNextLine()) {
-                employee = in.nextLine();
+        while(in.hasNextLine()) {
+            String relationshipEmployeeManager = in.nextLine();
+            String[] tokens = relationshipEmployeeManager.trim().split(" ");
+            try {
+                managerEmployeenMap.put(tokens[1], tokens[0]);
+            } catch(Exception ex) {
+                break;
             }
         }
+
         // Data saved in the hashmap for emplyee Manager Relationship
         heirarchyManagerSet.add(firstEmployee);
         employee = managerEmployeenMap.get(firstEmployee);
