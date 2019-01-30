@@ -10,27 +10,26 @@ The methods defined by the interface call one or more methods on the referenced 
 By doing that, the adapter class fulfills the expected contract by implementing the interface and enables you to reuse existing, incompatible implementations.
 
 */
+// Mimick some interface
 
 public class AdaptorApp {
     public static void main(String[] args) {
         String emToken = "764d-4d65";
-        CustomerHLP customer = new CustomerHLP("4932be6a-764d-4d65-be57-3e282cf0bcd8", emToken);
-        TpiWalletService tpiWalletService = new TpiWalletServiceImpl();
-        EMWalletService emWalletService = new EMWalletServiceImpl();
+        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", emToken);
+        WalletService walletService = new TpiWalletService();
+        // Adapter adapts subject (adaptee i.e. TpiWalletService) to a different interface.
+        // Decorator not only delegate, not only maps one method to another, they do more, they modify behaviour of some subject methods,
+        // Decorators typically add (transparently) functionality to wrapped object like logging, encryption, formatting, or compression to subject.
+        // This New functionality may bring a lot of new code. Hence, decorators are usually much “fatter” then Adapters.
 
-        // Wrap a tpiWalletService in a TpiWalletAdaptor so that it
-        // behaves like EMWalletService
-        EMWalletService tpiAdaptor = new TpiWalletAdaptor(tpiWalletService);
+        WalletAdaptor adaptor = new WalletAdaptor(walletService);
+        System.out.println(adaptor.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString());
 
-        System.out.println();
-        System.out.println("tpi..." + tpiWalletService.purchase(ExternalSystemIdHLP.SWIPE_IN_SLOTS, customer, "uuid-1", 10).toString());
+        WalletDecorator decorator1 = new WalletDecorator(new TpiWalletService(), "Klarna");
+        WalletDecorator decorator2 = new WalletDecorator(new TpiWalletService(), "PAYPAL");
+        System.out.println(decorator1.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString());
+        System.out.println(decorator2.purchase(WalletType.WALLET_EM, customer, "uuid-1", 10).toString());
 
-        System.out.println();
-        System.out.println("EM..." + emWalletService.emPurchase(emToken, 40).toString());
-
-        // EMWalletService behaving like a TpiWalletService
-        System.out.println();
-        System.out.println("Adaptor..." + tpiAdaptor.emPurchase(emToken, 40).toString());
     }
 }
 

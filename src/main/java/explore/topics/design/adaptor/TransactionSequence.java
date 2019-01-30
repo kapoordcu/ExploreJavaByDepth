@@ -4,10 +4,10 @@ package explore.topics.design.adaptor;
 /**
  * A class that represents transaction sequence information.
  */
-public class TpiTransactionSequenceDTOHLP {
+public class TransactionSequence {
     private final String resourceId;
 
-    public TpiTransactionSequenceDTOHLP(final String resourceId) {
+    public TransactionSequence(final String resourceId) {
         this.resourceId = resourceId;
     }
 

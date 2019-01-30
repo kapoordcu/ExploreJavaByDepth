@@ -2,11 +2,11 @@ package explore.topics.design.adaptor;
 
 import java.util.Objects;
 
-public class    CustomerHLP {
+public class Customer {
     private String customerID;
     private String emToken;
 
-    public CustomerHLP(String customerID, String emToken) {
+    public Customer(String customerID, String emToken) {
         this.customerID = customerID;
         this.emToken = emToken;
     }
