@@ -10,8 +10,14 @@ Wrap a complicated subsystem with a simpler interface.
 http://csharp-video-tutorials.blogspot.com/2018/02/facade-design-pattern.html
 */
 
-public class FacadeApp {
-    public static void main(String[] args) {
+import org.springframework.beans.factory.annotation.Autowired;
 
+public class FacadeApp {
+
+    @Autowired
+    protected static RecommendationFacade recommendationFacade;
+
+    public static void main(String[] args) {
+        recommendationFacade.getEventIds("VAIX", false);
     }
 }
