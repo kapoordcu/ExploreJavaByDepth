@@ -1,46 +1,10 @@
 package explore.topics.design.ocp;
 
+import java.awt.peer.ScrollbarPeer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-enum Confidence {
-    LOW, MID, HIGH
-}
-
-enum SportsType {
-    SOCCER, TABLETENNIS, BASEBALL, HANDBALL
-}
-
-class Event {
-    public String id;
-    public Confidence confidence;
-    public SportsType sportsType;
-
-    public Event(String id, Confidence confidence, SportsType sportsType) {
-        this.id = id;
-        this.confidence = confidence;
-        this.sportsType = sportsType;
-    }
-
-
-}
-
-class EventFilter {
-    public Stream<Event> filterByConfidence(List<Event> eventList, Confidence confidence) {
-        return eventList.stream().filter(p -> p.confidence == confidence);
-    }
-
-    public Stream<Event> filterBySportsType(List<Event> products, SportsType sportsType) {
-        return products.stream().filter(p -> p.sportsType == sportsType);
-    }
-
-    public Stream<Event> filterByConfidenceAndSportsType(List<Event> products, Confidence confidence, SportsType sportsType) {
-        return products.stream().filter(p -> p.confidence == confidence && p.sportsType == sportsType);
-    }
-    // state space explosion
-    // 3 criteria = 7 methods
-}
 
 public class OpenClose {
     public static void main(String[] args) {
@@ -52,78 +16,75 @@ public class OpenClose {
 
         List<Event> eventList = Arrays.asList(event1, event2, event3, event4, event5);
 
-        EventFilter eventFilter = new EventFilter();
-        eventFilter.filterByConfidence(eventList, Confidence.HIGH)
-                .forEach(p -> System.out.println(p.id));
-
         System.out.println("Open Closed Implemented");
-        EventFilterNewImpl filterNew = new EventFilterNewImpl();
+        Filter filterOCP = new EventFilterOCP();
 
-        filterNew.filterOCP(eventList, new ConfidenceSpecification(Confidence.HIGH))
-                .forEach(p -> System.out.println("The event with id " + p.id + " has HIGH confidence."));
+        System.out.println("Confidence.MID");
+        filterOCP.filterOCP(eventList, new ConfidanceSpec(Confidence.MID))
+                .forEach(e -> System.out.println(e));
 
-        filterNew.filterOCP(eventList, new ANDSpecification<>(
-                new ConfidenceSpecification(Confidence.HIGH),
-                new SportsTypeSpecification(SportsType.SOCCER)
-        )).forEach(p -> System.out.println("The event with id " + p.id + " has HIGH confidence and of type Soccer."));
+        System.out.println("SportsType.SOCCER");
+        filterOCP.filterOCP(eventList, new SportsSpec(SportsType.SOCCER))
+                .forEach(e -> System.out.println(e));
 
+        System.out.println("SportsType.SOCCER && Confidence.MID");
+        filterOCP.filterOCP(eventList, new CombinedTwo(
+                new ConfidanceSpec(Confidence.MID),
+                new SportsSpec(SportsType.SOCCER)
+        )).forEach(e -> System.out.println(e));
     }
 }
 
-//////////////OPEN CLOSE IN ACTION /////////////
+////////////////OPEN CLOSE IN ACTION /////////////
 interface Specification<T> {
-    boolean specificationMet(T spec);
+    boolean isSatisfied(T specification);
 }
 
-interface EventFilterNew<T> {
-    Stream<T> filterOCP(List<T> types, Specification<T> specs);
+interface Filter<T> {
+    Stream<T> filterOCP(List<T> events, Specification<T> specs);
 }
 
-class ConfidenceSpecification implements Specification<Event> {
+class EventFilterOCP implements Filter {
+    @Override
+    public Stream filterOCP(List events, Specification specs) {
+        return events.stream().filter(e -> specs.isSatisfied(e));
+    }
+}
+
+class ConfidanceSpec implements Specification<Event> {
+
     private Confidence confidence;
-    public ConfidenceSpecification(Confidence confidence) {
+    public ConfidanceSpec(Confidence confidence) {
         this.confidence = confidence;
     }
-
     @Override
-    public boolean specificationMet(Event spec) {
-        return spec.confidence == confidence;
+    public boolean isSatisfied(Event event) {
+        return event.confidence == confidence;
     }
 }
 
-class SportsTypeSpecification implements Specification<Event> {
+class SportsSpec implements Specification<Event> {
+
     private SportsType sportsType;
-    public SportsTypeSpecification(SportsType sportsType) {
+    public SportsSpec(SportsType sportsType) {
         this.sportsType = sportsType;
     }
-
     @Override
-    public boolean specificationMet(Event spec) {
-        return spec.sportsType == sportsType;
+    public boolean isSatisfied(Event event) {
+        return event.sportsType == sportsType;
     }
 }
 
-class ANDSpecification<T> implements Specification<T> {
-    private Specification<T> first, second;
+class CombinedTwo<T> implements Specification<T> {
+    private Specification<T> one, two;
 
-    ANDSpecification(Specification<T> first, Specification<T> second) {
-        this.first = first;
-        this.second = second;
+    public CombinedTwo(Specification<T> one, Specification<T> two) {
+        this.one = one;
+        this.two = two;
     }
 
-
     @Override
-    public boolean specificationMet(T spec) {
-        return first.specificationMet(spec) && second.specificationMet(spec);
-    }
-
-
-}
-
-class EventFilterNewImpl implements EventFilterNew<Event> {
-
-    @Override
-    public Stream<Event> filterOCP(List<Event> types, Specification<Event> specs) {
-        return types.stream().filter(p -> specs.specificationMet(p));
+    public boolean isSatisfied(T specification) {
+        return one.isSatisfied(specification) && two.isSatisfied(specification);
     }
 }
