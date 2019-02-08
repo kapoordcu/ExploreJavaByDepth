@@ -8,17 +8,21 @@ import java.util.stream.Stream;
 // Your client already using shipped code in the form of binaries
 public class OpenCloseVoilate {
     public static void main(String[] args) {
+        List<Event> eventList = getEventsStub();
+
+        EventFilter eventFilter = new EventFilter();
+        eventFilter.filterByConfidence(eventList, Confidence.HIGH)
+                .forEach(p -> System.out.println(p));
+    }
+
+    public static List<Event> getEventsStub() {
         Event event1 = new Event("1L", Confidence.HIGH, SportsType.SOCCER);
         Event event2 = new Event("2L", Confidence.HIGH, SportsType.BASEBALL);
         Event event3 = new Event("3L", Confidence.LOW, SportsType.HANDBALL);
         Event event4 = new Event("4L", Confidence.MID, SportsType.SOCCER);
         Event event5 = new Event("5L", Confidence.LOW, SportsType.TABLETENNIS);
 
-        List<Event> eventList = Arrays.asList(event1, event2, event3, event4, event5);
-
-        EventFilter eventFilter = new EventFilter();
-        eventFilter.filterByConfidence(eventList, Confidence.HIGH)
-                .forEach(p -> System.out.println(p));
+        return Arrays.asList(event1, event2, event3, event4, event5);
     }
 }
 
