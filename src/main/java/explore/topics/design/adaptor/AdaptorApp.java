@@ -23,9 +23,9 @@ public class AdaptorApp {
         System.out.println();
         System.out.println();
         System.out.println();
-        System.out.println("-------AFTERRRRR ADAPTOR-------------");
-        wallet = new EMWallet();
-        WalletAdaptor adaptor = new WalletAdaptor(wallet);  // Adapter adapts subject (adaptee i.e. TpiWallet) to a different interface.
+        System.out.println("-------AFTER ADAPTOR-------------");
+        EMWallet emWallet = new EMWallet();
+        Wallet adaptor = new WalletAdaptor(emWallet);  // Adapter adapts subject (adaptee i.e. TpiWallet) to a different interface.
         System.out.println(adaptor.purchase(customer, "uuid-1", 10));
 
         // Decorator not only delegate, not only maps one method to another, they do more, they modify behaviour of some subject methods,

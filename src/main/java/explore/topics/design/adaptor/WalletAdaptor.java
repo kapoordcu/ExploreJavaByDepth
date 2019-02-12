@@ -4,18 +4,14 @@ import java.util.Optional;
 
 public class WalletAdaptor implements Wallet {
 
-    Wallet wallet;
+    EMWallet emWallet;
 
-    public WalletAdaptor(Wallet wallet) {
-        this.wallet = wallet;
-    }
-
-    public Optional<TransactionSequence> incompatibleMethodCall(String emToken, int stake) {
-        return wallet.purchase(new Customer(emToken, emToken), emToken, stake);
+    public WalletAdaptor(EMWallet emWallet) {
+        this.emWallet = emWallet;
     }
 
     @Override
     public Optional<TransactionSequence> purchase(Customer customer, String transactionSequenceId, int stake) {
-        return incompatibleMethodCall(customer.getEmToken(), stake);
+        return emWallet.purchaseAndPayout(transactionSequenceId, stake);
     }
 }
