@@ -1,6 +1,7 @@
 package explore.topics.design.bridge;
 
-// Decouples an abstraction from its implementation so that two can vary independently (which means Used to separate an abstraction from its implementation so that both cab be modified independently
+// Decouples an abstraction from its implementation so that two can vary independently
+// (which means Used to separate an abstraction from its implementation so that both cab be modified independently
 
 // This pattern Involves an interface which acts as a bridge b/w the abstraction class and the implementation classes
 // With bridge pattern both type of classes can ve modified without affecting to each other.
@@ -25,25 +26,24 @@ two separate hierarchies—abstraction and implementation—which can be develop
 
 
 import explore.topics.design.adaptor.Customer;
-import explore.topics.design.adaptor.EMWalletService;
-import explore.topics.design.adaptor.TpiWalletService;
-import explore.topics.design.adaptor.WalletType;
+import explore.topics.design.adaptor.EMWallet;
+import explore.topics.design.adaptor.TpiWallet;
 
 public class BridgeApp {
     public static void main(String[] args) {
-        String emToken = "764d-4d65";
-        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", emToken);
+        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", "764d-4d65");
         System.out.println("-------------Sofort Klarna---------------");
-        AddMoneyToWallet sofort = new SofortMoneyToWallet(new EMWalletService());
+        MoneyToWallet sofort = new SofortMoneyToWallet(new EMWallet());
         sofort.addMoney(3000l);
-        sofort.wallet.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString();
+        sofort.wallet.purchase(customer, "uuid-1", 30).toString();
+
         System.out.println();
         System.out.println();
         System.out.println();
         System.out.println("-------------PayPal---------------");
-        AddMoneyToWallet paypal = new PayPalMoneyToWallet(new TpiWalletService());
+        MoneyToWallet paypal = new PayPalMoneyToWallet(new TpiWallet());
         paypal.addMoney(10000l);
-        paypal.wallet.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString();
+        paypal.wallet.purchase(customer, "uuid-1", 100).toString();
 
     }
 }

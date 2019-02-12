@@ -1,7 +1,7 @@
 package explore.topics.design.adaptor;
 
 // the adapter pattern makes two incompatible interfaces compatible without changing their existing code.
-// Adapter patterns use a single class (the adapter class) to join functionalities of independent or incompatible interfaces/classes.
+// Adapter patterns use a single class (the adapter class) to join functionality of independent or incompatible interfaces/classes.
 // This pattern converts the (incompatible) interface of a class (the adaptee) into another interface (the target) that clients require.
 
 /*
@@ -14,21 +14,28 @@ By doing that, the adapter class fulfills the expected contract by implementing 
 
 public class AdaptorApp {
     public static void main(String[] args) {
-        String emToken = "764d-4d65";
-        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", emToken);
-        WalletService walletService = new TpiWalletService();
-        // Adapter adapts subject (adaptee i.e. TpiWalletService) to a different interface.
+        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", "764d-4d65");
+
+        System.out.println("-------BEFORE ADAPTOR-------------");
+        Wallet wallet = new TpiWallet();
+        System.out.println(wallet.purchase(customer, "uuid-0", 100));
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("-------AFTERRRRR ADAPTOR-------------");
+        wallet = new EMWallet();
+        WalletAdaptor adaptor = new WalletAdaptor(wallet);  // Adapter adapts subject (adaptee i.e. TpiWallet) to a different interface.
+        System.out.println(adaptor.purchase(customer, "uuid-1", 10));
+
         // Decorator not only delegate, not only maps one method to another, they do more, they modify behaviour of some subject methods,
         // Decorators typically add (transparently) functionality to wrapped object like logging, encryption, formatting, or compression to subject.
         // This New functionality may bring a lot of new code. Hence, decorators are usually much “fatter” then Adapters.
 
-        WalletAdaptor adaptor = new WalletAdaptor(walletService);
-        System.out.println(adaptor.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString());
-
-        WalletDecorator decorator1 = new WalletDecorator(new TpiWalletService(), "Klarna");
-        WalletDecorator decorator2 = new WalletDecorator(new TpiWalletService(), "PAYPAL");
-        System.out.println(decorator1.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString());
-        System.out.println(decorator2.purchase(WalletType.WALLET_EM, customer, "uuid-1", 10).toString());
+//        WalletDecorator decorator1 = new WalletDecorator(new TpiWallet(), "Klarna");
+//        WalletDecorator decorator2 = new WalletDecorator(new TpiWallet(), "PAYPAL");
+//        System.out.println(decorator1.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString());
+//        System.out.println(decorator2.purchase(WalletType.WALLET_EM, customer, "uuid-1", 10).toString());
 
     }
 }

@@ -14,7 +14,7 @@ import static java.util.Collections.emptyList;
 public class RecommendationFacade {
 
     private final VaixService vaixService;
-    private final InwtManager inwtManager;
+    private final InwtService inwtService;
     private final ProfileService profileService;
 
     private final EventAndGroupIdsSupplier biEventAndGroupIdsSupplier;
@@ -23,10 +23,10 @@ public class RecommendationFacade {
 
 
     @Autowired
-    public RecommendationFacade(VaixService vaixService, InwtManager inwtManager,
+    public RecommendationFacade(VaixService vaixService, InwtService inwtService,
                                 ProfileService profileService) {
         this.vaixService = vaixService;
-        this.inwtManager = inwtManager;
+        this.inwtService = inwtService;
         this.profileService = profileService;
 
         this.biEventAndGroupIdsSupplier = new BIEventAndGroupIdsSupplier()
@@ -120,7 +120,7 @@ public class RecommendationFacade {
 
         @Override
         protected List<Long> getEventIds(String uuid, boolean confidenceSort) {
-            return inwtManager.getEventIdsByTurnover();
+            return inwtService.getEventIdsByTurnover();
         }
     }
 }

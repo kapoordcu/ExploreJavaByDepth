@@ -1,11 +1,11 @@
 package explore.topics.design.bridge;
 
-import explore.topics.design.adaptor.WalletService;
+import explore.topics.design.adaptor.Wallet;
 
 // // refined Abstraction
-public class SofortMoneyToWallet extends AddMoneyToWallet {
+public class SofortMoneyToWallet extends MoneyToWallet {
 
-    public SofortMoneyToWallet(WalletService wallet) {
+    public SofortMoneyToWallet(Wallet wallet) {
         super(wallet);
     }
 

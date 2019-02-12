@@ -2,22 +2,20 @@ package explore.topics.design.adaptor;
 
 import java.util.Optional;
 
-public class WalletAdaptor implements WalletService {
+public class WalletAdaptor implements Wallet {
 
-    WalletService walletService;
+    Wallet wallet;
 
-    public WalletAdaptor(WalletService walletService) {
-        this.walletService = walletService;
+    public WalletAdaptor(Wallet wallet) {
+        this.wallet = wallet;
     }
 
-    public Optional<TransactionSequence> emPurchase(String emToken, int stake) {
-        return walletService.purchase(WalletType.WALLET_EM, new Customer(emToken, emToken),
-                emToken, stake);
+    public Optional<TransactionSequence> incompatibleMethodCall(String emToken, int stake) {
+        return wallet.purchase(new Customer(emToken, emToken), emToken, stake);
     }
 
     @Override
-    public Optional<TransactionSequence> purchase(WalletType walletType,
-                                                  Customer customer, String transactionSequenceId, int stake) {
-        return emPurchase(customer.getEmToken(), stake);
+    public Optional<TransactionSequence> purchase(Customer customer, String transactionSequenceId, int stake) {
+        return incompatibleMethodCall(customer.getEmToken(), stake);
     }
 }

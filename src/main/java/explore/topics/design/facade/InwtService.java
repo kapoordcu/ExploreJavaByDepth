@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class InwtManager {
+public class InwtService {
     public List<Long> getEventIdsByTurnover() {
         return Collections.emptyList();
     }

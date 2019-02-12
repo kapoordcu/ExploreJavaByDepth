@@ -6,7 +6,8 @@ package explore.topics.design.decorator;
 // This pattern changes the functionality of objects at runtime without impacting its blueprint or the existing functionality.
 public class DecoratorApp {
     public static void main(String[] args) {
-
+        MagicString magicString = new MagicString("Gaurav Kapoor");
+        System.out.println(magicString.getVowelsInString());
     }
 }
 

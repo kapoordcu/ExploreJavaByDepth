@@ -1,11 +1,11 @@
 package explore.topics.design.bridge;
 
-import explore.topics.design.adaptor.WalletService;
+import explore.topics.design.adaptor.Wallet;
 
 // refined Abstraction
-public class PayPalMoneyToWallet extends AddMoneyToWallet {
+public class PayPalMoneyToWallet extends MoneyToWallet {
 
-    public PayPalMoneyToWallet(WalletService wallet) {
+    public PayPalMoneyToWallet(Wallet wallet) {
         super(wallet);
     }
 
