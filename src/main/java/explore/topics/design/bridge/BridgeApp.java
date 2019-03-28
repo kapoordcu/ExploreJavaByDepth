@@ -1,50 +1,53 @@
 package explore.topics.design.bridge;
 
-// Decouples an abstraction from its implementation so that two can vary independently
-// (which means Used to separate an abstraction from its implementation so that both cab be modified independently
-
-// This pattern Involves an interface which acts as a bridge b/w the abstraction class and the implementation classes
-// With bridge pattern both type of classes can ve modified without affecting to each other.
-
-//Publish interface in an inheritance hierarchy, and bury implementation in its own inheritance hierarchy.
-//        Beyond encapsulation, to insulation
-
-// When to choose : When you need to avoid a permanent binding between abstraction and implementation (when A & I) should be extensible
-// Hide the imp of an abstraction completely from clients
 /*
-
-The Bridge design pattern proposes refactoring this exponentially explosive inheritance hierarchy into two orthogonal hierarchies – one for platform-independent abstractions,
-and the other for platform-dependent implementations.
+PROBLEM IT SOLVES
+    This problem occurs because we’re trying to extend the classes in two independent dimensions, That’s a very common issue with class inheritance.
+    When you subclass an abstract base class to provide alternative implementations it is compile-time binding between interface and implementation.
+    The abstraction and implementation cannot be independently extended or composed.
 */
 
+/*
+SOLUTION
+    The Bridge pattern attempts to solve this problem by switching from inheritance to composition. What this means is that you extract one of the dimensions into a separate
+    class hierarchy, so that the original classes will reference an object of the new hierarchy, instead of having all of its state and behaviors within one class.
+*/
+
+/*
+NAMING CONVENTION
+    Following this approach, we can extract the color-related code into its own class with two subclasses: Red and Blue.
+    The Shape class then gets a reference field pointing to one of the color objects. Now the shape can delegate any color-related work to the linked color object.
+    That reference will act as a bridge between the Shape and Color classes. From now on, adding new colors won’t require changing the shape hierarchy, and vice versa.
+ */
+
+/*
+INTENT
+    The Bridge design pattern proposes refactoring exponentially explosive inheritance hierarchy into orthogonal hierarchies
+    Decouples(separate) an abstraction from its implementation so that two can vary independently without impact in client
+    Publish interface in an inheritance hierarchy, and bury implementation in its own inheritance hierarchy.
+    Uses composition over inheritance.
+*/
+
+/*
+WHEN TO USE
+    you want run-time binding of the implementation,
+    you want to share an implementation among multiple objects,
+    you need to map orthogonal class hierarchies.
+    The Bridge pattern is an application of the old advice, “prefer composition over inheritance”.
+    It becomes handy when you must subclass different times in ways that are orthogonal with one another.
+*/
 // https://refactoring.guru/design-patterns/bridge
-
-/*
-Bridge is a structural design pattern that lets you split a large class or a set of closely related classes into
-two separate hierarchies—abstraction and implementation—which can be developed independently of each other.
-*/
-
-
-import explore.topics.design.adaptor.Customer;
-import explore.topics.design.adaptor.EMWallet;
-import explore.topics.design.adaptor.TpiWallet;
 
 public class BridgeApp {
     public static void main(String[] args) {
-        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", "764d-4d65");
-        System.out.println("-------------Sofort Klarna---------------");
-        MoneyToWallet sofort = new SofortMoneyToWallet(new EMWallet());
-        sofort.addMoney(3000l);
-        sofort.wallet.purchase(customer, "uuid-1", 30).toString();
+        PaymentProvider paypalCreditCard = new PayPalPaymentProvider(new CreditCardImpl());
+        paypalCreditCard.whoIsPaymentProvoder();
 
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("-------------PayPal---------------");
-        MoneyToWallet paypal = new PayPalMoneyToWallet(new TpiWallet());
-        paypal.addMoney(10000l);
-        paypal.wallet.purchase(customer, "uuid-1", 100).toString();
+        PaymentProvider klarnaCreditCard = new SofortPaymentProvider(new CreditCardImpl());
+        klarnaCreditCard.whoIsPaymentProvoder();
 
+        PaymentProvider klarnaDebitCard = new SofortPaymentProvider(new DebitCardImpl());
+        klarnaDebitCard.whoIsPaymentProvoder();
     }
 }
 /*    Relations with Other Patterns
