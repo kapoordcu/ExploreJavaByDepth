@@ -3,13 +3,17 @@ package explore.topics.hackerrank;
 public class CalculateTheSquare {
     public static void main(String[] args) {
         CalculateTheSquare square = new CalculateTheSquare();
-        System.out.println(square.solution(6000, 7000));
+
+        System.out.println(square.solution(9, 9));
 
     }
 
-    public int solution(int lowLimit, int higherLimit) {
+    public int solution(int A, int B) {
         int repeatedSquareRootOperations = 0;
-        for (int i = lowLimit; i < higherLimit; i++) {
+        for (int i = A; i <= B; i++) {
+            if(i==1) {
+                i++;
+            }
             if(isWholeNumber(i)) {
                 int currentNumberCount = countRecursiveSquares(i);
                 repeatedSquareRootOperations = (repeatedSquareRootOperations > currentNumberCount) ?
@@ -29,8 +33,8 @@ public class CalculateTheSquare {
     }
 
     public boolean isWholeNumber(double number) {
-        double sr = Math.sqrt(number);
-        return ((sr - Math.floor(sr)) == 0);
+        double sqrt = Math.sqrt(number);
+        return ((sqrt - Math.floor(sqrt)) == 0);
     }
 
 
