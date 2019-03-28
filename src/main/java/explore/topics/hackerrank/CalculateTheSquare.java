@@ -3,22 +3,30 @@ package explore.topics.hackerrank;
 public class CalculateTheSquare {
     public static void main(String[] args) {
         CalculateTheSquare square = new CalculateTheSquare();
-
-        System.out.println(square.solution(9, 9));
-
+        System.out.println(square.solutionOsqrtBA(0, 1));
     }
 
     public int solution(int A, int B) {
         int repeatedSquareRootOperations = 0;
         for (int i = A; i <= B; i++) {
-            if(i==1) {
-                i++;
-            }
-            if(isWholeNumber(i)) {
+            if(isWholeNumber(i) && i!=1) {
                 int currentNumberCount = countRecursiveSquares(i);
                 repeatedSquareRootOperations = (repeatedSquareRootOperations > currentNumberCount) ?
                         repeatedSquareRootOperations : currentNumberCount;
             }
+        }
+        return repeatedSquareRootOperations;
+    }
+
+    public int solutionOsqrtBA(int A, int B) {
+        int repeatedSquareRootOperations = 0;
+        int currNumber = (int) Math.ceil(Math.sqrt(A));
+        int squareValue = 0;
+        while((squareValue = currNumber*currNumber) <= B) {
+            int currentNumberCount = countRecursiveSquares(squareValue);
+            repeatedSquareRootOperations = (repeatedSquareRootOperations > currentNumberCount) ?
+                    repeatedSquareRootOperations : currentNumberCount;
+            currNumber++;
         }
         return repeatedSquareRootOperations;
     }
