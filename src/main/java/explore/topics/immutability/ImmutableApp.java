@@ -10,7 +10,8 @@ public class ImmutableApp { // Object States cannot be modified after they are c
 //    PROS: Object of the class cannot be corrupted by thread interference or observed in inconsistent state
 //    CONS: A new object must be created each time you want the object with different state, resulting in object proliferation(rapid increase in the number or amount of something)
     public static void main(String[] args) {
-
+        StaticFields staticFields = new StaticFields();
+        staticFields.myAbstractMethod();
     }
 }
 
@@ -22,4 +23,14 @@ class StaticFields {
 
 
     */
+
+
+
+    void myAbstractMethod(){
+
+    }
+}
+
+class AbstractingClass extends StaticFields {
+
 }
