@@ -1,4 +1,4 @@
-package explore.topics.design.bridge;
+package explore.topics.design.bridgepattern;
 
 /*
 PROBLEM IT SOLVES
@@ -37,19 +37,6 @@ WHEN TO USE
     It becomes handy when you must subclass different times in ways that are orthogonal with one another.
 */
 // https://refactoring.guru/design-patterns/bridge
-
-public class BridgeApp {
-    public static void main(String[] args) {
-        PaymentProvider paypalCreditCard = new PayPalPaymentProvider(new CreditCardImpl());
-        paypalCreditCard.whoIsPaymentProvoder();
-
-        PaymentProvider klarnaCreditCard = new SofortPaymentProvider(new CreditCardImpl());
-        klarnaCreditCard.whoIsPaymentProvoder();
-
-        PaymentProvider klarnaDebitCard = new SofortPaymentProvider(new DebitCardImpl());
-        klarnaDebitCard.whoIsPaymentProvoder();
-    }
-}
 /*    Relations with Other Patterns
         Bridge is usually designed up-front, letting you develop parts of an application independently of each other.
         On the other hand, Adapter is commonly used with an existing app to make some otherwise-incompatible classes work together nicely.
@@ -63,3 +50,14 @@ public class BridgeApp {
 
         You can combine Builder with Bridge: the director class plays the role of the abstraction, while different builders act as implementations.*/
 
+
+public class BPApp {
+    public static void main(String[] args) {
+        SourceProvider providerBISoccer = new BIProvider(new Soccer());
+        providerBISoccer.getRecommendationProviderForSport();
+
+        SourceProvider providerBIBB = new BIProvider(new BasketBall());
+        providerBIBB.getRecommendationProviderForSport();
+
+    }
+}
