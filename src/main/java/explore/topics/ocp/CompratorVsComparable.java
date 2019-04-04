@@ -1,8 +1,10 @@
 package explore.topics.ocp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,6 +12,8 @@ import java.util.TreeSet;
 
 public class CompratorVsComparable {
     public static void main(String[] args) {
+        // Internal (Class of compared object must implement the interface)
+        // One way only
         Compareble1 c1 = new Compareble1("C", 2);
         Compareble1 c2 = new Compareble1("B", 1);
         Compareble1 c3 = new Compareble1("D", 3);
@@ -23,7 +27,9 @@ public class CompratorVsComparable {
 
         compareSet.stream().forEach((n) -> System.out.println(n.getLabel()));
 
-
+        // External(without touching the code of compared object)
+        // When you don't have the control over the source code of the class whose objects are compared
+        // Order objects in different ways
         Comparator1 ct1 = new Comparator1("Gaurav", 2);
         Comparator1 ct2 = new Comparator1("Amit", 1);
         Comparator1 ct3 = new Comparator1("Aadi", 3);
@@ -38,6 +44,20 @@ public class CompratorVsComparable {
         Collections.sort(compareList, new MyComparatorExp());
         compareList.stream().forEach((n) -> System.out.println(n.getLabel()));
 
+
+        TreeSet<String> treeSet = new TreeSet<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.length()-o2.length();
+            }
+        });
+        treeSet.add("hey");
+        treeSet.add("Mateuz");
+
+        Iterator<String> iterator = treeSet.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
 
     }
 }
