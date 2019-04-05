@@ -37,6 +37,10 @@ public class MethodReferencesStream {
          */
         Stream<DataVar> dataVarStream = Stream.generate(DataVar::new).limit(10).filter(d-> d.getVar()%2==0);
         dataVarStream.forEach(d -> System.out.println(d.getVar()));
+
+//
+//        Stream<DataDelete> dataDeleteSt = Stream.of(new DataDelete(1), new DataDelete(2));
+//        dataDeleteSt.forEach(DataDelete::log);
     }
 }
 
@@ -80,5 +84,16 @@ class DataVar {
 
     public int getVar() {
         return var;
+    }
+}
+class DataDelete {
+    private int var;
+
+    public DataDelete(int var) {
+        this.var = var;
+    }
+
+    public static void log() {
+        System.out.println("Logging...");
     }
 }
