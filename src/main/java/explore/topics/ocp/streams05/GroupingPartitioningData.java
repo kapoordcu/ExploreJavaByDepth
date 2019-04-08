@@ -78,6 +78,7 @@ public class GroupingPartitioningData {
         Stream<PersonGroup> partitioningByAgeStream = Stream.of(p1, p2, p3, p4);
         Map<Boolean, Double> byMaleAndAge = partitioningByAgeStream.collect(Collectors.partitioningBy(PersonGroup::isMale, Collectors.averagingDouble(PersonGroup::getAge)));
         System.out.println(byMaleAndAge);
+
     }
 }
 
