@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public class SearchMethods {
     public static void main(String[] args) {
-        /*
+/*
         find*() -> returns an Optional instance describing an element of the stream  : findFirst, findAny
         *Match(Predicate<? super T> predicte) : Returns weather elements of the stream match the given predicate : anyMatch, allMatch, nonematch
         *
