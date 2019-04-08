@@ -1,4 +1,4 @@
-package explore.topics.ocp;
+package explore.topics.ocp.generics;
 
 // A MR can be replaced by a lambda exp , if the exp body does nothing but invoke an existing method
 // <ClassName | objectVariable> :: <methodName>

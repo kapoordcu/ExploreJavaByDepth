@@ -1,4 +1,4 @@
-package explore.topics.ocp;
+package explore.topics.ocp.generics;
 
 // The filtering process in Collection and Streams is implemented using a Predicate
 // Predicate is an expression that evaluates to Boolean value which is true/false

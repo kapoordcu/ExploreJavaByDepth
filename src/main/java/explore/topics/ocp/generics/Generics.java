@@ -1,4 +1,4 @@
-package explore.topics.ocp;
+package explore.topics.ocp.generics;
 
 // Generics allows types to be specified as parameters when defining classes, interfaces and methods
 // It enables you to reuse same class/interface with diff types of input

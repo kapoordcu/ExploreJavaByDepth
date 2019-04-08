@@ -1,4 +1,4 @@
-package explore.topics.ocp;
+package explore.topics.ocp.generics;
 
 import java.util.stream.Stream;
 
