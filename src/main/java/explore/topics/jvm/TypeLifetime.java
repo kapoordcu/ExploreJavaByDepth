@@ -49,7 +49,7 @@ class Sub extends Super {
 LOADING
         ---1) JVM loads the class BY CLASS LOADER
             -- CLASS LOADER (it searches the classpath, once found, loads byte code into memory, and generates a class object(Meta information: classname, superclass, method info) as a output of loading
-            -- Class object is only created ONLY ONCE, Subsequent are loaded from memory
+            -- Class object is only created ONLY ONCE, Subsequent accesses are loaded from memory
             -- Output of Loading is the Class object
 LINKING
     VERIFICATION by Bytecode Verifier
