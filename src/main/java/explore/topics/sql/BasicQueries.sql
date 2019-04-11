@@ -1,3 +1,56 @@
+CREATE TABLE COUNTRY (
+    id INT  NOT NULL AUTO_INCREMENT,
+    name               VARCHAR(15) NOT NULL,
+    continent               VARCHAR(15) NOT NULL,
+    population               BIGINT NOT NULL,
+    capital               VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+CREATE TABLE GAMES (
+    id INT  NOT NULL AUTO_INCREMENT,
+    fk_country_1 INT NOT NULL REFERENCES COUNTRY(id),
+    score_country_1 INT  NOT NULL,
+    fk_country_2 INT NOT NULL REFERENCES COUNTRY(id),
+    score_country_2 INT  NOT NULL,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+INSERT INTO COUNTRY (NAME, CONTINENT, POPULATION, CAPITAL) VALUES ('Germany', 'Europe', 82670000, 'Berlin');
+INSERT INTO COUNTRY (NAME, CONTINENT, POPULATION, CAPITAL) VALUES ('USA', 'America', 325700000, 'Washington DC');
+INSERT INTO COUNTRY (NAME, CONTINENT, POPULATION, CAPITAL) VALUES ('Brasil', 'South America', 207700000, 'England');
+INSERT INTO COUNTRY (NAME, CONTINENT, POPULATION, CAPITAL) VALUES ('Panama', 'Middle America', 4034000, 'Panama City');
+INSERT INTO COUNTRY (NAME, CONTINENT, POPULATION, CAPITAL) VALUES ('New Zealand', 'Australia', 4693000, 'Wellington');
+INSERT INTO COUNTRY (NAME, CONTINENT, POPULATION, CAPITAL) VALUES ('Spain', 'Europe', 46560000, 'Madrid');
+
+INSERT INTO GAMES (fk_country_1, score_country_1, fk_country_2, score_country_2) VALUES (1, 2, 2, 1);
+INSERT INTO GAMES (fk_country_1, score_country_1, fk_country_2, score_country_2) VALUES (1, 1, 4, 1);
+INSERT INTO GAMES (fk_country_1, score_country_1, fk_country_2, score_country_2) VALUES (2, 1, 6, 4);
+INSERT INTO GAMES (fk_country_1, score_country_1, fk_country_2, score_country_2) VALUES (3, 3, 2, 0);
+
+
+-- // select all countries in europe with a population larger than 50 million
+Select c.name from country as c where population > 50000000 AND LOWER(continent) LIKE '%europe%';
+-- // Write a query which prints out all(!) countries with the number of games played
+--Germany .       2
+--USA             3
+--Brasil          1
+--Panama          1
+--New Zealand     0
+--Spain           1
+select id, name, mid.wins win from COUNTRY c INNER JOIN (select fk1, count(*) wins
+from (
+      (select FK_COUNTRY_1 as fk1 from GAMES)
+      union all
+      (select FK_COUNTRY_2 as fk2 from GAMES)
+     )
+group by fk1) mid ON (c.id=mid.fk1) where wins>2;
+-- // List all countries which scored at least 3 goals in the tournament Where ID = (select g.fk_country_1 from ​games where ​ score_country_1)
+
+
+
 CREATE TABLE STUDENT (
  ID 						INT  NOT NULL AUTO_INCREMENT,
  NAME               VARCHAR(15) NOT NULL,
