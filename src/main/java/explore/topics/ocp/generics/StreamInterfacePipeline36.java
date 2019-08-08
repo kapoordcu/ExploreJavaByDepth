@@ -2,7 +2,7 @@ package explore.topics.ocp.generics;
 
 import java.util.stream.Stream;
 
-public class StreamInterfacePipeline {
+public class StreamInterfacePipeline36 {
     public static void main(String[] args) {
 //        Collection<Integer> collection = Arrays.asList(1, 4, 5, 6, 8, 12, 3, 18);
 //        Stream<Integer> stream = collection.stream();

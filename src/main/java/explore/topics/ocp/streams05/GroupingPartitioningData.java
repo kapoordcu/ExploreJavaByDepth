@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 
     The Collector Class
-        provides a predefined factory methods
+        provides a predefined factory222 methods
         toList. toSet, toCollection, toMap, groupingBy, partitioningBy
 
             <T> Collector<T, ?, List<T>> toSet()  /// returns a Collector that accumulates input elements into a new Set
