@@ -2,8 +2,6 @@ package explore.topics.hackerrank;
 
 import java.util.*;
 
-import static com.sun.tools.doclint.Entity.sum;
-
 public class Amazon1 {
 
     public static void main(String[] args) {

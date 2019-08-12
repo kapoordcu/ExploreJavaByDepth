@@ -3,7 +3,7 @@ package explore.topics.ocp.generics;
 // Generics allows types to be specified as parameters when defining classes, interfaces and methods
 // It enables you to reuse same class/interface with diff types of input
 
-public class Generics {
+public class Generics31 {
 
     public static void main(String[] args) {
         Person<String, Integer> person = new Person<>("Gaurav", 25);

@@ -1,4 +1,4 @@
-package explore.topics.design.adaptor;
+package explore.topics.design.aAdaptor;
 
 // the adapter pattern makes two incompatible interfaces compatible without changing their existing code.
 // Adapter patterns use a single class (the adapter class) to join functionality of independent or incompatible interfaces/classes.
@@ -10,37 +10,60 @@ The methods defined by the interface call one or more methods on the referenced 
 By doing that, the adapter class fulfills the expected contract by implementing the interface and enables you to reuse existing, incompatible implementations.
 
 */
-// Mimick some interface
-
-public class AdaptorApp {
+public class AdpatorApp {
     public static void main(String[] args) {
-        Customer customer = new Customer("4932be6a-764d-4d65-be57-3e282cf0bcd8", "764d-4d65");
-
         System.out.println("-------BEFORE ADAPTOR-------------");
-        Wallet wallet = new TpiWallet();
-        System.out.println(wallet.purchase(customer, "uuid-0", 100));
+        DataFormat format = new JsonDataFormat();
+        // Client Call
+        format.processData("JSON", "UTF-8");
 
         System.out.println();
         System.out.println();
         System.out.println();
         System.out.println("-------AFTER ADAPTOR-------------");
-        EMWallet emWallet = new EMWallet();
-        Wallet adaptor = new WalletAdaptor(emWallet);  // Adapter adapts subject (adaptee i.e. TpiWallet) to a different interface.
-        System.out.println(adaptor.purchase(customer, "uuid-1", 10));
-
-        // Decorator not only delegate, not only maps one method to another, they do more, they modify behaviour of some subject methods,
-        // Decorators typically add (transparently) functionality to wrapped object like logging, encryption, formatting, or compression to subject.
-        // This New functionality may bring a lot of new code. Hence, decorators are usually much “fatter” then Adapters.
-
-//        WalletDecorator decorator1 = new WalletDecorator(new TpiWallet(), "Klarna");
-//        WalletDecorator decorator2 = new WalletDecorator(new TpiWallet(), "PAYPAL");
-//        System.out.println(decorator1.purchase(WalletType.WALLET_TPI, customer, "uuid-1", 10).toString());
-//        System.out.println(decorator2.purchase(WalletType.WALLET_EM, customer, "uuid-1", 10).toString());
-
+        // 6.	Clients should use the adapter via the client interface.
+        // This will let you change or extend the adapters without affecting the client code.
+        ProtoBufType typ = new ProtoBufType();
+        DataFormat formatAdaptor = new DataFormatAdaptor(typ);
+        formatAdaptor.processData("PROTO", "UTF-8");
     }
 }
 
+// Implementer Interface
+interface DataFormat {
+    // client interface
+    void processData(String type, String encoding);
+}
 
+// Concrete Implementer
+class JsonDataFormat implements DataFormat {
+    @Override
+    public void processData(String type, String encoding) {
+        System.out.println("DataFormat is JSON.");
+    }
+}
+
+enum DataType { PROTO, JSON, XML };
+
+// Adaptee
+class ProtoBufType { // A useful service class, which you can’t change (often 3rd-party, legacy or with lots of existing dependencies).
+    public void processData(DataType dataType) {
+        System.out.println("DataFormat is ProtoBuf.");
+    }
+}
+
+class DataFormatAdaptor implements DataFormat {
+    private final ProtoBufType protoBufType;
+
+    public DataFormatAdaptor(ProtoBufType protoBufType) {
+        this.protoBufType = protoBufType;
+    }
+
+    @Override
+    public void processData(String type, String encoding) {
+        protoBufType.processData(DataType.PROTO);
+    }
+}
 /*
     Advantages of Adapter design pattern
         It allows more flexibility in design.
