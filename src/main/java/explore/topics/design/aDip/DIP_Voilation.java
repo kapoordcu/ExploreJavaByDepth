@@ -18,7 +18,7 @@ In other words, module high level would be where the action is invoked and low l
 
 public class DIP_Voilation {
     public static void main(String[] args) {
-        Project project = new Project();
+        Project project = new Project(new FrontEndDeveloper(), new BackEndDeveloper());
         project.makeApplication();
     }
 }
@@ -36,9 +36,14 @@ class BackEndDeveloper {
 }
 
 class Project {
-    FrontEndDeveloper fe = new FrontEndDeveloper();
-    BackEndDeveloper be = new BackEndDeveloper();
+    FrontEndDeveloper fe;
+    BackEndDeveloper be;
     // What if a new full stack developer join
+
+    public Project(FrontEndDeveloper front, BackEndDeveloper back) {
+        this.fe = front;
+        this.be = back;
+    }
 
     public void makeApplication() {
         fe.writeJavaScript();
