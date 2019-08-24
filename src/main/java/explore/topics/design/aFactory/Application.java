@@ -6,11 +6,14 @@ public class Application {
         Wallet walletVisa = new VISA();
         Wallet walletMC = new MasterCard();
 
-        Wallet wallet = WalletFactory.getWallet("VISA") ; // This wont change, Although you may need to change WalletFactory
+        Wallet wallet = WalletFactory.getWallet(WalletType.KLARNA) ; // This wont change, Although you may need to change WalletFactory
         wallet.purchase();
     }
 }
 
+enum WalletType {
+    VISA, MASTERCARD, KLARNA, PAYPAL, NO_WALLET
+}
 interface Wallet {
     void purchase();
 }
@@ -23,19 +26,25 @@ class VISA implements Wallet {
 }
 
 class MasterCard implements Wallet {
-
     @Override
     public void purchase() {
-        System.out.println("MasterCard");
+        System.out.println("MASTERCARD");
+    }
+}
+
+class NoWallet implements Wallet {
+    @Override
+    public void purchase() {
+        System.out.println("NO_WALLET");
     }
 }
 
 class WalletFactory {
-    public static Wallet getWallet(String type) {
-        Wallet wallet = null;
-        if (type.equalsIgnoreCase(VISA.class.getSimpleName())) {
+    public static Wallet getWallet(WalletType type) {
+        Wallet wallet = new NoWallet();
+        if (type == WalletType.VISA) {
             wallet = new VISA();
-        } else if (type.equalsIgnoreCase(MasterCard.class.getSimpleName())) {
+        } else if (type == WalletType.MASTERCARD) {
             wallet =  new MasterCard();
         }
         return wallet;

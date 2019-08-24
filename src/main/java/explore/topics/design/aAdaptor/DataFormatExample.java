@@ -10,7 +10,7 @@ The methods defined by the interface call one or more methods on the referenced 
 By doing that, the adapter class fulfills the expected contract by implementing the interface and enables you to reuse existing, incompatible implementations.
 
 */
-public class AdpatorApp {
+public class DataFormatExample {
     public static void main(String[] args) {
         System.out.println("-------BEFORE ADAPTOR-------------");
         DataFormat format = new JsonDataFormat();
