@@ -1,86 +1,65 @@
 package explore.topics.design.aLsp;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LSPSolved {
-
-
     public static void main(String[] args) {
-        List<IaccessBets> users = Arrays.asList(
-                new BIUser("mobile_01"),
-                new INWTUser("prod_02"),
-                new LoggedOutUser("unknown")
-        );
-        users.stream().forEach(member -> member.accessBets());
+        List<ReadOnlyAccess> users = new ArrayList<>();
+        users.add(new SimpleUserV("mobile_01")         );
+        users.add(new AdminUserV("mobile_01")         );
+
+        users.stream().forEach(member -> member.accessTables());
     }
 }
 
-interface IsystemUser {
-    void getBalance();
+interface ReadOnlyAccess {
+    void accessTables();
 }
 
-interface IaccessBets {
-    void accessBets();
+interface AdminAccess {
+    void accessCredentials();
 }
 
-abstract class User implements IsystemUser, IaccessBets {
+abstract class UserV implements ReadOnlyAccess, AdminAccess {
     private String userName;
 
-    public User(String userName) {
+    public UserV(String userName) {
         this.userName = userName;
     }
 
-    public abstract void accessBets();
+    public abstract void accessTables();
 
-    public abstract void getBalance();
+    public abstract void accessCredentials();
 }
 
-class BIUser extends User {
+class AdminUserV extends UserV {
 
-    public BIUser(String userName) {
+    public AdminUserV(String userName) {
         super(userName);
     }
 
     @Override
-    public void accessBets() {
-        System.out.println("Bets for BI visible");
+    public void accessTables() {
+        System.out.println("Admin user access the tables.");
     }
 
 
     @Override
-    public void getBalance() {
-        System.out.println("BI data is tracked");
+    public void accessCredentials() {
+        System.out.println("Admin user access the credentials");
     }
 }
 
-class INWTUser extends User {
-
-    public INWTUser(String userName) {
-        super(userName);
-    }
-
-    @Override
-    public void accessBets() {
-        System.out.println("Bets for INWT visible");
-    }
-
-
-    @Override
-    public void getBalance() {
-        System.out.println("INWT data is tracked");
-    }
-}
-
-class LoggedOutUser implements IaccessBets {
+class SimpleUserV implements ReadOnlyAccess {
     private String userName;
 
-    public LoggedOutUser(String userName) {
+    public SimpleUserV(String userName) {
         this.userName=userName;
     }
-    @Override
-    public void accessBets() {
-        System.out.println("Bets for LoggedOut User visible: "+userName);
-    }
 
+    @Override
+    public void accessTables() {
+        System.out.println("Simple user access the tables.");
+    }
 }
