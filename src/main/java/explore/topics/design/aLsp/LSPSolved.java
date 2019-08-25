@@ -1,4 +1,4 @@
-package explore.topics.design.lsp;
+package explore.topics.design.aLsp;
 
 import java.util.Arrays;
 import java.util.List;
