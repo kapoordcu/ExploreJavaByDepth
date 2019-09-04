@@ -1,10 +1,7 @@
-package explore.topics.design.aFactory;
+package explore.topics.design.aFactory.f;
 
 public class Application {
     public static void main(String[] args) {
-        // Earlier
-        Wallet walletVisa = new VISA();
-        Wallet walletMC = new MasterCard();
 
         Wallet wallet = WalletFactory.getWallet(WalletType.KLARNA) ; // This wont change, Although you may need to change WalletFactory
         wallet.purchase();
