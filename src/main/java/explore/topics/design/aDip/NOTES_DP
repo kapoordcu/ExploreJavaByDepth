@@ -1,0 +1,8 @@
+In software design, tight coupling is often considered to be a liability in design. When one class knows explicitly about the design and implementation of another class,
+its raise the risk that changes to one class will break the other class.
+
+
+Dependency Injection Pattern is nothing but the best way to enable loose coupling
+
+A class has dependency on some other class and knows a lot about the other classes it interacts with is said to be tightly coupled. When a class knows explicitly
+about the design and implementation of another class, its raise the risk that changes to one class will break the other class.
