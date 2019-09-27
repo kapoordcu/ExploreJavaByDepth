@@ -1,19 +1,22 @@
 package explore.topics.design.aOCP.voilate;
 
 
+import java.math.BigDecimal;
+
 public class OpenCloseApp {
-    String payout = "";
-    Double EXTTRAS = 1.1;
-    public void transact(Object[] transactions) {
+    private static final Double COMMISSION_CHARGES_RATE = 1.1;
+
+    public Double transact(Object[] transactions) {
         for (Object t: transactions) {
             if(t instanceof ElectronicTransaction) {
-                payout += ((ElectronicTransaction) t).getAmount() + ((ElectronicTransaction) t).getCurrency();
+                return  ((ElectronicTransaction) t).getAmount();
             }
             if(t instanceof CashTransaction) {
-                payout += ((ElectronicTransaction) t).getAmount()*EXTTRAS + ((ElectronicTransaction) t).getCurrency();
+                return ((ElectronicTransaction) t).getAmount()* COMMISSION_CHARGES_RATE;
             }
 
         }
+        return Double.valueOf(0);
     }
 }
 // This is okay for 2 type of transactions, Imagine there is one more type of transaction ( Mobile )
@@ -21,27 +24,15 @@ public class OpenCloseApp {
 // Your client already using shipped code in the form of binaries
 
 class ElectronicTransaction {
-    private String currency;
     private Double amount;
-
-    public String getCurrency() {
-        return currency;
-    }
-
     public Double getAmount() {
         return amount;
     }
 }
 
 class CashTransaction {
-    private String currency;
     private Double amount;
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public Double getAmount() {
-        return amount;
+    public BigDecimal getAmount() {
+        return BigDecimal.valueOf(amount);
     }
 }

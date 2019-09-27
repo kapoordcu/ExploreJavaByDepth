@@ -1,7 +1,6 @@
 package explore.topics.design.aOCP.solved;
 
 public class OpenClosedApp {
-
     public void transact(Transaction[] transactions) {
         for (Transaction t: transactions) {
             t.transactCommit();
@@ -9,42 +8,28 @@ public class OpenClosedApp {
     }
 }
 
-abstract class Transaction {
-    public abstract String transactCommit();
+interface Transaction {
+    Double COMMISSION_CHARGES_RATE = 1.1;
+    Double transactCommit();
 }
 
-class Electronic extends Transaction {
-    private String currency;
+class ElectronicTransaction implements Transaction{
     private Double amount;
-
-    public String getCurrency() {
-        return currency;
-    }
-
     public Double getAmount() {
         return amount;
     }
 
     @Override
-    public String transactCommit() {
-        return String.valueOf(amount).concat(currency);
+    public Double transactCommit() {
+        return amount;
     }
 }
 
-class Cash extends Transaction {
-    private String currency;
+class CashTransaction implements Transaction{
     private Double amount;
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
     @Override
-    public String transactCommit() {
-        return String.valueOf(amount*1.10).concat(currency);
+    public Double transactCommit() {
+        return Double.valueOf(amount*COMMISSION_CHARGES_RATE);
     }
 }
