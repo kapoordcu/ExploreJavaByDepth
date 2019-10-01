@@ -2,28 +2,33 @@ package explore.topics.design.aStrategy;
 
 public class StrategyApp {
     public static void main(String[] args) {
-        DevContext ctx1 = new DevContext(new FrontEnd());
+        DevContext ctx1 = new DevContext();
+        //we could assume context is already set by preferences
+        ctx1.setType(new FrontEnd());
         ctx1.startApp();
 
-        ctx1 = new DevContext(new BackEnd());
+        ctx1.setType(new BackEnd());
         ctx1.startApp();
 
     }
 }
 
 class DevContext {
-    private final Development type;
+    private Development type;
 
-    public DevContext(Development type) {
+    //this can be set at runtime by the application preferences
+    public void setType(Development type) {
         this.type = type;
     }
 
+    //use the strategy
     public void startApp() {
         type.developApplication();
     }
 }
 
 //•	Capture the abstraction in an interface, bury implementation details in derived classes.
+//Strategy Interface
 interface Development {
     void developApplication();
 }
