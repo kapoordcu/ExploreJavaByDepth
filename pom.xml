@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<jackson.version>2.9.9.2</jackson.version>
+		<jackson.version>2.9.10</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -60,6 +60,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 
 	</dependencies>

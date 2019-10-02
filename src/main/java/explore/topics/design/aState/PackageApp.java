@@ -1,4 +1,4 @@
-package explore.topics.aState;
+package explore.topics.design.aState;
 
 public class PackageApp {
     public static void main(String[] args) {
