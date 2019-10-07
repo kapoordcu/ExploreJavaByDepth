@@ -1,4 +1,4 @@
-package explore.topics.hackerrank;
+package explore.topics.testlive;
 
 public class TrianglePrint2019 {
     public static void main(String[] args) {

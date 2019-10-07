@@ -1,6 +1,6 @@
-package explore.topics.hackerrank;
+package explore.topics.testlive;
 
-public class Occurance {
+public class Occurance2019 {
     public static void main(String[] args) {
         String pattern = "aaBBcccDDDeeaaaeFGHH";
         System.out.println(printPattern(pattern));
