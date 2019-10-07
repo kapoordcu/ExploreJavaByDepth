@@ -6,9 +6,10 @@ import java.util.List;
 
 public class MergeTwoLists {
     public static void main(String[] args) {
-        List<Integer> first = List.of(1, 3, 7, 10);
-        List<Integer> sec = List.of(4);
-        System.out.println(joinListSorted(first, sec));
+        String s = "strawberries";
+        System.out.println(s.substring(2,5) );
+        byte b = 42;
+        byte b1 = 24;
     }
 
     public static List<Integer> joinListSorted(List<Integer> list1, List<Integer> list2) {
