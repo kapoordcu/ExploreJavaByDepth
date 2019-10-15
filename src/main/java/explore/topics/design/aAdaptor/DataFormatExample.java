@@ -4,6 +4,8 @@ package explore.topics.design.aAdaptor;
 // Adapter patterns use a single class (the adapter class) to join functionality of independent or incompatible interfaces/classes.
 // This pattern converts the (incompatible) interface of a class (the adaptee) into another interface (the target) that clients require.
 
+import java.util.Arrays;
+
 /*
 The adapter class implements the expected interface and keeps a reference to an object of the class you want to reuse.
 The methods defined by the interface call one or more methods on the referenced object and return a value of the expected type.
@@ -16,26 +18,22 @@ public class DataFormatExample {
         DataFormat format = new JsonDataFormat();
         // Client Call
         format.processData("JSON", "UTF-8");
-
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        Arrays.asList(null);
         System.out.println("-------AFTER ADAPTOR-------------");
-        // 6.	Clients should use the adapter via the client interface.
+        // Clients should use the adapter via the client interface.
         // This will let you change or extend the adapters without affecting the client code.
-        ProtoBufType typ = new ProtoBufType();
-        DataFormat formatAdaptor = new DataFormatAdaptor(typ);
-        formatAdaptor.processData("PROTO", "UTF-8");
+        ProtoBufAdaptee adaptee = new ProtoBufAdaptee();
+        DataFormat dataAdaptor = new DataFormatAdaptor(adaptee);
+        dataAdaptor.processData("PROTO", "UTF-8");
     }
 }
 
-// Implementer Interface
+// Target Interface == client Interface
 interface DataFormat {
-    // client interface
     void processData(String type, String encoding);
 }
 
-// Concrete Implementer
+// Concrete Implementation, IGNORE
 class JsonDataFormat implements DataFormat {
     @Override
     public void processData(String type, String encoding) {
@@ -45,17 +43,18 @@ class JsonDataFormat implements DataFormat {
 
 enum DataType { PROTO, JSON, XML };
 
-// Adaptee
-class ProtoBufType { // A useful service class, which you can’t change (often 3rd-party, legacy or with lots of existing dependencies).
+// Adaptee - Incompatible Interface
+class ProtoBufAdaptee {
     public void processData(DataType dataType) {
         System.out.println("DataFormat is ProtoBuf.");
     }
 }
 
+// Adaptor Class
 class DataFormatAdaptor implements DataFormat {
-    private final ProtoBufType protoBufType;
+    private final ProtoBufAdaptee protoBufType;
 
-    public DataFormatAdaptor(ProtoBufType protoBufType) {
+    public DataFormatAdaptor(ProtoBufAdaptee protoBufType) {
         this.protoBufType = protoBufType;
     }
 

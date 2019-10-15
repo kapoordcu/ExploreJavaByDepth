@@ -1,8 +1,7 @@
-package explore.topics.hackerrank;
+package explore.topics.testlive.amazon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Amazon2 {
