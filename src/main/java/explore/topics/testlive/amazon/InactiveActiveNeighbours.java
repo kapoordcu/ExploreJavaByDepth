@@ -7,16 +7,38 @@ import java.util.stream.Collectors;
 public class InactiveActiveNeighbours {
     public static void main(String[] args) {
         int[] states = {1, 0, 0, 1, 1, 0, 0, 1};
-        List<Integer> integers = cellCompete(states, 3);
-        System.out.println(integers);
+        //List<Integer> resultFirstAttempt = cellCompeteFirstAttempt(states, 3);
+        List<Integer> resultFirstEfficient = cellCompeteEffiecient(states, 3);
+        //System.out.println(resultFirstAttempt);
+        System.out.println(resultFirstEfficient);
 
+    }
+
+    private static List<Integer> cellCompeteEffiecient(int[] states, int days) {
+        for (int i = 1; i <=  days; i++) {
+            states = getNextDayStates(states);
+        }
+        return Arrays.stream(states).boxed().collect(Collectors.toList());
+    }
+
+    private static int[] getNextDayStates(int[] states) {
+        if(states.length>1) {
+            int[] temp = states.clone();
+            temp[0] = 0^states[1];
+            temp[states.length-1] = 0^states[states.length-2];
+            for (int i = 1; i < states.length-1; i++) {
+                temp[i] = states[i-1]^states[i+1];
+            }
+            states = temp.clone();
+        }
+        return states;
     }
 
     public static int XOR(int x, int y) {
         return x==y ? 0 : 1;
     }
 
-    public static List<Integer> cellCompete(int[] states, int days) {
+    public static List<Integer> cellCompeteFirstAttempt(int[] states, int days) {
         int[] arrayNextDay = new int[states.length+2];
         for (int i = 1; i <= days; i++) {
             arrayNextDay = calculateNthDayStatus(arrayNextDay, states);
