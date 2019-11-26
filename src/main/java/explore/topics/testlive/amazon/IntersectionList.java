@@ -8,7 +8,8 @@ public class IntersectionList {
     public static void main(String[] args) {
         List<Integer> list1 = Arrays.asList(1, 5, 2, 1);
         List<Integer> list2 = Arrays.asList( 3, 1, 3);
-        System.out.println(intersect(list1, list2));
+        //System.out.println(intersect(list1, list2));
+        list1.retainAll(list2);
         List<Integer> mergedArrays = intersectMultipleOccurance(list1, list2);
     }
 
