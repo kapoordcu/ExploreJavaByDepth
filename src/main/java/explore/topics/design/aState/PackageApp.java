@@ -47,7 +47,7 @@ class PackageCtx {
     }
 
     public void printStatus() {
-        state.printStatus();
+        state.currentStatus();
     }
 }
 
@@ -55,7 +55,7 @@ class PackageCtx {
 interface PackageState {
     void next(PackageCtx pkg);
     void prev(PackageCtx pkg);
-    void printStatus();
+    void currentStatus();
 }
 
 
@@ -72,7 +72,7 @@ class OrderedState implements PackageState {
     }
 
     @Override
-    public void printStatus() {
+    public void currentStatus() {
         System.out.println("Package ordered, not delivered to the office yet.");
     }
 }
@@ -90,7 +90,7 @@ class DeliveredState implements PackageState {
     }
 
     @Override
-    public void printStatus() {
+    public void currentStatus() {
         System.out.println("Package delivered to post office, not received yet.");
     }
 }
@@ -108,7 +108,7 @@ class ReceivedState implements PackageState {
     }
 
     @Override
-    public void printStatus() {
+    public void currentStatus() {
         System.out.println("Package journey ended.");
     }
 }
