@@ -4,6 +4,11 @@ package explore.topics.design.aOCP.voilate;
 import java.math.BigDecimal;
 
 public class OpenCloseApp {
+
+
+}
+
+class InitTransaction {
     private static final Double COMMISSION_CHARGES_RATE = 1.1;
 
     public Double transact(Object[] transactions) {
@@ -19,6 +24,7 @@ public class OpenCloseApp {
         return Double.valueOf(0);
     }
 }
+
 // This is okay for 2 type of transactions, Imagine there is one more type of transaction ( Mobile )
 // You should not be jumping to the code which is already being written, Open for extension and closed to modification
 // Your client already using shipped code in the form of binaries
