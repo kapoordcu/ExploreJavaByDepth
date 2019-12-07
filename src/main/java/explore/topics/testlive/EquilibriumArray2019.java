@@ -10,13 +10,13 @@ public class EquilibriumArray2019 {
         int[] arrayEq2 = {4, -1, 1, 2, 1};
         int[] arrayEq3 = {2, 1, 1, 3, 1};
         int[] arrayEq4 = {2, 1, 2, 3, 1};
-        System.out.println(isBalancedArray(arrayEq1));
-        System.out.println(isBalancedArray(arrayEq2));
-        System.out.println(isBalancedArray(arrayEq3));
-       System.out.println(isBalancedArray(arrayEq4));
+        System.out.println(findEquilibriumArrayIndex(arrayEq1));
+        System.out.println(findEquilibriumArrayIndex(arrayEq2));
+        System.out.println(findEquilibriumArrayIndex(arrayEq3));
+       System.out.println(findEquilibriumArrayIndex(arrayEq4));
     }
 
-    private static int isBalancedArray(int[] arrayEq) {
+    private static int findEquilibriumArrayIndex(int[] arrayEq) {
         List<Integer> integerList = Arrays.stream(arrayEq).boxed().collect(Collectors.toList());
         for (int i = 0; i < arrayEq.length - 1; i++) {
             int left = sumLeft(integerList, i+1);
