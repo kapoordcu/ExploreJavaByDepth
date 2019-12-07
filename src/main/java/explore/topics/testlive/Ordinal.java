@@ -121,73 +121,38 @@ public class Ordinal {
     }
 
     public double evaluate(String expr) {
-        List<String> operators = Arrays.asList("+", "-", "*", "/");
-        Stack<String> characterStack = new Stack<>();
-
-        try {
-            String[] characters = expr.split(" ");
-            for(String ch: characters) {
-                if(operators.contains(ch)) { // Operator
-                    Integer lower = Integer.valueOf(characterStack.pop());
-                    Integer upper = Integer.valueOf(characterStack.pop());
-                    characterStack.push(calculateExpr(lower, upper, ch, operators));
-                } else {
-                    characterStack.push(ch);
-                }
-            }
-        } catch (Exception ex) {
+        if(expr==null || expr.length()==0) {
             return 0.0;
         }
-        String peek = characterStack.peek();
-        return peek.equalsIgnoreCase("") ? 0.0 : Double.valueOf(peek);
-    }
-
-    public int rpn(String[]  tokens) {
-        int returnValue = 0;
-
-        String operators = "+-*/";
-
+        String[] tokens = expr.trim().split(" ");
         Stack<String> stack = new Stack<String>();
-
-        for(String t : tokens){
-            if(!operators.contains(t)){
-                stack.push(t);
-            }else{
-                int a = Integer.valueOf(stack.pop());
-                int b = Integer.valueOf(stack.pop());
-                int index = operators.indexOf(t);
-                switch(index){
-                    case 0:
-                        stack.push(String.valueOf(a+b));
-                        break;
-                    case 1:
-                        stack.push(String.valueOf(b-a));
-                        break;
-                    case 2:
-                        stack.push(String.valueOf(a*b));
-                        break;
-                    case 3:
-                        stack.push(String.valueOf(b/a));
-                        break;
-                }
+        double returnValue = 0;
+        String operators = "+-*/";
+        for (String currentSymbol : tokens) {
+            if (operators.contains(currentSymbol)) {
+                double a = Double.valueOf(stack.pop());
+                double b = Double.valueOf(stack.pop());
+                pushToStack(stack, a, b, currentSymbol);
+            } else {
+                stack.push(currentSymbol);
             }
         }
 
-        returnValue = Integer.valueOf(stack.pop());
+        returnValue = Double.valueOf(stack.pop());
 
         return returnValue;
     }
-    private String calculateExpr(Integer lower, Integer upper, String ch, List<String> operators) {
-        String retValu = "";
-        if(ch.equalsIgnoreCase(operators.get(0))) {
-            retValu = String.valueOf(upper + lower);
-        } else if(ch.equalsIgnoreCase(operators.get(1))) {
-            retValu = String.valueOf(upper - lower);
-        } else if(ch.equalsIgnoreCase(operators.get(2))) {
-            retValu = String.valueOf(upper * lower);
-        } else if(ch.equalsIgnoreCase(operators.get(3))) {
-            retValu = String.valueOf(upper / lower);
+
+    public void pushToStack(Stack<String> stack, double a, double b, String currentSymbol) {
+        if(currentSymbol.equalsIgnoreCase("+")) {
+            stack.push(String.valueOf(a + b));
+        } else if(currentSymbol.equalsIgnoreCase("-")) {
+            stack.push(String.valueOf(b - a));
+        } else if(currentSymbol.equalsIgnoreCase("*")) {
+            stack.push(String.valueOf(a * b));
+        } else if(currentSymbol.equalsIgnoreCase("/")) {
+            stack.push(String.valueOf(b / a));
         }
-        return retValu;
     }
+
 }

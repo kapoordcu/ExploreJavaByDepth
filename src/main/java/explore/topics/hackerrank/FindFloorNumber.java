@@ -4,7 +4,7 @@ package explore.topics.hackerrank;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FloorNumber {
+public class FindFloorNumber {
 
     static int getLuckyFloorNumber(int number) {
         Map<Integer, Integer> uniqueFloorSet = new HashMap<>();
