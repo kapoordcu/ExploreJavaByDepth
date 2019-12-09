@@ -11,7 +11,9 @@ public class TrianglePrint2019 {
 //            printRevertLTraingle('*', i, depth);
 //        }
 
-        printChristmasTree('*', depth);
+//        printChristmasTree('*', depth);
+        int a[] = { 0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 20, 21, 23 };
+        findMissingNumbers(a);
     }
 
     public static String printLTraingle(char ch, int depth) {
@@ -47,10 +49,40 @@ public class TrianglePrint2019 {
     }
 
     public static String printCharNTimes(char c, int n) {
+        for (int i = 0; i < n; i=i*2) {
+
+        }
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < n; i++) {
             builder.append(c);
         }
         return builder.toString();
     }
+
+    private static void findMissingNumbers(int values[], int position, int count) {
+        boolean foundMissingNumber = false;
+        if (position == values.length - 1)
+            return;
+
+        for (; position < values[values.length - 1]; position++) {
+
+            if ((values[position] - count) != position) {
+                System.out.println("Missing Number: " + (position + count));
+                foundMissingNumber = true;
+                count++;
+                break;
+            }
+        }
+
+        if (foundMissingNumber) {
+            findMissingNumbers(values, position, count);
+        }
+    }
+
+    public static void findMissingNumbers(int values[]) {
+        findMissingNumbers(values, 0, 0);
+    }
+
+
+
 }
