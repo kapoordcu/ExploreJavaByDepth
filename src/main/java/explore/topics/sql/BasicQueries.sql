@@ -1,3 +1,40 @@
+CREATE TABLE DONORS (
+    id INT  NOT NULL AUTO_INCREMENT,
+    name               VARCHAR(15) NOT NULL,
+    SEX               ENUM('m', 'f'),
+    bgroup               VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+CREATE TABLE ACCEPTORS (
+    id INT  NOT NULL AUTO_INCREMENT,
+    name               VARCHAR(15) NOT NULL,
+    SEX               ENUM('m', 'f'),
+    bgroup               VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+INSERT INTO DONORS(name, SEX, bgroup) VALUES ('Elias MC', 'm', 'A+');
+INSERT INTO DONORS(name, SEX, bgroup) VALUES ('Greta Th', 'f', 'B+');
+INSERT INTO DONORS(name, SEX, bgroup) VALUES ('Magnus MC', 'm', 'A+');
+INSERT INTO DONORS(name, SEX, bgroup) VALUES ('Anna Kut', 'f', 'B+');
+INSERT INTO DONORS(name, SEX, bgroup) VALUES ('Marta Rand', 'f', 'A+');
+INSERT INTO DONORS(name, SEX, bgroup) VALUES ('Anders Harami', 'm', 'AB+');
+
+INSERT INTO ACCEPTORS(name, SEX, bgroup) VALUES ('Vipul C', 'm', 'B-');
+INSERT INTO ACCEPTORS(name, SEX, bgroup) VALUES ('Vineet MC', 'm', 'AB+');
+INSERT INTO ACCEPTORS(name, SEX, bgroup) VALUES ('Aparna Randi', 'f', 'K+');
+INSERT INTO ACCEPTORS(name, SEX, bgroup) VALUES ('Krupa MKL', 'f', 'R+');
+INSERT INTO ACCEPTORS(name, SEX, bgroup) VALUES ('Sonali Harami', 'f', 'K+');
+INSERT INTO ACCEPTORS(name, SEX, bgroup) VALUES ('Shilpa MC', 'f', 'AB+');
+
+
+-- // Find sex by blood group
+
+-- // COUNTRY GAMES EXAMPLE
+
 CREATE TABLE COUNTRY (
     id INT  NOT NULL AUTO_INCREMENT,
     name               VARCHAR(15) NOT NULL,
@@ -40,50 +77,24 @@ Select c.name from country as c where population > 50000000 AND LOWER(continent)
 --Panama          1
 --New Zealand     0
 --Spain           1
-select id, name, mid.wins win from COUNTRY c INNER JOIN (select fk1, count(*) wins
-from (
-      (select FK_COUNTRY_1 as fk1 from GAMES)
-      union all
-      (select FK_COUNTRY_2 as fk2 from GAMES)
-     )
-group by fk1) mid ON (c.id=mid.fk1) where wins>2;
+select coun.name, res2.wins from COUNTRY coun INNER JOIN
+(
+	select r1.fk_country_1, sum(r1.c1) as wins from
+	(
+		(select fk_country_1, count(fk_country_1) as c1
+			from GAMES group by fk_country_1)
+		UNION
+		(select fk_country_2, count(fk_country_2) as c2
+			from GAMES group by fk_country_2)
+	) as r1 group by  r1.fk_country_1
+) as res2 on (coun.id=res2.fk_country_1)
 -- // List all countries which scored at least 3 goals in the tournament Where ID = (select g.fk_country_1 from ​games where ​ score_country_1)
 
 
 
-CREATE TABLE STUDENT (
- ID 						INT  NOT NULL AUTO_INCREMENT,
- NAME               VARCHAR(15) NOT NULL,
- PRIMARY KEY (ID)
- ) ENGINE = InnoDB
-AUTO_INCREMENT = 1;
 
-CREATE TABLE SUBJECT (
-STUDENTID INT ZEROFILL NOT NULL REFERENCES EMPLOYEE(ID),
- SUBJECT               VARCHAR(15) NOT NULL
- ) ENGINE = InnoDB
-AUTO_INCREMENT = 1;
+-- // EMPLOYEE DEPARTMENT EXAMPLE
 
-INSERT INTO STUDENT (NAME) VALUES ('Samantha');
-INSERT INTO STUDENT (NAME) VALUES ('Jane');
-INSERT INTO STUDENT (NAME) VALUES ('Bob');
-INSERT INTO STUDENT (NAME) VALUES ('Scarlet');
-INSERT INTO STUDENT (NAME) VALUES ('David');
-
-
-INSERT INTO SUBJECT (STUDENTID,SUBJECT) VALUES (1, 'Biology');
-INSERT INTO SUBJECT (STUDENTID,SUBJECT) VALUES (1, 'Physics');
-INSERT INTO SUBJECT (STUDENTID,SUBJECT) VALUES (3, 'History');
-INSERT INTO SUBJECT (STUDENTID,SUBJECT) VALUES (4, 'Geography');
-INSERT INTO SUBJECT (STUDENTID,SUBJECT) VALUES (4, 'Geography');
-
-
-SELECT ID, RESULT.SUBJECT, RESULT.STUDENTS_SUBJECT_COUNT FROM STUDENT s INNER JOIN (SELECT
-    STUDENTID, SUBJECT, COUNT(*) AS STUDENTS_SUBJECT_COUNT
-FROM
-    SUBJECT
-GROUP BY
-    STUDENTID, SUBJECT) RESULT ON(s.ID= RESULT.STUDENTID);
 
 
 -- // Select Employee with Max Salary
