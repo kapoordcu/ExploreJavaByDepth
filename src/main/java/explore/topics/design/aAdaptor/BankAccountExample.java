@@ -1,43 +1,32 @@
 package explore.topics.design.aAdaptor;
 
+import java.util.UUID;
+
 public class BankAccountExample {
     public static void main(String[] args) {
-        BankAccount account = new DomesticAccount();
-        account.transact(20l);
-
-        BankAccount accointEuro = new AccounAdaptor(new EU3rdPartyAccount());
-        accointEuro.transact(20l);
+        Recommendation recommendation = new InternalRecommendation();
+        recommendation.getEvents(UUID.randomUUID());
+        // How to call third party API
     }
 }
 
-
-interface BankAccount {
-    void transact(Long amount);
+// Target Interface == client Interface
+interface Recommendation {
+    void getEvents(UUID uuid);
 }
 
 
-class DomesticAccount implements BankAccount {
+class InternalRecommendation implements Recommendation {
     @Override
-    public void transact(Long amount) {
-        System.out.println("Currency is spent locally.");
+    public void getEvents(UUID uuid) {
+        System.out.println("Internal Events fetched");
     }
 }
 
+// Adaptee - Incompatible
 class EU3rdPartyAccount {
-    public void transact(Double amount, String currency) {
-        System.out.println("Currency is supplied to third party class via client interface.");
+    public void getExternalEvents(String externalId) {
+        System.out.println("Events from external dependency fetched");
     }
 }
 
-class AccounAdaptor implements BankAccount {
-    EU3rdPartyAccount thirdParty;
-
-    public AccounAdaptor(EU3rdPartyAccount thirdParty) {
-        this.thirdParty = thirdParty;
-    }
-
-    @Override
-    public void transact(Long amount) {
-        thirdParty.transact(Double.valueOf(amount), "EURO");
-    }
-}

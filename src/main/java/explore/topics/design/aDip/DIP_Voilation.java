@@ -36,15 +36,23 @@ class BackEndDeveloper {
 }
 
 class Project {
+//   The Project class is a high-level module,
+//    and it depends on low-level modules such as BackEndDeveloper and FrontEndDeveloper.
+//    We are actually violating the first part of the dependency inversion principle.
     FrontEndDeveloper fe;
     BackEndDeveloper be;
     // What if a new full stack developer join
+
+
 
     public Project(FrontEndDeveloper front, BackEndDeveloper back) {
         this.fe = front;
         this.be = back;
     }
 
+//   methods writeJava and writeJavascript are methods bound to the corresponding
+//   classes. those are details since
+//   Thus, the second part of the dependency inversion principle is violated
     public void makeApplication() {
         fe.writeJavaScript();
         be.writeJava();
@@ -52,11 +60,7 @@ class Project {
 }
 
 /*
-        So as we can see, the Project class is a high-level module, and it depends on low-level modules such as BackEndDeveloper and FrontEndDeveloper.
-            We are actually violating the first part of the dependency inversion principle.
 
-        Also, by inspecting the implement function of Project.class, we realize that the methods writeJava and writeJavascript are methods bound to the corresponding
-        classes. Regarding the project scope, those are details since, in both cases, they are forms of development.
-            Thus, the second part of the dependency inversion principle is violated
+
 
 */

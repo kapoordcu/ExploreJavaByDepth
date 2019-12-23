@@ -10,7 +10,6 @@ import java.util.Arrays;
 The adapter class implements the expected interface and keeps a reference to an object of the class you want to reuse.
 The methods defined by the interface call one or more methods on the referenced object and return a value of the expected type.
 By doing that, the adapter class fulfills the expected contract by implementing the interface and enables you to reuse existing, incompatible implementations.
-
 */
 public class DataFormatExample {
     public static void main(String[] args) {
