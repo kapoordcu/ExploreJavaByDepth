@@ -1,12 +1,6 @@
 //package explore.topics.optional;
 //
-//
-//import org.junit.jupiter.api.Test;
-//
 //import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
 //
 //public class OptionalCases {
 //
@@ -21,6 +15,7 @@
 //        Optional<String> staticOpt = Optional.of("OPT_VAL");
 //        System.out.println("value = " + staticOpt.toString() + " and isPresent="  + staticOpt.isPresent());
 //
+//        //the argument passed to the of method cannot be null, otherwise, we will get a NullPointerException:
 //        //the argument passed to the of method cannot be null, otherwise, we will get a NullPointerException:
 //        String name = null;
 //        // Optional<String> nullExceptionOpt = Optional.of(name);

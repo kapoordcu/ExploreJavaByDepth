@@ -2,7 +2,7 @@ package explore.topics.optional;
 
 public class MergeStrings {
     public static void main(String[] args) {
-        System.out.println(megreStrings("a", "0"));
+        System.out.println(megreStrings("abcd", "ef"));
     }
 
     private static String megreStrings(String a, String b) {

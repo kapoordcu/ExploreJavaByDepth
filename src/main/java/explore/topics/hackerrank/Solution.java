@@ -1,4 +1,4 @@
-package explore.topics.optional;
+package explore.topics.hackerrank;
 
 import org.springframework.util.StringUtils;
 
