@@ -1,4 +1,4 @@
-package explore.topics.optional;
+package explore.topics.hackerrank;
 
 public class MergeStrings {
     public static void main(String[] args) {
