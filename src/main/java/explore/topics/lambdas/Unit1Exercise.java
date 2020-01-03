@@ -19,7 +19,7 @@ public class Unit1Exercise {
                 new Person("A", "Hazarvi", 25)
         );
 
-        Collections.sort(personList, (Person o1, Person o2) ->  o1.getLastName().compareTo(o2.getLastName()));
+        Collections.sort(personList, Comparator.comparing(Person::getLastName));
 
         // printCondition(personList, p -> true);
         System.out.println("person sorted");
