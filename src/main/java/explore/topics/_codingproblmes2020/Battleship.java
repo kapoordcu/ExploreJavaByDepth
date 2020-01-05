@@ -1,16 +1,16 @@
-package explore.topics.hackerrank.battleground;
+package explore.topics._codingproblmes2020;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class BattleGround {
+public class Battleship {
 
     public static void main(String[] args) {
         String S = "1A 1B,2C 2C";
         String T = "1B";
 
-        BattleGround ground = new BattleGround();
+        Battleship ground = new Battleship();
         System.out.println(ground.solution(10, S, T));
     }
     private List<Point> positionHitPoints(int n, String hitPoints) {
