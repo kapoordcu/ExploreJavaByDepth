@@ -68,6 +68,7 @@ INSERT INTO GAMES (fk_country_1, score_country_1, fk_country_2, score_country_2)
 INSERT INTO GAMES (fk_country_1, score_country_1, fk_country_2, score_country_2) VALUES (3, 3, 2, 0);
 
 
+
 -- // select all countries in europe with a population larger than 50 million
 Select c.name from country as c where population > 50000000 AND LOWER(continent) LIKE '%europe%';
 -- // Write a query which prints out all(!) countries with the number of games played
@@ -130,6 +131,82 @@ RESULT ORDER BY SALARY LIMIT 1;
 -- // Using CTE = Common Table Expression
 WITH RESULT AS (SELECT SALARY, DENSE_RANK() OVER (ORDER BY SALARY DESC) DESCRANK FROM EMPLOYEE)
 SELECT SALARY FROM RESULT WHERE DESCRANK=3;
+
+CREATE TABLE Countries (
+    id INT  NOT NULL AUTO_INCREMENT,
+    name               VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+CREATE TABLE Players (
+    id INT  NOT NULL AUTO_INCREMENT,
+    name               VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+CREATE TABLE Goals (
+    player_id INT  NOT NULL AUTO_INCREMENT,
+    country_id INT NOT NULL REFERENCES Countries(id),
+    goals VARCHAR(15)  NOT NULL,
+    PRIMARY KEY (player_id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+
+INSERT INTO Countries (NAME) VALUES ('Germany');
+INSERT INTO Countries (NAME) VALUES ('Portugal');
+INSERT INTO Countries (NAME) VALUES ('Argentina');
+INSERT INTO Countries (NAME) VALUES ('France');
+
+
+INSERT INTO Players (NAME) VALUES ('CR');
+INSERT INTO Players (NAME) VALUES ('LM');
+INSERT INTO Players (NAME) VALUES ('TK');
+INSERT INTO Players (NAME) VALUES ('AS');
+INSERT INTO Players (NAME) VALUES ('KM');
+INSERT INTO Players (NAME) VALUES ('MR');
+INSERT INTO Players (NAME) VALUES ('AG');
+INSERT INTO Players (NAME) VALUES ('PD');
+INSERT INTO Players (NAME) VALUES ('TW');
+
+INSERT INTO Goals (country_id, goals) VALUES (2, '6');
+INSERT INTO Goals (country_id, goals) VALUES (3, '6');
+INSERT INTO Goals (country_id, goals) VALUES (1, '5');
+INSERT INTO Goals (country_id, goals) VALUES (2, '3');
+INSERT INTO Goals (country_id, goals) VALUES (4, '7');
+INSERT INTO Goals (country_id, goals) VALUES (1, '3');
+INSERT INTO Goals (country_id, goals) VALUES (4, '8');
+INSERT INTO Goals (country_id, goals) VALUES (3, '4');
+INSERT INTO Goals (country_id, goals) VALUES (1, '3');
+
+-- // Goals by country and if same goal then first should be with least player_id
+select c.name, sg from Countries c inner join (select player_id, country_id, sum(goals) sg from Goals GROUP BY country_id) res
+on (c.id=res.country_id) order by sg desc, player_id asc
+
+
+CREATE TABLE STUDENT (
+    id INT  NOT NULL AUTO_INCREMENT,
+    name               VARCHAR(15) NOT NULL,
+    score               double ,
+    PRIMARY KEY (id)
+ ) ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+INSERT INTO STUDENT(name, score) values ('Bob', 50);
+INSERT INTO STUDENT(name, score) values ('John', 65.5);
+INSERT INTO STUDENT(name, score) values ('Harry', 45);
+INSERT INTO STUDENT(name, score) values ('Dick', 85);
+INSERT INTO STUDENT(name, score) values ('Dev', 25);
+INSERT INTO STUDENT(name, score) values ('Sid', 98);
+INSERT INTO STUDENT(name, score) values ('Tom', 90);
+INSERT INTO STUDENT(name, score) values ('Julia', 70.5);
+INSERT INTO STUDENT(name, score) values ('Erika', 81);
+INSERT INTO STUDENT(name, score) values ('Jeryy', 85);
+-- // Top 3 scores and in case of same score, take the one with lower id
+select * from (select id, name, score, ROW_NUMBER() over (order by score desc, id ) rownum from STUDENT) r1
+where r1.rownum <=3
 
 -- CREATE DATABASE IF NOT EXISTS practicesql;
 -- use practicesql;
