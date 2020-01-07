@@ -1,11 +1,10 @@
-package explore.topics.testlive.glovo;
+package explore.topics._codingproblmes2020;
 
-public class Application2 {
+public class BinomialCoefficient {
 
     public static void main(String[] args) {
-        Application2 app = new Application2();
-        int solution = app.solution(5, 3);
-        System.out.println(solution);
+        BinomialCoefficient bnml = new BinomialCoefficient();
+        System.out.println(bnml.solution(5, 3));
     }
 
     public int solution(int N, int K) {
