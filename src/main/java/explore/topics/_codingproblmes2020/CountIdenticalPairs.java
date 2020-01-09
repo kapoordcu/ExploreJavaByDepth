@@ -1,6 +1,7 @@
 package explore.topics._codingproblmes2020;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,10 +17,9 @@ public class CountIdenticalPairs {
     }
 
     public int solution(int[] A) {
-        Map<Integer, Long> arrayByFrequency = IntStream.of(A).boxed()
-                .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-        return arrayByFrequency.values().stream()
-                .mapToInt(v -> toIntExact((v * (v - 1) / 2)))
+        Map<Integer, Long> groupByCount = IntStream.of(A).boxed().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        return groupByCount.values().stream()
+                .mapToInt(v -> toIntExact(v * (v - 1) / 2))
                 .sum();
 //        List<Pair> pairs = new ArrayList<>();
 //        for (int i = 0; i < A.length; i++) {
