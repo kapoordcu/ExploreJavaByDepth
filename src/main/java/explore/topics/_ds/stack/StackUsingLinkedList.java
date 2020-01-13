@@ -1,8 +1,10 @@
 package explore.topics._ds.stack;
 
+import java.util.Stack;
+
 public class StackUsingLinkedList {
     public static void main(String[] args) {
-
+        Stack<Integer> ints = new Stack<>();
         StackLL ll = new StackLL();
         ll.push(10);
         System.out.println(ll.peek());
