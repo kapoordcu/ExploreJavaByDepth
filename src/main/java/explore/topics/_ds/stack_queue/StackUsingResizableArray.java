@@ -1,37 +1,44 @@
-package explore.topics._ds.stack;
+package explore.topics._ds.stack_queue;
 
 //          Pros: Easy to implement. Memory is saved as pointers are not involved.
 //          Cons: It is not dynamic. It doesn’t grow and shrink depending on needs at runtime.
 
-public class StackUsingArray {
+public class StackUsingResizableArray {
     private int[] stackArray;
     private int capacity = 5;
     private int top;
 
-    public StackUsingArray() {
+    public StackUsingResizableArray() {
         this.stackArray = new int[capacity];
         this.top = -1;
     }
 
     public static void main(String[] args) {
-        StackUsingArray stack = new StackUsingArray();
+        StackUsingResizableArray stack = new StackUsingResizableArray();
         stack.push(3);
         stack.push(4);
         stack.push(2);
         stack.push(5);
-        System.out.println(stack.pop());
-        System.out.println(stack.pop());
-        System.out.println(stack.peek());
-        System.out.println(stack.pop());
-        System.out.println(stack.peek());
-        System.out.println(stack.isEmpty());
+        stack.push(12);
+        stack.push(7);
+        stack.push(11);
+        stack.push(2);
+        stack.push(8);
     }
 
     public void push(int value) {
-        if(top>=capacity-1) {
-            throw new RuntimeException("Stack out of capacity");
+        if(top==capacity-1) {
+            copyOldArrayToNew(stackArray.length*2);
         }
         stackArray[++top] = value;
+    }
+
+    private void copyOldArrayToNew(int newLength) {
+        int[] newArray = new int[newLength];
+        for (int i = 0; i < stackArray.length; i++) {
+            newArray[i] = stackArray[i];
+        }
+        stackArray = newArray;
     }
 
     public int pop() {

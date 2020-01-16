@@ -120,39 +120,5 @@ public class Ordinal {
         return ordinalStr;
     }
 
-    public double evaluate(String expr) {
-        if(expr==null || expr.length()==0) {
-            return 0.0;
-        }
-        String[] tokens = expr.trim().split(" ");
-        Stack<String> stack = new Stack<String>();
-        double returnValue = 0;
-        String operators = "+-*/";
-        for (String currentSymbol : tokens) {
-            if (operators.contains(currentSymbol)) {
-                double a = Double.valueOf(stack.pop());
-                double b = Double.valueOf(stack.pop());
-                pushToStack(stack, a, b, currentSymbol);
-            } else {
-                stack.push(currentSymbol);
-            }
-        }
-
-        returnValue = Double.valueOf(stack.pop());
-
-        return returnValue;
-    }
-
-    public void pushToStack(Stack<String> stack, double a, double b, String currentSymbol) {
-        if(currentSymbol.equalsIgnoreCase("+")) {
-            stack.push(String.valueOf(a + b));
-        } else if(currentSymbol.equalsIgnoreCase("-")) {
-            stack.push(String.valueOf(b - a));
-        } else if(currentSymbol.equalsIgnoreCase("*")) {
-            stack.push(String.valueOf(a * b));
-        } else if(currentSymbol.equalsIgnoreCase("/")) {
-            stack.push(String.valueOf(b / a));
-        }
-    }
 
 }

@@ -1,4 +1,4 @@
-package explore.topics._ds.stack;
+package explore.topics._ds.stack_queue;
 
 import java.util.Stack;
 
@@ -11,6 +11,7 @@ public class StackUsingLinkedList {
         ll.push(6);
         ll.push(13);
         System.out.println(ll.peek());
+        System.out.println(ll.pop());
         ll.push(2);
 
     }
@@ -24,31 +25,29 @@ class StackLL{
     }
 
     public void push(int value) {
-        StackNode node = new StackNode(value);
-        if(top==null) {
-            top = node;
+        StackNode oldTop = top;
+        if(top!=null) {
+            top = new StackNode(value);
+            top.next = oldTop;
         } else {
-            StackNode prevTop = top;
-            top = node;
-            top.next = prevTop;
+            top = new StackNode(value);
         }
     }
 
     public int peek() {
-        if(top==null) {
-            return Integer.MIN_VALUE;
+        if(top!=null) {
+            return top.value;
         }
-        return top.value;
+        return Integer.MAX_VALUE;
     }
 
     public int pop() {
-        if(top==null) {
-            return Integer.MIN_VALUE;
+        if(top!=null) {
+            int value = top.value;
+            top = top.next;
+            return value;
         }
-        int value = top.value;
-                top = top.next;
-
-        return value;
+        return Integer.MAX_VALUE;
     }
 }
 
