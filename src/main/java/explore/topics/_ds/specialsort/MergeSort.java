@@ -8,20 +8,20 @@ public class MergeSort {
 
     public static void main(String[] args) {
         MergeSort sort = new MergeSort();
-        int[] arr = {7,3, 2, 5, 1,4, 6};
+        int[] arr = {7, 3, 2, 5};
         int[] arrCopy = arr.clone();
 
         sort.mergeSort(arr, arrCopy,0, arr.length-1);
         System.out.println(Arrays.toString(arr));
     }
 
-    public void mergeSort(int[] arr, int[] auxilarryArray, int low, int high) {
+    public void mergeSort(int[] arr, int[] arrCopy, int low, int high) {
         System.out.println("Merge sort of " + low + ", " + high);
         if(low<high) {
             int mid = (low + high)/2;
-            mergeSort(arr, auxilarryArray, low, mid);
-            mergeSort(arr, auxilarryArray, mid+1, high);
-            mergeTwoHalves(arr, auxilarryArray, low, mid, high);
+            mergeSort(arr, arrCopy, low, mid);
+            mergeSort(arr, arrCopy, mid+1, high);
+            mergeTwoHalves(arr, arrCopy, low, mid, high);
         }
     }
 
