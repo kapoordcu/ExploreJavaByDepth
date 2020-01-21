@@ -1,68 +1,70 @@
 package explore.topics._ds.stack_queue;
 
 public class QueueUsingLinkedList {
-    private QueueNode first;
-    private QueueNode last;
+    private MyQueueNode entry;
+    private MyQueueNode exit;
+
+    public QueueUsingLinkedList() {
+        this.entry = null;
+        this.exit = null;
+    }
 
     public static void main(String[] args) {
         QueueUsingLinkedList queue = new QueueUsingLinkedList();
         queue.enqueue(10);
         queue.enqueue(30);
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
         queue.enqueue(15);
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
         queue.enqueue(5);
         queue.enqueue(11);
         queue.enqueue(3);
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
+
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
     }
 
-    public QueueUsingLinkedList() {
-        this.first = null;
-        this.last = null;
-    }
 
-    public boolean isEmpty() {
-        return first==null;
-    }
 
-    public void enqueue(int value) {
-        QueueNode node = new QueueNode(value);
-        if(isEmpty()) {
-            first = last = node;
+    private int dequeue() {
+        if(exit==null) {
+            return Integer.MAX_VALUE;
         } else {
-            QueueNode oldLast = last;
-            oldLast.next = node;
-            last = node;
-        }
-    }
-
-    public int dequeue() {
-        if(isEmpty()) {
-            last = null;
-        } else {
-            int value = first.value;
-            first = first.next;
+            int value = exit.value;
+            exit = exit.next;
             return value;
         }
-        return Integer.MAX_VALUE;
     }
+
+    /**
+     *
+     *  |entry| -- || -- || -- || -- |exit|
+     */
+
+    private void enqueue(int value) {
+        MyQueueNode newNode = new MyQueueNode(value, null);
+        if(exit==null) {
+            entry = exit = newNode;
+        } else {
+            MyQueueNode oldEntry = entry;
+            oldEntry.next = newNode;
+            entry = newNode;
+        }
+    }
+
 }
 
-
-class QueueNode {
+class MyQueueNode {
     public int value;
-    public QueueNode next;
+    public MyQueueNode next;
 
-    public QueueNode(int value) {
+    public MyQueueNode(int value, MyQueueNode next) {
         this.value = value;
-        this.next = null;
+        this.next = next;
     }
+
 }
+
