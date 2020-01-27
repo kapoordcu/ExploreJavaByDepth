@@ -25,7 +25,10 @@ public class SumKInSortedArray {
         array[random] = temp;
     }
 
-    // Array must be sorted
+    // Array must be sorted,  O(NlogN) due to sorting: in-place
+    // A more efficient in-place solution would be to sort the array and use two pointers to scan through array
+    // from both direction i.e. beginning and end.
+    //Arrays.sort() method uses a two pivot quicksort algorithm to sort array of primitives.
     private List<String> findIndicesUsingLowHighPointers(int[] array, int target) {
         List<String> indices = new ArrayList<>();
         int low = 0;
@@ -47,6 +50,12 @@ public class SumKInSortedArray {
      /*
         Time Complexity: O(n)
         Auxiliary Space: O(n) where n is size of array.
+            it would need additional space of order O(n) to store numbers in Hashtable or Set,
+            so you need additional space which could be problem if array is very large
+
+        Only N to iterate through array and insert values in a Set because add() and contains() both O(1) operation in hash table.
+        So total complexity of solution would be O(N).
+
      */
     private List<String> findIndicesUsingHash(int[] array, int target) {
         Map<Integer, Integer> sumMap = new HashMap<>();
