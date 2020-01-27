@@ -1,18 +1,18 @@
 package explore.topics.arrays;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 public class SumKInSortedArray {
     public static void main(String[] args) {
-        int[] array = { 0, 1,3, 5, 6,8,9,11,14 };
+        int[] array = { 1, 5, 3, 2, 4};
         //shuffle(array);
         SumKInSortedArray sore = new SumKInSortedArray();
         sore.findIndicesUsingLowHighPointers(array, 14);
-        sore.findIndicesUsingHash(array, 14);
+        sore.findIndicesUsingHash(array, 5);
         System.out.println();
     }
 
@@ -51,16 +51,16 @@ public class SumKInSortedArray {
         Time Complexity: O(n)
         Auxiliary Space: O(n) where n is size of array.
      */
-    private int findIndicesUsingHash(int[] array, int target) {
-        Set<Integer> sumMap = new HashSet<>();
-        int numberPairs = 0;
+    private List<String> findIndicesUsingHash(int[] array, int target) {
+        Map<Integer, Integer> sumMap = new HashMap<>();
+        List<String> indices = new ArrayList<>();
         for (int i = 0; i < array.length; i++) {
-            if(sumMap.contains(target-array[i])) {
-                numberPairs++;
+            if(sumMap.containsKey(target-array[i])) {
+                indices.add(sumMap.get(target-array[i]) + ":" + i);
             }
-            sumMap.add(array[i]);
+            sumMap.put(array[i], i);
         }
-        return numberPairs;
+        return indices;
     }
 
 }
