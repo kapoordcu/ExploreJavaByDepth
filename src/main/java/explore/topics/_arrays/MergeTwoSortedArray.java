@@ -6,28 +6,30 @@ public class MergeTwoSortedArray {
         int[] a2 = {0, 1, 8};
 
         int[] join = extraSpaceJoin(a1, a2);
-        inPlaceJoin(a1, a2);
+        inPlaceJoin(a1, a2);  // {0,1,2,4,5}   {8,9,10}
+        inPlaceJoin(a2, a1); // {0,1,2}   {4,5,8,9,10}
     }
 
     // In Place join
     private static void inPlaceJoin(int[] a1, int[] a2) {
-        int i = a1.length-1;
-        int j = a2.length-1;
-        while (j>=0 && a1[i]>a2[j]) {
-            replaceMax(a1, a2, i, j);
-            j--;
+        for (int i = 0; i < a1.length; i++) {
+            if(a1[i] > a2[0]) {
+                int higher = a1[i];
+                a1[i] = a2[0];
+                a2[0] = higher;
+            }
+            sortSecondArray(a2);
         }
     }
 
-    private static void replaceMax(int[] a1, int[] a2, int i, int j) {
-        int replace = a1[i];
-        int l = i-1;
-        while (l>=0 && a1[l]>a2[j]) {
-            a1[l+1] = a1[l];
-            l--;
+    private static void sortSecondArray(int[] a2) {
+        int element = a2[0];
+        int k=1;
+        while (k<a2.length && a2[k]<element) {
+            a2[k-1] = a2[k];
+            k++;
         }
-        a1[l+1] = a2[j];
-        a2[j] = replace;
+        a2[k-1] = element;
     }
 
     /**
