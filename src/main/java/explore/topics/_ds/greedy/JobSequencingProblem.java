@@ -37,13 +37,13 @@ public class JobSequencingProblem {
         int[] slots = new int[maxDeadLine];
 
         for (int i = 0; i < maxDeadLine; i++) {
-            slots[i] = i;
+            slots[i] = i + 1;
         }
         int profit = 0;
         for (int i = 0; i < sortedByProfit.size(); i++) {
             Job currentJob = sortedByProfit.get(i);
-            for (int j=Math.min(maxDeadLine, currentJob.getDeadline())-1; j >=0 ; j--) {
-                if(slots[j]!=-1) {
+            for (int j = 0; j < maxDeadLine; j++) {
+                if(currentJob.getDeadline()>=slots[j] && slots[j]!=-1) {
                     slots[j] = -1;
                     profit += currentJob.getProfit();
                     break;
