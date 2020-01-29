@@ -15,10 +15,48 @@ public class JobSequencingProblem {
                 new Job("d", 1, 25),
                 new Job("e", 3, 15)
         );
-        System.out.println(js.findMaxProfit(jobs));
+        System.out.println(js.findMaxProfitNaive(jobs));
+        System.out.println(js.findMaxProfitUsingTreeSet(jobs));
     }
 
-    private int findMaxProfit(List<Job> jobs) {
+//    1. sort job according to decresing order of deadline =  O(nlogn)
+//
+//    2.for each job find slot in array of size n = O(n^2)
+//
+//    total time  = O(nlogn) + O(n^2) =O(n^2)
+
+    private int findMaxProfitNaive(List<Job> jobs) {
+
+        List<Job> sortedByProfit = jobs.stream()
+                .sorted(Comparator.comparing(Job::getProfit).reversed()
+                        .thenComparing(Job::getDeadline))
+                .collect(Collectors.toList());
+        int maxDeadLine = jobs.stream()
+                .mapToInt(Job::getDeadline)
+                .max().getAsInt();
+        int[] slots = new int[maxDeadLine];
+
+        for (int i = 0; i < maxDeadLine; i++) {
+            slots[i] = i;
+        }
+        int profit = 0;
+        for (int i = 0; i < sortedByProfit.size(); i++) {
+            Job currentJob = sortedByProfit.get(i);
+            for (int j=Math.min(maxDeadLine, currentJob.getDeadline())-1; j >=0 ; j--) {
+                if(slots[j]!=-1) {
+                    slots[j] = -1;
+                    profit += currentJob.getProfit();
+                    break;
+                }
+            }
+        }
+        return profit;
+    }
+
+
+    //Time Complexity: O(N*log(N))
+    //Auxiliary Space: O(N)
+    private int findMaxProfitUsingTreeSet(List<Job> jobs) {
         int profit = 0;
         List<Job> sortedByProfit = jobs.stream()
                         .sorted(Comparator.comparing(Job::getProfit).reversed()
@@ -29,13 +67,13 @@ public class JobSequencingProblem {
                             .max().getAsInt();
         // Creating TreeSet Object
         TreeSet<Integer> ts = new TreeSet<>();
-        for (int i = 0; i < maxDeadLine; i++) {
+        for (int i = 1; i <= maxDeadLine; i++) {
             ts.add(i);
         }
 
         for (int i = 0; i < sortedByProfit.size(); i++) {
             Job selectedJob = sortedByProfit.get(i);
-            Integer floor = ts.floor(selectedJob.deadline-1);
+            Integer floor = ts.floor(selectedJob.deadline);
             if(floor!=null) {
                 System.out.println("Job " + selectedJob.getId() + " is selected with profit " + selectedJob.profit);
                 profit += selectedJob.getProfit();
