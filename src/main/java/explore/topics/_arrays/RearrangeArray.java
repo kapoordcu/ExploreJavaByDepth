@@ -5,39 +5,35 @@ import java.util.Arrays;
 public class RearrangeArray {
 
     public static void main(String[] args) {
-        int[] arr = { 1, 2, 3, 4, 5, 6, 7};
+        int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
         reArrangeWithONSpace(arr);
         reArrangeWithO1Space(arr);
     }
 
     private static void reArrangeWithO1Space(int[] arr) {
-        int temp = 0;
-        int i = 0;
-        int j= arr.length-1;
-        while (i<j) {
-            int min = arr[i];
-            int max = arr[j];
+        int min = arr[0];
+        int max = arr[arr.length-1];
+        for (int i = 0; i < arr.length; i++) {
             if(i%2==0) {
-                temp = arr[i+1];
+                arr[i] = max--;
             } else {
-                arr[i++] = max;
-                arr[i++] = min;
+                arr[i] = min++;
             }
-
-
         }
+        System.out.println(Arrays.toString(arr));
     }
 
     private static void reArrangeWithONSpace(int[] arr) {
         int[] copy = new int[arr.length];
         int i = 0;
         int j = arr.length-1;
+
         for (int k = 0; i<j && k < arr.length;) {
             copy[k++] = arr[j--];
             copy[k++] = arr[i++];
         }
         if(arr.length%2!=0) {
-            copy[arr.length-1] = arr[arr.length/2];
+            copy[arr.length-1] = arr[i];
         }
         System.out.println(Arrays.toString(copy));
     }
