@@ -9,26 +9,30 @@ import java.util.stream.Collectors;
 public class JobSequencingProblem {
     public static void main(String[] args) {
         JobSequencingProblem js = new JobSequencingProblem();
-        List<Job> jobs = Arrays.asList(new Job("j1", 2, 100),
-                new Job("j2", 1, 19),
-                new Job("j3", 2, 27),
-                new Job("j4", 1, 25),
-                new Job("j5", 3, 15)
+        List<Job> jobs = Arrays.asList(new Job("a", 2, 100),
+                new Job("b", 1, 19),
+                new Job("c", 2, 27),
+                new Job("d", 1, 25),
+                new Job("e", 3, 15)
         );
-        System.out.println(js.findMaxProfit(jobs, 5));
+        System.out.println(js.findMaxProfit(jobs));
     }
 
-    private int findMaxProfit(List<Job> jobs, int n) {
+    private int findMaxProfit(List<Job> jobs) {
         int profit = 0;
         List<Job> sortedByProfit = jobs.stream()
-                .sorted(Comparator.comparing(Job::getProfit).reversed()
-                        .thenComparing(Comparator.comparing(Job::getDeadline).reversed()))
+                        .sorted(Comparator.comparing(Job::getProfit).reversed()
+                        .thenComparing(Job::getDeadline))
                 .collect(Collectors.toList());
+        int maxDeadLine = jobs.stream()
+                            .mapToInt(Job::getDeadline)
+                            .max().getAsInt();
         // Creating TreeSet Object
         TreeSet<Integer> ts = new TreeSet<>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < maxDeadLine; i++) {
             ts.add(i);
         }
+
         for (int i = 0; i < sortedByProfit.size(); i++) {
             Job selectedJob = sortedByProfit.get(i);
             Integer floor = ts.floor(selectedJob.deadline-1);
