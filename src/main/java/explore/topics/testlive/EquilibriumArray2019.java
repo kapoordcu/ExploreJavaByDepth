@@ -10,10 +10,14 @@ public class EquilibriumArray2019 {
         int[] arrayEq2 = {4, -1, 1, 2, 1};
         int[] arrayEq3 = {2, 1, 1, 3, 1};
         int[] arrayEq4 = {2, 1, 2, 3, 1};
+        int[] array = { 1, 3, 4, 2, 10, 5, 5 };
+        int[] array2 = { 6, 4, 1, 0, 0, 0, 1, 2, 6};
         System.out.println(findEquilibriumArrayIndex(arrayEq1));
         System.out.println(findEquilibriumArrayIndex(arrayEq2));
         System.out.println(findEquilibriumArrayIndex(arrayEq3));
        System.out.println(findEquilibriumArrayIndex(arrayEq4));
+       System.out.println(findEquilibriumArrayIndex(array));
+       System.out.println(findEquilibriumArrayIndex(array2));
     }
 
     private static int findEquilibriumArrayIndex(int[] arrayEq) {
