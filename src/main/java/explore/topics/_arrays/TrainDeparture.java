@@ -3,40 +3,30 @@ package explore.topics._arrays;
 public class TrainDeparture {
     public static void main(String[] args) {
         String[] arr = { "0900",  "0940", "0950",  "1100", "1500", "1800"};
-           String[] dep = { "0940",  "1200", "1120",  "1130", "1900", "2000"};
+           String[] dep = { "0910",  "1200", "1120",  "1130", "1900", "2000"};
 
         quickSort(arr, 0, arr.length-1);
         quickSort(dep, 0, arr.length-1);
-        mergeStep(arr, dep);
+        System.out.println(mergeStep(arr, dep));
 
     }
 
-    private static void mergeStep(String[] arr, String[] dep) {
+    private static int mergeStep(String[] arr, String[] dep) {
         int i = 0;
-        while (i <arr.length) {
-            if(compareStringTime(arr[i] , dep[0]) <= 0) {
+        int j = 0;
+        int platforms = 0;
+        int max = 0;
+        while (i<arr.length && j<dep.length) {
+            if(compareStringTime(arr[i], dep[j]) < 0) {
+                platforms += 1;
+                max = Math.max(max, platforms);
                 i++;
             } else {
-                swapTwoArrayElement(arr, dep, i, 0);
-                sortRemainingArray(dep);
+                platforms -= 1;
+                j++;
             }
         }
-    }
-
-    private static void sortRemainingArray(String[] a2) {
-        String element = a2[0];
-        int k=1;
-        while (k<a2.length && compareStringTime(a2[k],element)<0) {
-            a2[k-1] = a2[k];
-            k++;
-        }
-        a2[k-1] = element;
-    }
-
-    private static void swapTwoArrayElement(String[] arr, String[] dep, int i, int j) {
-        String temp = arr[i];
-        arr[i] = dep[0];
-        dep[0] = temp;
+        return max;
     }
 
     private static void quickSort(String[] arr, int low, int high) {
