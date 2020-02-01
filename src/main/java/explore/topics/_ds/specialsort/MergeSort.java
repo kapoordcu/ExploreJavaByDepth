@@ -17,28 +17,6 @@ import java.util.Arrays;
 // recursive algorithm(use stack) --> max size = logN at a time
 // Extra space (n "auxillary" + logN "stack")
 public class MergeSort {
-
-    public static void main(String[] args) {
-        MergeSort ob = new MergeSort();
-        int arr[] = {12, 11, 13, 5, 6, 7};
-        int[] arr1 = {7, 3, 2, 5, 1, 4, 6};
-        int[] arr1Duplicate = {7, 3, 2, 5, 1, 4, 6, 2, 3};
-        int[] arr2 = {3, 6, 0, 5, 2, 7, 9};
-        int[] arr2Duplicate = {3, 6, 0, 9, 2, 7, 0, 9, 9};
-
-        ob.mergeSort(arr, 0, arr.length-1);
-        ob.mergeSort(arr1, 0, arr1.length-1);
-        ob.mergeSort(arr1Duplicate, 0, arr1Duplicate.length-1);
-        ob.mergeSort(arr2, 0, arr2.length-1);
-        ob.mergeSort(arr2Duplicate, 0, arr2Duplicate.length-1);
-
-        System.out.println(Arrays.toString(arr));
-        System.out.println(Arrays.toString(arr1));
-        System.out.println(Arrays.toString(arr1Duplicate));
-        System.out.println(Arrays.toString(arr2));
-        System.out.println(Arrays.toString(arr2Duplicate));
-    }
-
     public void mergeSort(int[] arr, int low, int high) {
         //System.out.println("Merge sort of " + low + ", " + high);
         if(low<high) {
@@ -91,4 +69,25 @@ public class MergeSort {
         return sorted;
     }
 
+
+    public static void main(String[] args) {
+        MergeSort ob = new MergeSort();
+        int arr[] = {12, 11, 13, 5, 6, 7};
+        int[] arr1 = {7, 3, 2, 5, 1, 4, 6};
+        int[] arr1Duplicate = {7, 3, 2, 5, 1, 4, 6, 2, 3};
+        int[] arr2 = {3, 6, 0, 5, 2, 7, 9};
+        int[] arr2Duplicate = {3, 6, 0, 9, 2, 7, 0, 9, 9};
+
+        ob.mergeSort(arr, 0, arr.length-1);
+        ob.mergeSort(arr1, 0, arr1.length-1);
+        ob.mergeSort(arr1Duplicate, 0, arr1Duplicate.length-1);
+        ob.mergeSort(arr2, 0, arr2.length-1);
+        ob.mergeSort(arr2Duplicate, 0, arr2Duplicate.length-1);
+
+        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(arr1));
+        System.out.println(Arrays.toString(arr1Duplicate));
+        System.out.println(Arrays.toString(arr2));
+        System.out.println(Arrays.toString(arr2Duplicate));
+    }
 }
