@@ -14,14 +14,13 @@ public class QuickSort {
 
     static int partition(Comparable arr[], int low, int high) {
         Comparable pivot = arr[high];
-        int i = low-1;
-        for (int j=low; j<high; j++) {
-            if (arr[j].compareTo(pivot)<0) {
-                swap(arr, ++i, j);
+        for (int i=low; i<high; i++) {
+            if (arr[i].compareTo(pivot)<0) {
+                swap(arr, low++, i);
             }
         }
-        swap(arr, i+1, high);
-        return i+1;
+        swap(arr, low, high);
+        return low;
     }
 
     private static void swap(Comparable[] a, int i, int j) {
