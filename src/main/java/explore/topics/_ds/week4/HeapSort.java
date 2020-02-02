@@ -18,35 +18,36 @@ public class HeapSort<Key extends Comparable<Key>> {
 
         Comparable[] arr = {13, 2, 6, 15, 1, 8, 3, 19, 11};
         HeapSort heapObj = new HeapSort(arr);
-        System.out.println(Arrays.toString(arr));
-
         for (int i = heapObj.N/2; i >=0 ; i--) {
            heapObj.sink(arr, i, heapObj.N);
         }
         heapObj.startHeapSort(heapObj.arr, heapObj.N);
-        System.out.println();
+        System.out.println(Arrays.toString(arr));
     }
 
     private void startHeapSort(Comparable[] arr, int N) {
         for (int i = 0; i < N; i++) {
-            exchange(i, N-1);
-            sink(arr, i, --N);
+            deleteMax();
         }
     }
 
+    private Comparable deleteMax() {
+        Comparable deletedMax = arr[0];
+        exchange(0, N-1);
+        sink(arr,0, --N);
+        return deletedMax;
+    }
+
     private void sink(Comparable[] arr, int K, int N) {
-        int max = K;
-        int l = 2*K+1;
-        int r = 2*K+2;
-        if(l<N && less(K, l)) {
-            max = l;
-        }
-        if(r<N && less(K, r)) {
-            max = r;
-        }
-        if(max!=K) {
-            exchange(K, max);
-            sink(arr, max, N);
+        int greaterChild = 2*K + 1;
+        if(greaterChild<N) {
+            if(greaterChild+1 < N && less(greaterChild, greaterChild+1)) {
+                greaterChild++;
+            }
+            if(less(K, greaterChild)) {
+                exchange(K, greaterChild);
+                sink(arr, greaterChild, N);
+            }
         }
     }
 
