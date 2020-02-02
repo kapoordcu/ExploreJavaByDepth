@@ -1,23 +1,19 @@
-package explore.topics._ds.week4;
+package explore.topics._ds.specialtopics;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-public class HeapSort<Key extends Comparable<Key>> {
+public class HeapSortMax<Key extends Comparable<Key>> {
     private Comparable[] arr;
     private int N;
 
-    public HeapSort(Comparable[] arr) {
+    public HeapSortMax(Comparable[] arr) {
         this.arr = arr;
         N = arr.length;
     }
 
     public static void main(String[] args) {
-        Map<Integer, Integer> map = new HashMap<>();
-
         Comparable[] arr = {13, 2, 6, 15, 1, 8, 3, 19, 11};
-        HeapSort heapObj = new HeapSort(arr);
+        HeapSortMax heapObj = new HeapSortMax(arr);
         for (int i = heapObj.N/2; i >=0 ; i--) {
            heapObj.sink(arr, i, heapObj.N);
         }

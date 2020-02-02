@@ -1,4 +1,4 @@
-package explore.topics._ds.week4;
+package explore.topics._ds.specialtopics;
 
 import explore.topics._ds.basicsort.SortUtils;
 
