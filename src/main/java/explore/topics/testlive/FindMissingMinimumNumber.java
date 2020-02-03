@@ -11,6 +11,7 @@ public class FindMissingMinimumNumber {
         FindMissingMinimumNumber c = new FindMissingMinimumNumber();
         int[] arr = {1,2,3};
         int solution = c.solution(arr);
+        System.out.println(solution);
     }
 
     public int solution(int[] A) {
