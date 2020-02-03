@@ -9,22 +9,26 @@ public class StockProfit {
         int[] arr10 = {10, 23, 13, 25, 29, 33, 19, 34, 45, 65, 67};
                         //(0 3) (4 6)
                         //(1 4) (5 9)
-        findMaxProfitDays(arr7).stream().forEach(System.out::println);
-        findMaxProfitDays(arr10).stream().forEach(System.out::println);
+
+        List<Stock> stocks = new ArrayList<>();
+        System.out.println(findMaxProfitDaysNaive(arr7, stocks));
+        stocks.clear();
+        System.out.println(findMaxProfitDaysNaive(arr10, stocks));
+        stocks.clear();
+        System.out.println(findMaxProfitDaysON(arr7, stocks));
+        stocks.clear();
+        System.out.println(findMaxProfitDaysON(arr10, stocks));
+        stocks.clear();
     }
 
-    private static List<Stock> findMaxProfitDays(int[] arr) {
-        List<Stock> days = new ArrayList<>();
-        int start = 0;
-        for (int j = 0; j < arr.length; j++) {
-            while(j+1<arr.length && arr[j] < arr[j+1]) {
-                j++;
-            }
-            days.add(new Stock(start, j));
-            start = j+1;
-        }
-        return days;
+    private static int findMaxProfitDaysON(int[] arr, List<Stock> stocks) {
+        return 0;
     }
+
+    private static int findMaxProfitDaysNaive(int[] arr7, List<Stock> stocks) {
+        return 0;
+    }
+
 }
 
 class Stock {
@@ -38,8 +42,6 @@ class Stock {
 
     @Override
     public String toString() {
-        return "("+buy +
-                ", " + sell +
-                ')';
+        return "(" + buy + ", " + sell + ')';
     }
 }
