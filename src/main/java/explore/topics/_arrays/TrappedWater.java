@@ -32,24 +32,24 @@ public class TrappedWater {
 
     public int maxWaterON(int arr[], int n) {
         int result = 0;
-        int left_max = 0, right_max = 0;
+        int left = 0, right = 0;
         int lo = 0, hi = n - 1;
         while (lo <= hi) {
             if (arr[lo] < arr[hi]) {
-                if (arr[lo] > left_max) {
-                    left_max = arr[lo];
+                if (arr[lo] > left) {
+                    left = arr[lo];
                 }
                 else {
-                    result += left_max - arr[lo];
+                    result += left - arr[lo];
                 }
                 lo++;
             }
             else {
-                if (arr[hi] > right_max) {
-                    right_max = arr[hi];
+                if (arr[hi] > right) {
+                    right = arr[hi];
                 }
                 else {
-                    result += right_max - arr[hi];
+                    result += right - arr[hi];
                 }
                 hi--;
             }
