@@ -19,6 +19,15 @@ public class FindMiddleOfLinkedList {
         findMiddle(list);
     }
 
+    private static void swap(List<Integer> list, Integer start, Integer end) {
+        Integer startEle = list.get(start);
+        Integer endtEle = list.get(end);
+        list.remove(start);
+        list.add(start, endtEle);
+        list.remove(end);
+        list.add(end, startEle);
+    }
+
     private static void findMiddle(List<Integer> list) {
         int size = list.size();
         int count = 0;

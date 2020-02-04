@@ -12,9 +12,16 @@ public class MyLinkedList {
         list.insert(2);
         list.insert(90);
         list.insert(11);
-        //printList(list);
-        list.findMiddle();
 
+//        list.findMiddle();
+//        list.reverseList();
+//        printList(list);
+        rotateList(list, 4);
+
+    }
+
+    private static void rotateList(MyList list, int rotations) {
+        
     }
 
     private static void printList(MyList list) {
@@ -76,4 +83,18 @@ class MyList {
         }
     }
 
+    public void reverseList() {
+        MyListNode current = head;
+        MyListNode prev = null;
+        MyListNode next = null;
+        while (current!=null) {
+            next = current.next;
+            current.next = prev;
+
+            prev = current;
+            current = next;
+
+        }
+        head = prev;
+    }
 }
