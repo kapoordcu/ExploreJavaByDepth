@@ -1,5 +1,6 @@
 package explore.topics._stacks_queues;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class NextLargerElement {
@@ -8,11 +9,12 @@ public class NextLargerElement {
         int[] arr2 = { 4, 3, 2, 1};
         int[] arr3 = { 1, 2, 5, 4};
 
-
         findNextLarger(arr1);
         findNextLarger(arr2);
         findNextLarger(arr3);
-        System.out.println();
+        System.out.println(Arrays.toString(arr1));
+        System.out.println(Arrays.toString(arr2));
+        System.out.println(Arrays.toString(arr3));
     }
 
     //Time Complexity: O(n).
