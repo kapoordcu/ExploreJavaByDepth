@@ -13,7 +13,7 @@ public class StackUsingLinkedList {
         System.out.println(ll.peek());
         System.out.println(ll.pop());
         ll.push(2);
-
+        System.out.println(ll.peek());
     }
 }
 
