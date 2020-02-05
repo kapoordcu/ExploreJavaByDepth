@@ -9,12 +9,33 @@ public class NextLargerElement {
         int[] arr2 = { 4, 3, 2, 1};
         int[] arr3 = { 1, 2, 5, 4};
 
-        findNextLarger(arr1);
-        findNextLarger(arr2);
-        findNextLarger(arr3);
+        findNextLargerWithoutStack(arr1);
+        findNextLargerWithoutStack(arr2);
+        findNextLargerWithoutStack(arr3);
+//
+//        findNextLarger(arr1);
+//        findNextLarger(arr2);
+//        findNextLarger(arr3);
         System.out.println(Arrays.toString(arr1));
         System.out.println(Arrays.toString(arr2));
         System.out.println(Arrays.toString(arr3));
+    }
+
+    private static void findNextLargerWithoutStack(int[] arr) {
+        int arrLen = arr.length;
+        int max = arr[arrLen-1];
+        int temp = 0;
+        arr[arrLen-1] = -1;
+        for (int i = arrLen-2; i >= 0 ; i--) {
+            if(arr[i] < max) {
+                temp = arr[i];
+                arr[i] = max;
+                max = Math.min(temp, max);
+            } else {
+                max = Math.min(arr[i], max);
+                arr[i] = -1;
+            }
+        }
     }
 
     //Time Complexity: O(n).
