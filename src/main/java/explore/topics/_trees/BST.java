@@ -3,16 +3,16 @@ package explore.topics._trees;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TreeImpls {
+public class BST {
     private static Queue<TreeNode> Q = new LinkedList<>();
     private static TreeNode root;
 
-    public TreeImpls() {
+    public BST() {
         this.root = null;
     }
 
     public static void main(String[] args) {
-        TreeImpls bst = new TreeImpls();
+        BST bst = new BST();
         bst.insertBST(10);
         bst.insertBST(12);
         bst.insertBST(5);
@@ -21,47 +21,10 @@ public class TreeImpls {
         bst.insertBST(9);
         bst.insertBST(8);
         bst.inorder(root);
-
-        System.out.println();
-        
-        TreeImpls binary = new TreeImpls();
-        binary.insertBinaryTree(10);
-        binary.insertBinaryTree(12);
-        binary.insertBinaryTree(5);
-        binary.insertBinaryTree(13);
-        binary.insertBinaryTree(6);
-        binary.insertBinaryTree(9);
-        binary.insertBinaryTree(8);
-        binary.inorder(root);
-
     }
 
-    private void insertBinaryTree(int value) {
-        insertBinaryTree(root, value);
-    }
+    private void leftView(TreeNode node) {
 
-    private void insertBinaryTree(TreeNode node, int value) {
-        if(node==null) {
-            root = new TreeNode(value);
-            Q.add(root);
-        } else {
-            while(!Q.isEmpty()) {
-                TreeNode peek = Q.peek();
-                TreeNode treeNode = new TreeNode(value);
-                if(peek.left!=null && peek.right!=null) {
-                    Q.poll();
-                    continue;
-                } else if(peek.left==null) {
-                    peek.left = treeNode;
-                    Q.add(treeNode);
-                    break;
-                } else if(peek.right==null) {
-                    peek.right = treeNode;
-                    Q.add(treeNode);
-                    break;
-                }
-            }
-        }
     }
 
     private void insertBST(int value) {
