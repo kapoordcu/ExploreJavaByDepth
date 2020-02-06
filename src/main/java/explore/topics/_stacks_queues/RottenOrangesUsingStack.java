@@ -3,7 +3,7 @@ package explore.topics._stacks_queues;
 import java.util.Arrays;
 import java.util.Stack;
 
-public class RottenOranges {
+public class RottenOrangesUsingStack {
 
     private static Stack<Element> elementStack = new Stack<>();
     private static int rounds = 0;
