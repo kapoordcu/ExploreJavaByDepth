@@ -1,7 +1,10 @@
 package explore.topics._trees;
 
-public class TreeImpls {
+import java.util.LinkedList;
+import java.util.Queue;
 
+public class TreeImpls {
+    private static Queue<TreeNode> Q = new LinkedList<>();
     private static TreeNode root;
 
     public TreeImpls() {
@@ -9,32 +12,56 @@ public class TreeImpls {
     }
 
     public static void main(String[] args) {
-        TreeImpls tree = new TreeImpls();
-//        tree.insertBST(10);
-//        tree.insertBST(12);
-//        tree.insertBST(5);
-//        tree.insertBST(13);
-//        tree.insertBST(6);
-//        tree.insertBST(9);
-//        tree.insertBST(8);
-//        tree.inorderBST(root);
+        TreeImpls bst = new TreeImpls();
+        bst.insertBST(10);
+        bst.insertBST(12);
+        bst.insertBST(5);
+        bst.insertBST(13);
+        bst.insertBST(6);
+        bst.insertBST(9);
+        bst.insertBST(8);
+        bst.inorder(root);
 
-        tree.insertBinaryTree(10);
-        tree.insertBinaryTree(12);
-        tree.insertBinaryTree(5);
-        tree.insertBinaryTree(13);
-        tree.insertBinaryTree(6);
-        tree.insertBinaryTree(9);
-        tree.insertBinaryTree(8);
+        System.out.println();
+        
+        TreeImpls binary = new TreeImpls();
+        binary.insertBinaryTree(10);
+        binary.insertBinaryTree(12);
+        binary.insertBinaryTree(5);
+        binary.insertBinaryTree(13);
+        binary.insertBinaryTree(6);
+        binary.insertBinaryTree(9);
+        binary.insertBinaryTree(8);
+        binary.inorder(root);
 
     }
 
     private void insertBinaryTree(int value) {
-        root = insertBinaryTree(root, value);
+        insertBinaryTree(root, value);
     }
 
-    private TreeNode insertBinaryTree(TreeNode node, int value) {
-        return null;
+    private void insertBinaryTree(TreeNode node, int value) {
+        if(node==null) {
+            root = new TreeNode(value);
+            Q.add(root);
+        } else {
+            while(!Q.isEmpty()) {
+                TreeNode peek = Q.peek();
+                TreeNode treeNode = new TreeNode(value);
+                if(peek.left!=null && peek.right!=null) {
+                    Q.poll();
+                    continue;
+                } else if(peek.left==null) {
+                    peek.left = treeNode;
+                    Q.add(treeNode);
+                    break;
+                } else if(peek.right==null) {
+                    peek.right = treeNode;
+                    Q.add(treeNode);
+                    break;
+                }
+            }
+        }
     }
 
     private void insertBST(int value) {
@@ -57,13 +84,13 @@ public class TreeImpls {
     }
 
     //Inorder Travel of BST sorts the elements
-    private void inorderBST(TreeNode node) {
+    private void inorder(TreeNode node) {
         if(node==null) {
             return;
         }
-        inorderBST(node.left);
-        System.out.println(node.value);
-        inorderBST(node.right);
+        inorder(node.left);
+        System.out.print(node.value + " ");
+        inorder(node.right);
     }
 
     static class TreeNode {
