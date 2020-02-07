@@ -6,22 +6,25 @@ import java.util.Queue;
 public class BinaryTree {
     private static Queue<TreeNode> Q = new LinkedList<>();
     private static TreeNode root;
+
     static int max_level = 0;
+
     public BinaryTree() {
         this.root = null;
     }
 
     public static void main(String[] args) {
-        BinaryTree binary = new BinaryTree();
-        binary.insertInLevelOrder(10);
-        binary.insertInLevelOrder(12);
-        binary.insertInLevelOrder(5);
-        binary.insertInLevelOrder(13);
-        binary.insertInLevelOrder(6);
-        binary.insertInLevelOrder(9);
-        binary.insertInLevelOrder(8);
-    }
+        BinaryTree treeL = new BinaryTree();
+        treeL.root = new TreeNode(10);
+        treeL.root.left = new TreeNode(5);
+        treeL.root.right = new TreeNode(12);
+        treeL.root.right.right = new TreeNode(13);
+        treeL.root.left.right = new TreeNode(8);
+        treeL.root.left.right.left = new TreeNode(6);
+        treeL.root.left.right.right = new TreeNode(9);
 
+        treeL.levelOrderTraversalNaive(treeL.root);
+    }
     //Level Order traversal is also known as Breadth-First Traversal since it traverses
     // all the nodes at each level before going to the next level (depth).
 
@@ -34,21 +37,21 @@ public class BinaryTree {
         // For a skewed tree, printGivenLevel() uses O(n) space for call stack.
         // For a Balanced tree, call stack uses O(log n) space, (i.e., height of the balanced tree).
     private void levelOrderTraversalNaive(TreeNode node) {
-        int h = heightOfTree(node);
-        for (int i = 1; i <= h; i++) {
+        int height = heightOfTree(node);
+        for (int i = 1; i <= height ; i++) {
             printLevel_N(node, i);
         }
     }
 
     private void printLevel_N(TreeNode node, int level) {
-        if(node==null) {
+        if(node == null) {
             return;
         }
         if(level==1) {
             System.out.print(node.value + " ");
-        } else if(level>1) {
-            printLevel_N(node.left, level-1);
-            printLevel_N(node.right, level-1);
+        } else {
+            printLevel_N(node.left, level -1);
+            printLevel_N(node.right, level -1);
         }
     }
 
@@ -56,11 +59,10 @@ public class BinaryTree {
         if(node==null) {
             return 0;
         } else {
-            int left = heightOfTree(node.left);
-            int right = heightOfTree(node.right);
-            return Math.max(left, right) + 1;
+            return Math.max(heightOfTree(node.left), heightOfTree(node.right)) + 1;
         }
     }
+
 
     private void insertInLevelOrder(int value) {
         insertInLevelOrder(root, value);
