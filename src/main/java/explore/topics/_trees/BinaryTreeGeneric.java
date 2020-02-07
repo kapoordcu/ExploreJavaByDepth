@@ -5,7 +5,8 @@ import java.util.Queue;
 
 public class BinaryTreeGeneric<Key extends Comparable<Key>> {
     private static Node root;
-    private static int max_level;
+    private static int max_level_left_View;
+    private static int max_level_right_View;
 
     /**
      * Check BST
@@ -31,15 +32,27 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
         if(node==null) {
             return;
         } else {
-            if(level > max_level) {
-                System.out.println(node.data);
-                max_level = level;
+            if(level > max_level_left_View) {
+                System.out.print(node.data + " ");
+                max_level_left_View = level;
             }
             leftViewOfBinaryTree(node.left, level+1);
             leftViewOfBinaryTree(node.right, level+1);
         }
     }
 
+    /**
+     * Right view of the tree
+     */
+    private void rightViewOfBinaryTree(Node node, int level) {
+        if(node==null) { return;}
+        if(level>max_level_right_View) {
+            System.out.print(node.data + " ");
+            max_level_right_View = level;
+        }
+        rightViewOfBinaryTree(node.right, level + 1);
+        rightViewOfBinaryTree(node.left, level + 1);
+    }
     /**
      * Level order traversal
      * Time Complexity: O(n) where n is number of nodes in the binary tree
@@ -62,6 +75,12 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
 
     public static void main(String[] args) {
 
+        /**             10
+         *       5          12
+         *          8           13
+         *        6   9
+         *
+         */
         BinaryTreeGeneric<Integer> treeL = new BinaryTreeGeneric<>();
         treeL.root = new Node(10);
         treeL.root.left = new Node(5);
@@ -75,6 +94,8 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
 
         //treeL.levelOrderPrint(treeL.root);
         treeL.leftViewOfBinaryTree(treeL.root, 1);
+        System.out.println();
+        treeL.rightViewOfBinaryTree(treeL.root, 1);
 
 //        BinaryTreeGeneric<String> notBST = new BinaryTreeGeneric<>();
 //        notBST.root = new Node("a");
