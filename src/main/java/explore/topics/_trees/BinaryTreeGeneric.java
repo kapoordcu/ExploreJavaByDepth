@@ -36,7 +36,7 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
                 max_level = level;
             }
             leftViewOfBinaryTree(node.left, level+1);
-            leftViewOfBinaryTree(node.left, level+1);
+            leftViewOfBinaryTree(node.right, level+1);
         }
     }
 
