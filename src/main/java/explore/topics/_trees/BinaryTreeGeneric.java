@@ -1,12 +1,16 @@
 package explore.topics._trees;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+
+import static java.util.Map.Entry.comparingByKey;
+import static java.util.stream.Collectors.toMap;
 
 public class BinaryTreeGeneric<Key extends Comparable<Key>> {
     private static Node root;
     private static int max_level_left_View;
     private static int max_level_right_View;
+    private static  Map<Integer, List<Integer>> hdVerticalOrder =  new TreeMap<>();
+    private static  Map<Integer, Integer> hdBottomView =  new TreeMap<>();
 
     /**
      * Check BST
@@ -23,6 +27,32 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
         }
         return isBST(node.left, l, node) &&
                 isBST(node.right, node, r);
+    }
+
+    /**
+     * Time Complexity of hashing based solution can be considered as O(n) under the assumption
+     * that we have good hashing function that allows insertion and retrieval operations in O(1) time.
+     * @param node
+     */
+    private void verticalOrderTraversalOfBinaryTree(Node node) {
+        calculateHorizontalDistanceForVerticalOrder(node, 0);
+        hdVerticalOrder.entrySet().stream()
+                .forEach((entry -> System.out.println(entry.getValue())));
+
+    }
+
+    private void calculateHorizontalDistanceForVerticalOrder(Node node, int level) {
+        if(node==null) {
+            return;
+        }
+        List<Integer> nodes = hdVerticalOrder.get(level);
+        if(nodes==null) {
+            nodes = new ArrayList<>();
+        }
+        nodes.add((Integer) node.data);
+        hdVerticalOrder.put(level, nodes);
+        calculateHorizontalDistanceForVerticalOrder(node.left, level-1);
+        calculateHorizontalDistanceForVerticalOrder(node.right, level+1);
     }
 
     /**
@@ -53,6 +83,21 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
         rightViewOfBinaryTree(node.right, level + 1);
         rightViewOfBinaryTree(node.left, level + 1);
     }
+
+    private void BottomViewOfBinaryTree(Node node) {
+        calculateHorizontalDistanceForBottomView(node, 0);
+        System.out.println(hdBottomView);
+    }
+
+    private void calculateHorizontalDistanceForBottomView(Node node, int hd) {
+        if(node==null) {
+            return;
+        }
+        hdBottomView.put(hd, (Integer) node.data);
+        calculateHorizontalDistanceForBottomView(node.left, hd-1);
+        calculateHorizontalDistanceForBottomView(node.right, hd+1);
+    }
+
     /**
      * Level order traversal
      * Time Complexity: O(n) where n is number of nodes in the binary tree
@@ -82,21 +127,41 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
          *
          */
         BinaryTreeGeneric<Integer> treeL = new BinaryTreeGeneric<>();
-        treeL.root = new Node(10);
-        treeL.root.left = new Node(5);
-        treeL.root.left.right = new Node(8);
-        treeL.root.left.right.left = new Node(6);
-        treeL.root.left.right.right = new Node(9);
-        treeL.root.right = new Node(12);
-        treeL.root.right.right = new Node(13);
+//        treeL.root = new Node(10);
+//        treeL.root.left = new Node(5);
+//        treeL.root.left.right = new Node(8);
+//        treeL.root.left.right.left = new Node(6);
+//        treeL.root.left.right.right = new Node(9);
+//        treeL.root.right = new Node(12);
+//        treeL.root.right.right = new Node(13);
+//        //treeL.levelOrderPrint(treeL.root);
+//        treeL.leftViewOfBinaryTree(treeL.root, 1);
+//        System.out.println();
+//        treeL.rightViewOfBinaryTree(treeL.root, 1);
+//        System.out.println();
 
+        treeL.root = new Node(1);
+        treeL.root.left = new Node(2);
+        treeL.root.left.left = new Node(4);
+        treeL.root.left.right = new Node(5);
+        treeL.root.right = new Node(3);
+        treeL.root.right.left = new Node(6);
+        treeL.root.right.left.right = new Node(8);
+        treeL.root.right.right = new Node(7);
+        treeL.root.right.right.right = new Node(9);
+        treeL.verticalOrderTraversalOfBinaryTree(treeL.root);
 
-
-        //treeL.levelOrderPrint(treeL.root);
-        treeL.leftViewOfBinaryTree(treeL.root, 1);
-        System.out.println();
-        treeL.rightViewOfBinaryTree(treeL.root, 1);
-
+        treeL.root = new Node(1);
+        treeL.root.left = new Node(2);
+        treeL.root.left.left = new Node(4);
+        treeL.root.left.right = new Node(5);
+        treeL.root.right = new Node(3);
+        treeL.root.right.left = new Node(6);
+        treeL.root.right.left.right = new Node(8);
+        treeL.root.right.right = new Node(7);
+        treeL.root.right.right.right = new Node(9);
+        treeL.BottomViewOfBinaryTree(treeL.root);
+        
 //        BinaryTreeGeneric<String> notBST = new BinaryTreeGeneric<>();
 //        notBST.root = new Node("a");
 //        notBST.root.left = new Node("b");
@@ -124,6 +189,7 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
 //        BST.root.right.right.right = new Node("k");
 //        System.out.println(BST.isBST(BST.root, null, null));
     }
+
 
     static class Node {
         public Comparable data;
