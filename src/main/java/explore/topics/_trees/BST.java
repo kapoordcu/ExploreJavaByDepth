@@ -1,5 +1,7 @@
 package explore.topics._trees;
 
+import explore.topics._arrays.LeaderInArray;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,18 +15,52 @@ public class BST {
 
     public static void main(String[] args) {
         BST bst = new BST();
-        bst.insertBST(10);
-        bst.insertBST(12);
-        bst.insertBST(5);
-        bst.insertBST(13);
-        bst.insertBST(6);
-        bst.insertBST(9);
         bst.insertBST(8);
-        bst.inorder(root);
+        bst.insertBST(9);
+        bst.insertBST(2);
+        bst.insertBST(4);
+        bst.insertBST(7);
+        bst.insertBST(6);
+        bst.insertBST(1);
+        bst.insertBST(3);
+        bst.insertBST(5);
+        bst.preorder(root);
+        System.out.println();
+        System.out.println("Lowest Common Ancestor: " + bst.LowestCommonAncestor(root, 3, 7));
+        System.out.println("Lowest Common Ancestor: " + bst.LowestCommonAncestor(root, 6, 7));
+        System.out.println("Lowest Common Ancestor: " + bst.LowestCommonAncestor(root, 4, 5));
+        System.out.println("Lowest Common Ancestor: " + bst.LowestCommonAncestor(root, 4, 3));
+        System.out.println("Lowest Common Ancestor: " + bst.LowestCommonAncestor(root, 1, 7));
     }
 
-    private void leftView(TreeNode node) {
+    private void preorder(TreeNode node) {
+        if(node==null) {
+            return;
+        }
+        preorder(node.left);
+        System.out.print(node.value + " ");
+        preorder(node.right);
+    }
 
+    /**
+     * Lowest Common Ancestor in a BST
+     */
+    private int LowestCommonAncestor(TreeNode node, int a, int b) {
+        if(node==null) {
+            return -1;
+        }
+        if(a<node.value && b < node.value) {
+            return LowestCommonAncestor(node.left, a, b);
+        } else if(a>node.value && b > node.value) {
+            return LowestCommonAncestor(node.right, a, b);
+        } else if(a>node.value && b < node.value) {
+            return node.value;
+        } else if(a<node.value && b>node.value) {
+            return node.value;
+        } else if(node.value==a || node.value==b){
+            return node.value;
+        }
+        return -1;
     }
 
     private void insertBST(int value) {

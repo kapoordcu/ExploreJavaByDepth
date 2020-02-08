@@ -211,22 +211,32 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
 //        treeL.rightViewOfBinaryTree(treeL.root, 1);
 //        System.out.println();
 
-        treeL.root = new Node(1);
-        treeL.root.left = new Node(2);
-        treeL.root.left.left = new Node(4);
-        treeL.root.left.right = new Node(5);
-        treeL.root.right = new Node(3);
-        treeL.root.right.left = new Node(6);
-        treeL.root.right.left.right = new Node(8);
-        treeL.root.right.right = new Node(7);
-        treeL.root.right.right.right = new Node(9);
-        treeL.verticalOrderTraversalOfBinaryTree(treeL.root);
-        treeL.BottomViewOfBinaryTree(treeL.root);
-        System.out.println("Level order traverasal o(n^2)");
-        treeL.levelOrderTravesalSpiral(root);
+        treeL.root = new Node(8);
+        treeL.root.left = new Node(11);
+        treeL.root.left.left = new Node(1);
+        treeL.root.left.right = new Node(6);
+        treeL.root.left.left.right = new Node(9);
+        treeL.root.left.right.right = new Node(4);
+        treeL.root.right = new Node(12);
+        treeL.root.right.left = new Node(3);
+        treeL.root.right.left.right = new Node(7);
         System.out.println();
-        System.out.println(" Level order traverasal o(n) and o(n)");
-        treeL.levelOrderTravesalSpiralOnOn(root);
+
+        System.out.println("Lowest Common Ancestor: " + treeL.lowestCommonAncestor(root, 3, 7).data);
+        System.out.println("Lowest Common Ancestor: " + treeL.lowestCommonAncestor(root, 6, 7).data);
+        System.out.println("Lowest Common Ancestor: " + treeL.lowestCommonAncestor(root, 4, 12).data);
+        System.out.println("Lowest Common Ancestor: " + treeL.lowestCommonAncestor(root, 4, 3).data);
+        System.out.println("Lowest Common Ancestor: " + treeL.lowestCommonAncestor(root, 1, 6).data);
+//        treeL.verticalOrderTraversalOfBinaryTree(treeL.root);
+//        treeL.BottomViewOfBinaryTree(treeL.root);
+//        System.out.println("Level order traverasal o(n^2)");
+//        treeL.levelOrderTravesalSpiral(root);
+//        System.out.println();
+//        System.out.println(" Level order traverasal o(n) and o(n)");
+//        treeL.levelOrderTravesalSpiralOnOn(root);
+//        System.out.println();
+//        System.out.println("Connect Nodes at Same Level");
+//        treeL.connectNodeAtSameLevel(treeL.root);
 
 //        BinaryTreeGeneric<String> notBST = new BinaryTreeGeneric<>();
 //        notBST.root = new Node("a");
@@ -256,10 +266,98 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
 //        System.out.println(BST.isBST(BST.root, null, null));
     }
 
+    /**
+     * Lowest Common Ancestor in a Binary Tree
+     */
+    private Node lowestCommonAncestor(Node node, int n1, int n2) {
+        if (node == null) {
+            return null;
+        }
+        if (node.data.compareTo(n1)==0 || node.data.compareTo(n2)==0) {
+            return node;
+        }
+        Node left_lca = lowestCommonAncestor(node.left, n1, n2);
+        Node right_lca = lowestCommonAncestor(node.right, n1, n2);
+        if (left_lca!=null && right_lca!=null) {
+            return node;
+        }
+        return (left_lca != null) ? left_lca : right_lca;
+    }
+
+
+    private List<Integer> findPathFromRootToAnyNode(Node node, int a) {
+        List<Integer> list = new LinkedList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            Node poll = queue.poll();
+            if(poll.data.compareTo(a)==0) {
+                list.add(a);
+                return list;
+            } else {
+                list.add((int)poll.data);
+                if(poll.left!=null) {
+                    queue.add(poll.left);
+                }
+                if(poll.right!=null) {
+                    queue.add(poll.right);
+                }
+            }
+        }
+        return list;
+    }
+
+    private void connectNodeAtSameLevel(Node node) {
+        if(node==null) {
+            return;
+        }
+        Queue<Node> queue1 = new LinkedList<>();
+        Queue<Node> queue2 = new LinkedList<>();
+        queue1.add(node);
+        Node first = null;
+        Node second = null;
+        while (!queue1.isEmpty() || !queue2.isEmpty()) {
+            while (!queue1.isEmpty()) {
+                first = queue1.poll();
+                if(second!=null) {
+                    second.nextRight = first;
+                }
+                if(first.left!=null) {
+                    queue2.add(first.left);
+                }
+                if(first.right!=null) {
+                    queue2.add(first.right);
+                }
+                if(!queue1.isEmpty()) {
+                    second = queue1.poll();
+                    first.nextRight = second;
+                }
+            }
+            while (!queue2.isEmpty()) {
+                first = queue2.poll();
+                if(second!=null) {
+                    second.nextRight = first;
+                }
+                if(first.left!=null) {
+                    queue1.add(first.left);
+                }
+                if(first.right!=null) {
+                    queue1.add(first.right);
+                }
+                if(!queue2.isEmpty()) {
+                    second = queue2.poll();
+                    first.nextRight = second;
+                }
+            }
+        }
+    }
+
+
     static class Node {
         public Comparable data;
         public Node left;
         public Node right;
+        public Node nextRight;
 
         public Node(Comparable data) {
             this.data = data;
