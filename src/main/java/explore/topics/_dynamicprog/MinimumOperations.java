@@ -10,12 +10,21 @@ public class MinimumOperations {
     }
 
     private int findMinOps(int number) {
-        int i = 0;
-        while (Math.pow(2, i) < number) {
-            i++;
+        int cost = 0;
+        while (number!=0) {
+            if(number%2==0) {
+                cost += findMinOption(number-1);
+            } else {
+                cost +=  1 + findMinOption(number-1);
+            }
+            number = number/2;
         }
-        int value = (int) Math.pow(2, i-1);
-        int diff = number - value;
-        return i + diff;
+
+        return cost;
+    }
+
+    private int findMinOption(int number) {
+        int diff = number - number/2;
+        return Math.min(1, diff);
     }
 }
