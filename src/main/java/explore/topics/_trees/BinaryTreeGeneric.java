@@ -84,6 +84,77 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
         rightViewOfBinaryTree(node.left, level + 1);
     }
 
+    /**
+     * Time Complexity: Worst case time complexity of the above method is O(n^2).
+     * Worst case occurs in case of skewed trees.
+     * @param node
+     */
+    private void levelOrderTravesalSpiral(Node node) {
+        boolean leftToRight = true;
+        int height = heightOfTree(node);
+        for (int i = 1; i <=height ; i++) {
+            printLevel(node, i, leftToRight);
+            leftToRight = !leftToRight;
+        }
+    }
+
+    /**
+     * Time Complexity: Worst case time complexity of the above method is O(n^2).
+     * Worst case occurs in case of skewed trees.
+     * @param node
+     */
+    private void levelOrderTravesalSpiralOnOn(Node node) {
+        Stack<Node> stackLR = new Stack<>();
+        Stack<Node> stackRL = new Stack<>();
+        stackLR.push(node);
+        while (!stackLR.isEmpty() || !stackRL.isEmpty()) {
+            while (!stackLR.isEmpty()) {
+                Node pop = stackLR.pop();
+                System.out.print(pop.data + " ");
+                if (pop.left != null) {
+                    stackRL.push(pop.left);
+                }
+                if (pop.right != null) {
+                    stackRL.push(pop.right);
+                }
+            }
+
+            while (!stackRL.isEmpty()) {
+                Node pop = stackRL.pop();
+                System.out.print(pop.data + " ");
+                if (pop.right != null) {
+                    stackLR.push(pop.right);
+                }
+                if (pop.left != null) {
+                    stackLR.push(pop.left);
+                }
+            }
+        }
+    }
+
+    private void printLevel(Node node, int level, boolean leftToRight) {
+        if(node==null) {
+            return;
+        }
+        if(level==1) {
+            System.out.print(node.data + " ");
+        }
+        if(leftToRight) {
+            printLevel(node.left, level-1, leftToRight);
+            printLevel(node.right, level-1, leftToRight);
+        } else {
+            printLevel(node.right, level-1, leftToRight);
+            printLevel(node.left, level-1, leftToRight);
+        }
+    }
+
+    private int heightOfTree(Node node) {
+        if(node==null) {
+            return 0;
+        }
+        return Math.max(heightOfTree(node.left), heightOfTree(node.right)) + 1;
+    }
+
     private void BottomViewOfBinaryTree(Node node) {
         calculateHorizontalDistanceForBottomView(node, 0);
         System.out.println(hdBottomView);
@@ -150,18 +221,13 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
         treeL.root.right.right = new Node(7);
         treeL.root.right.right.right = new Node(9);
         treeL.verticalOrderTraversalOfBinaryTree(treeL.root);
-
-        treeL.root = new Node(1);
-        treeL.root.left = new Node(2);
-        treeL.root.left.left = new Node(4);
-        treeL.root.left.right = new Node(5);
-        treeL.root.right = new Node(3);
-        treeL.root.right.left = new Node(6);
-        treeL.root.right.left.right = new Node(8);
-        treeL.root.right.right = new Node(7);
-        treeL.root.right.right.right = new Node(9);
         treeL.BottomViewOfBinaryTree(treeL.root);
-        
+        System.out.println("Level order traverasal o(n^2)");
+        treeL.levelOrderTravesalSpiral(root);
+        System.out.println();
+        System.out.println(" Level order traverasal o(n) and o(n)");
+        treeL.levelOrderTravesalSpiralOnOn(root);
+
 //        BinaryTreeGeneric<String> notBST = new BinaryTreeGeneric<>();
 //        notBST.root = new Node("a");
 //        notBST.root.left = new Node("b");
@@ -189,7 +255,6 @@ public class BinaryTreeGeneric<Key extends Comparable<Key>> {
 //        BST.root.right.right.right = new Node("k");
 //        System.out.println(BST.isBST(BST.root, null, null));
     }
-
 
     static class Node {
         public Comparable data;
