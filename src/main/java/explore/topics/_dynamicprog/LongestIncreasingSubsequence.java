@@ -1,31 +1,31 @@
 package explore.topics._dynamicprog;
 
-public class LISubsequence {
+public class LongestIncreasingSubsequence {
     public static void main(String[] args) {
         int[] A = {10, 22, 9, 33, 21, 50, 41, 60, 80};
-        int[] A2 = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
-        LISubsequence liSubsequence = new LISubsequence();
+        int[] A2 = {0, 8, 4, 12, 2, 10, 6, 14, 1, 3, 11, 7, 15};
+        LongestIncreasingSubsequence liSubsequence = new LongestIncreasingSubsequence();
         System.out.println(liSubsequence.findMaxSubsequenceOn2(A, A.length));
-        System.out.println(liSubsequence.findMaxSubsequenceOn2(A, A.length));
+        System.out.println(liSubsequence.findMaxSubsequenceOn2(A2, A2.length));
         System.out.println(liSubsequence.findMaxSubsequenceOLongN(A, A.length));
         System.out.println(liSubsequence.findMaxSubsequenceOLongN(A2, A2.length));
     }
 
     private int findMaxSubsequenceOLongN(int[] A, int size) {
-        int[] tailTable = new int[size];
-        tailTable[0] = A[0];
-        int len = 1;
-        for (int i = 1; i < size; i++) {
-            if(A[i]<tailTable[0]) {
-                tailTable[0] = A[i];
-            } else if(A[i] > tailTable[len-1]) {
-                tailTable[len++] = A[i];
+        int highest = 1;
+        int[] T = new int[size];
+        T[0] = A[0];
+        for (int i = 1; i < A.length; i++) {
+            if(A[i]<T[0]) {
+                T[0] = A[i];
+            } else if(A[i] > T[highest-1]) {
+                T[highest++] = A[i];
             } else {
-                int index = ceilElementInArray(tailTable, 0, len-1, A[i]);
-                tailTable[index] = A[i];
+                int ceil = ceilElementInArray(T, 0, highest, A[i]);
+                T[ceil] = A[i];
             }
         }
-        return len;
+        return highest;
     }
 
     /**
