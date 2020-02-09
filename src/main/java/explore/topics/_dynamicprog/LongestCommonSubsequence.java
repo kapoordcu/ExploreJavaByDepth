@@ -5,10 +5,10 @@ public class LongestCommonSubsequence {
         LongestCommonSubsequence commonSubsequence = new LongestCommonSubsequence();
         String[] A = {};
         String[] B = {};
-        System.out.println(commonSubsequence.findLongest(A, B));
+        System.out.println(commonSubsequence.findLongestCommonSubsequence(A, B));
     }
 
-    private int findLongest(String[] A, String[] B) {
+    private int findLongestCommonSubsequence(String[] A, String[] B) {
         return  4;
     }
 }
