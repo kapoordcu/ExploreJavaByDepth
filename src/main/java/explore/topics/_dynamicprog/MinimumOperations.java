@@ -19,7 +19,6 @@ public class MinimumOperations {
             }
             number = number/2;
         }
-
         return cost;
     }
 
