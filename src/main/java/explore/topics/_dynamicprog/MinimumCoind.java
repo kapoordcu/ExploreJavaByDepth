@@ -10,11 +10,13 @@ public class MinimumCoind {
         coins.greedyApproach(D1, 43);
         System.out.println(coinCount);
 
-        int[] deno = { 5, 9, 6, 1 };
-        System.out.println(coins.findMinimumCoinsRandomArray(deno, 17));
-        System.out.println(coins.findMinimumCoinsRandomArray(deno, 11));
-        System.out.println(coins.findMinimumCoinsRandomArray(deno, 9));
-        System.out.println(coins.findMinimumCoinsRandomArray(deno, 10));
+        int[] D2 = { 5, 9, 6, 1 };
+        int[] D3 = { 4, 3, 1};
+        System.out.println(coins.findMinimumCoinsRandomArray(D2, 17));
+        System.out.println(coins.findMinimumCoinsRandomArray(D2, 11));
+        System.out.println(coins.findMinimumCoinsRandomArray(D2, 9));
+        System.out.println(coins.findMinimumCoinsRandomArray(D2, 10));
+        System.out.println(coins.findMinimumCoinsRandomArray(D3, 7));
 
     }
 
