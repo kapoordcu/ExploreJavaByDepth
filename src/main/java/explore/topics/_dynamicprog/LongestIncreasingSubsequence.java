@@ -15,7 +15,7 @@ public class LongestIncreasingSubsequence {
         int highest = 1;
         int[] T = new int[size];
         T[0] = A[0];
-        for (int i = 1; i < A.length; i++) {
+        for (int i = 1; i < size; i++) {
             if(A[i]<T[0]) {
                 T[0] = A[i];
             } else if(A[i] > T[highest-1]) {
@@ -48,11 +48,11 @@ public class LongestIncreasingSubsequence {
     }
 
     private int findMaxSubsequenceOn2(int[] A, int length) {
-        int[] maxLen = new int[A.length];
-        for (int i = 0; i < maxLen.length; i++) {
+        int[] maxLen = new int[length];
+        for (int i = 0; i < length; i++) {
             maxLen[i] = 1;
         }
-        for (int i = 1; i < A.length; i++) {
+        for (int i = 1; i < length; i++) {
             for (int j = 0; j < i; j++) {
                 if(A[i]>A[j]) {
                     maxLen[i] = Math.max(maxLen[j] + 1, maxLen[i]);
@@ -60,7 +60,7 @@ public class LongestIncreasingSubsequence {
             }
         }
         int max = 0;
-        for (int i = 0; i < maxLen.length; i++) {
+        for (int i = 0; i < length; i++) {
             max = Math.max(max, maxLen[i]);
         }
         return max;
