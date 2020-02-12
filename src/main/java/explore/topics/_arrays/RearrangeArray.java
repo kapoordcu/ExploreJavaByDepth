@@ -10,6 +10,15 @@ public class RearrangeArray {
         reArrangeWithO1Space(arr);
     }
 
+    private static void reArrangeWithO1Unsorted(int[] A) {
+        int N =  A.length;
+        for (int i = 0; i < N/2; i++) {
+            if(2*i+i<N) {
+                int temp = A[2*i+1];
+                A[2*i+1] = A[i];
+            }
+        }
+    }
     private static void reArrangeWithO1Space(int[] arr) {
         int min = arr[0];
         int max = arr[arr.length-1];

@@ -3,11 +3,14 @@ package explore.topics._arrays;
 public class TrappedWater {
 
     public static void main(String[] args) {
-        int arr[] = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
         TrappedWater water = new TrappedWater();
+        int arr[] = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
         System.out.println(water.maxWaterNaive(arr, arr.length));
         System.out.println(water.maxWaterAuxilarryArray(arr, arr.length));
         System.out.println(water.maxWaterON(arr, arr.length));
+
+        int[] arr2 = {3,0,0,2,0,4};
+        System.out.println(water.maxWaterAuxilarryArray(arr2, arr2.length));
     }
 
     public int maxWaterNaive(int arr[], int n) {
