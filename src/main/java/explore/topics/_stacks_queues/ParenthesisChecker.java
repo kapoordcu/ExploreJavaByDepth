@@ -3,46 +3,42 @@ package explore.topics._stacks_queues;
 import java.util.Stack;
 
 public class ParenthesisChecker {
-    public static void main(String[] args) {
-        String b1 = "{([])}";
-        String b2 = "{}";
-        String b3 = "()}";
 
-        ParenthesisChecker checker = new ParenthesisChecker();
-
-        System.out.println(checker.isBalanced(b1));
-        System.out.println(checker.isBalanced(b2));
-        System.out.println(checker.isBalanced(b3));
-    }
-
-    private boolean isBalanced(String str) {
-        Stack exprStack = new Stack();
-        for (char ch : str.toCharArray()) {
-            if(ch=='{' || ch=='[' || ch=='(') {
-                exprStack.push(ch);
-            }
-            if(ch=='}' || ch==']' || ch==')') {
-                if(!exprStack.isEmpty()) {
-                    char pop = (char) exprStack.pop();
-                    if(!isMatchingPair(pop, ch)) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
+    /**
+     * Time Complexity: O(n)
+     * Auxiliary Space: O(n) for stack.
+     */
+    public static boolean isValid(String pattern) {
+        Stack<Character> stack = new Stack<>();
+        for(Character ch: pattern.toCharArray()) {
+            if(!stack.isEmpty()) {
+                checkIfMismatchFound(stack, ch);
+            } else {
+                stack.push(ch);
             }
         }
-        return exprStack.isEmpty();
+        return stack.isEmpty();
     }
 
-    private boolean isMatchingPair(char pop, char ch) {
-        if(ch==']' && pop=='[') {
-            return true;
-        } else if(ch=='}' && pop=='{') {
-            return true;
-        } else if(ch==')' && pop=='(') {
+    private static void checkIfMismatchFound(Stack<Character> stack, Character ch) {
+        Character peek = stack.peek();
+        if(checkIFMatchingCharIsPopped(peek, ch)) {
+            stack.pop();
+        } else {
+            stack.push(ch);
+        }
+    }
+
+    private static boolean checkIFMatchingCharIsPopped(Character pop, Character ch) {
+        if(pop=='{' && ch=='}' ||
+                pop=='[' && ch==']' ||
+                pop=='(' && ch==')' ) {
             return true;
         }
+        return false;
+    }
+
+    public boolean ifSame(Character inStack, Character matchingChar) {
         return false;
     }
 }
