@@ -6,11 +6,13 @@ public class MaxRectangleAreaFromHistogram {
     public static void main(String[] args) {
         int[] hist = {1,2,1,3,3,4,1};
         int[] histStack = {2, 1,2, 3, 1};
-        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxArea(hist));
-        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxArea(histStack));
-
-        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxAreaStack(hist));
-        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxAreaStack(histStack));
+        int[] histStack2 = {6,2,5,4,5,1,6};
+//        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxArea(hist));
+//        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxArea(histStack));
+//
+//        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxAreaStack(hist));
+//        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxAreaStack(histStack));
+        System.out.println(MaxRectangleAreaFromHistogram.calculateMaxAreaStack(histStack2));
 
     }
 
