@@ -1,21 +1,31 @@
 package explore.topics._geometry;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class QuadApp {
     public static Random rand = new Random();
+    public static int TOTAL_POINTS = 100000;
+    public static int RANGE_RECT_WIDTH = 200;
+    public static int RANGE_RECT_HEIGHT = 200;
+
     public static void main(String[] args) {
-        int width = 200;
-        int height = 200;
-        Rect boundary = new Rect(new Point(200, 200), width, height);
+        Rect boundary = new Rect(new Point(200, 200), RANGE_RECT_WIDTH, RANGE_RECT_HEIGHT);
         QuadTree qTree = new QuadTree(boundary, 4);
-        for (int i = 0; i < 1000; i++) {
-            Point point = new Point(rand.nextInt(width), rand.nextInt(height));
+        for (int i = 0; i < TOTAL_POINTS; i++) {
+            Point point = new Point(rand.nextInt(RANGE_RECT_WIDTH), rand.nextInt(RANGE_RECT_HEIGHT));
             qTree.insert(point);
         }
-        System.out.println(qTree);
+
+        //Point center = new Point(rand.nextInt(250), rand.nextInt(250));
+        int rangerectX = rand.nextInt(RANGE_RECT_WIDTH);
+        int rangerectY = rand.nextInt(RANGE_RECT_HEIGHT);
+        Point center = new Point(rangerectX, rangerectY);
+        Rect range = new Rect(center, 100, 100);
+        List<Point> intersactionAreaPoints = new ArrayList<>();
+        List<Point> points = qTree.query(range, intersactionAreaPoints);
+        System.out.println("The rectangle range is (" + rangerectX + " , " + rangerectY + ") from a sample space ("
+                + RANGE_RECT_WIDTH + " , " + RANGE_RECT_HEIGHT + ")");
+        System.out.println(points.size() + " points (out of " + TOTAL_POINTS + ") found in the intersection area" );
     }
 }
 
@@ -34,13 +44,12 @@ class QuadTree {
         this.capacity = capacity;
         this.points = new ArrayList<>();
         this.divided = false;
-        this.northEast = null;
-        this.northWest = null;
-        this.southWest = null;
-        this.southEast = null;
     }
 
     public boolean insert(Point point) {
+        if(!this.boundary.contains(point)) {
+            return false;
+        }
         if(this.points.size()<capacity) {
             this.points.add(point);
             return true;
@@ -78,6 +87,25 @@ class QuadTree {
 
         this.divided = true;
     }
+
+    public List<Point> query(Rect range, List<Point> pointsIntersect) {
+        if(!this.boundary.intersects(range)) {
+            return pointsIntersect;
+        } else {
+            for (Point p:  this.points) {
+                if(range.contains(p)) {
+                    pointsIntersect.add(p);
+                }
+            }
+            if(this.divided) {
+                this.northEast.query(range, pointsIntersect);
+                this.northWest.query(range, pointsIntersect);
+                this.southWest.query(range, pointsIntersect);
+                this.southEast.query(range, pointsIntersect);
+            }
+        }
+        return pointsIntersect;
+    }
 }
 
 class Rect {
@@ -89,6 +117,20 @@ class Rect {
         this.center = center;
         this.width = width;
         this.height = height;
+    }
+
+    public boolean intersects(Rect range) {
+        return !(range.center.x - range.width/2 > this.center.x + this.width/2 ||
+                range.center.x + range.width/2 < this.center.x - this.width/2 ||
+                range.center.y - range.height/2 > this.center.y + this.height/2 ||
+                range.center.y + range.height/2 < this.center.y - this.height/2);
+    }
+
+    public boolean contains(Point point) {
+        return (point.x >= this.center.x-this.width/2 &&
+                point.x <= this.center.x+this.width/2 &&
+                point.y >= this.center.y-this.height/2 &&
+                point.y <= this.center.y+this.height/2) ;
     }
 }
 
