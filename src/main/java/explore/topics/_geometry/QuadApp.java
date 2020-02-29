@@ -4,7 +4,7 @@ import java.util.*;
 
 public class QuadApp {
     public static Random rand = new Random();
-    public static int TOTAL_POINTS = 100000;
+    public static int TOTAL_POINTS = 1000000;
     public static int RANGE_RECT_WIDTH = 200;
     public static int RANGE_RECT_HEIGHT = 200;
 

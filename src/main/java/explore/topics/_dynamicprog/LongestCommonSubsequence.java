@@ -5,23 +5,23 @@ public class LongestCommonSubsequence {
         LongestCommonSubsequence commonSubsequence = new LongestCommonSubsequence();
         String A = "abcdefghij";
         String B = "ecdgi";
-        //System.out.println(commonSubsequence.LCSUsingRecursion(A, B, 0, 0));
+        System.out.println(commonSubsequence.LCSUsingRecursion(A, B, 0, 0));
         System.out.println(commonSubsequence.LCSUsingDP(A, B, A.length(), B.length()));
     }
-//
-//    /**
-//     *
-//        Exponential Time taking problem
-//     */
-//    private int LCSUsingRecursion(String[] A, String[] B, int i, int j) {
-//        if(i>= A.length || j>=B.length) {
-//            return 0;
-//        } else if(A[i] == B[j]) {
-//            return  1 + LCSUsingRecursion(A, B, i+1, j+1);
-//        } else {
-//            return Math.max(LCSUsingRecursion(A, B, i+1, j), LCSUsingRecursion(A, B, i, j+1));
-//        }
-//    }
+
+    /**
+     *
+        Exponential Time taking problem
+     */
+    private int LCSUsingRecursion(String A, String B, int i, int j) {
+        if(i>= A.length() || j>=B.length()) {
+            return 0;
+        } else if(A.charAt(i) == B.charAt(j)) {
+            return  1 + LCSUsingRecursion(A, B, i+1, j+1);
+        } else {
+            return Math.max(LCSUsingRecursion(A, B, i+1, j), LCSUsingRecursion(A, B, i, j+1));
+        }
+    }
 
     /**
      *
