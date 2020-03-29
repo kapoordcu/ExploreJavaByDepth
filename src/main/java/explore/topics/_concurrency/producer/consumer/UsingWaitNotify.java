@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-public class ProducerConsumerUsingWaitNotify {
+public class UsingWaitNotify {
     public static Integer CAP = 10;
     public static Random random = new Random();
     private static Queue<Integer> queue = new LinkedList<>();
@@ -30,14 +30,14 @@ class Producer implements Runnable {
     public void run() {
         while (true){
             synchronized (sharedQ) {
-                while(sharedQ.size()== ProducerConsumerUsingWaitNotify.CAP) {
+                while(sharedQ.size()== UsingWaitNotify.CAP) {
                     try {
                         sharedQ.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                int itemAdded = ProducerConsumerUsingWaitNotify.random.nextInt(ProducerConsumerUsingWaitNotify.CAP);
+                int itemAdded = UsingWaitNotify.random.nextInt(UsingWaitNotify.CAP);
                 sharedQ.add(itemAdded);
                 System.out.println("Produced and now  Size:" + sharedQ.size());
                 sharedQ.notifyAll();
