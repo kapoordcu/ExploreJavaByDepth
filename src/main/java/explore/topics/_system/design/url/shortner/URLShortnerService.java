@@ -1,10 +1,16 @@
 package explore.topics._system.design.url.shortner;
 
+import java.security.NoSuchAlgorithmException;
+
 public class URLShortnerService {
     private URLMapping urlSave = new URLMapping();
-    private HashingStrategy strategy = new Base64Strategy();
+    private HashingStrategy strategy;
 
-    public String shortenedURL(String url) {
+    public URLShortnerService(HashingStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public String shortenedURL(String url) throws NoSuchAlgorithmException {
         String shortUrl = urlSave.getShortUrl(url);
         if(shortUrl==null) {
             shortUrl = strategy.generateShortenedURL(url);
