@@ -12,11 +12,4 @@ public class RoundRobin implements LoadBalancer {
         Server server = serverList.get(slot.getAndIncrement()%serverList.size());
         return server.getIp();
     }
-
-    public static void main(String[] args) {
-        RoundRobin roundRobin = new RoundRobin();
-        for (int i = 0; i < 100; i++) {
-            System.out.println(roundRobin.getServerAddress(""));
-        }
-    }
 }
