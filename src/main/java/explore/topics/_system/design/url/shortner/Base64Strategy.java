@@ -2,10 +2,10 @@ package explore.topics._system.design.url.shortner;
 
 import java.util.Random;
 
-public class IDUtils {
+public class Base64Strategy implements HashingStrategy {
     private static Random random = new Random();
 
-    public static String generateShortenedURL(String url) {
+    public String generateShortenedURL(String url) {
         int seed = random.nextInt(Integer.MAX_VALUE);
         String hash = base62(seed);
         return "www.goo.gl/" + hash;
