@@ -1,6 +1,5 @@
 package explore.topics._system.design.load.balancer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -9,13 +8,15 @@ public class RoundRobin implements LoadBalancer {
 
     @Override
     public String getServerAddress(String clientIp) {
-        List<String> ipList = new ArrayList<>(ServerDiscovery.map.values());
-//        synchronized (slot) {
-//            if(slot>ipList.size()-1) {
-//                slot = 0;
-//            }
-//            return ipList.get(slot++);
-//        }
-        return ipList.get(slot.getAndIncrement() % ServerDiscovery.map.size());
+        List<Server> serverList = ServerDiscovery.serverList;
+        Server server = serverList.get(slot.getAndIncrement()%serverList.size());
+        return server.getIp();
+    }
+
+    public static void main(String[] args) {
+        RoundRobin roundRobin = new RoundRobin();
+        for (int i = 0; i < 100; i++) {
+            System.out.println(roundRobin.getServerAddress(""));
+        }
     }
 }

@@ -1,15 +1,20 @@
 package explore.topics._system.design.load.balancer;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ServerDiscovery {
-    public static ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
+    public final static List<Server> serverList = new LinkedList<>();
     static {
-        map.putIfAbsent(1, "192.168.0.1");
-        map.putIfAbsent(2, "192.168.0.2");
-        map.putIfAbsent(3, "192.168.0.3");
-        map.putIfAbsent(4, "192.168.0.4");
-        map.putIfAbsent(5, "192.168.0.5");
-        map.putIfAbsent(6, "192.168.0.6");
+        serverList.add(new Server("192.168.0.1", 1));
+        serverList.add(new Server("192.168.0.2", 4));
+        serverList.add(new Server("192.168.0.3", 2));
+        serverList.add(new Server("192.168.0.4", 9));
+        serverList.add(new Server("192.168.0.5", 2));
+        serverList.add(new Server("192.168.0.6", 3));
+        serverList.add(new Server("192.168.0.7", 1));
+        serverList.add(new Server("192.168.0.8", 1));
+        serverList.add(new Server("192.168.0.9", 1));
+        serverList.add(new Server("192.168.0.10", 1));
     }
 }
