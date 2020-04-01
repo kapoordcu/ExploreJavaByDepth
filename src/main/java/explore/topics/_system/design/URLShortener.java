@@ -24,16 +24,6 @@ public class URLShortener {
         return null;
     }
 
-    public static String base62(Integer decimal) {
-        char[] s = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        String hash_str = "";
-        while (decimal>0) {
-            hash_str = s[decimal%62] + hash_str;
-            decimal /= 62;
-        }
-        return hash_str;
-    }
-
     //127.0.0.1
     public static String ipToHash(String ip) {
         String ipHash = Arrays.stream(ip.split("\\."))
