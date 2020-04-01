@@ -9,11 +9,12 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertTrue;
 
 public class RoundRobinTest {
-    private static Integer REQUEST_COUNT = 5;
+    private static Integer REQUEST_COUNT = 113;
     private static Integer THREAD_COUNT = 8;
     private static long AWAIT_TERMINATION = 2000;
+    public static String EXPECTED_LAST_SERVER = "";
     private RoundRobin roundRobin = new RoundRobin();
-    
+
     @Test
     public void setup() throws InterruptedException {
         ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_COUNT);
@@ -21,7 +22,12 @@ public class RoundRobinTest {
             threadPool.submit(new RRtask(roundRobin));
         }
         threadPool.awaitTermination(AWAIT_TERMINATION, TimeUnit.MILLISECONDS);
-        assertTrue(roundRobin.slot==REQUEST_COUNT%ServerDiscovery.map.size());
+        int serverSelected = REQUEST_COUNT % ServerDiscovery.map.size();
+        if(serverSelected==0) {
+            serverSelected = ServerDiscovery.map.size();
+        }
+        assertTrue(EXPECTED_LAST_SERVER
+                .equalsIgnoreCase(ServerDiscovery.map.get(serverSelected)));
     }
 }
 
@@ -34,6 +40,6 @@ class RRtask  implements Runnable {
 
     @Override
     public void run() {
-        roundRobin.getServerAddress("");
+        RoundRobinTest.EXPECTED_LAST_SERVER = roundRobin.getServerAddress("");
     }
 }
