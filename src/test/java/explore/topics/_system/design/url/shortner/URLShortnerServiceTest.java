@@ -35,11 +35,19 @@ public class URLShortnerServiceTest {
     }
 
     @Test
+    public void encodeAndDecodeURL() throws NoSuchAlgorithmException {
+        URLShortnerService service = new URLShortnerService(new Base64Strategy());
+        String generatedURL1 = service.shortenedURL(URL1);
+        String origin = service.originalURL(generatedURL1);
+        assertTrue(URL1.equalsIgnoreCase(origin));
+    }
+
+    @Test
     public void checkURLMD5() throws InterruptedException, NoSuchAlgorithmException {
         URLShortnerService service = new URLShortnerService(new Md5Strategy());
-        String generatedURL1 = service.shortenedURL(URLShortnerServiceTest.URL1);
-        String generatedURL2 = service.shortenedURL(URLShortnerServiceTest.URL1_COPY);
-        String generatedURL3 = service.shortenedURL(URLShortnerServiceTest.URL3);
+        String generatedURL1 = service.shortenedURL(URL1);
+        String generatedURL2 = service.shortenedURL(URL1_COPY);
+        String generatedURL3 = service.shortenedURL(URL3);
         Thread[] threads = new Thread[10];
         for (int i = 0; i < 10; i++) {
             threads[i] = new Thread(new ShortURLTAsk(service));

@@ -20,9 +20,10 @@ public class URLShortnerService {
     }
 
     public String originalURL(String shortUrl) {
-        return urlSave.urlMappings.values()
+        return urlSave.urlMappings.entrySet()
                 .stream()
-                .filter(e -> e.equals(shortUrl))
+                .filter(e -> e.getValue().equals(shortUrl))
+                .map(entry -> entry.getKey())
                 .findFirst()
                 .orElse(null);
     }
