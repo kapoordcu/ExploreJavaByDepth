@@ -18,14 +18,11 @@ public class Scatter {
     private Set<Integer> getPrices(int prodId) throws InterruptedException {
         Set<Integer> prices = Collections.synchronizedSet(new HashSet<>());
         CountDownLatch latch = new CountDownLatch(3);
-
+        // we have 3 tasks, give the latch to all the 3 tasks
         threadPool.submit(new PriceGatherTask("url1", prodId, prices, latch));
         threadPool.submit(new PriceGatherTask("url2", prodId, prices, latch));
         threadPool.submit(new PriceGatherTask("url3", prodId, prices, latch));
-
         latch.await(3, TimeUnit.SECONDS); //wait for every task to count down = 0
-
-        //Thread.sleep(3000); //after timeout return the prices
         return prices; // will wait  even if all prices have arrived
     }
 
@@ -71,8 +68,6 @@ class PriceGatherTask implements Runnable {
     public void run() {
         int price = 0;
         // http call returns price
-        // Pricess added after timeour are ingnore
-        // since  main thread already returned
         prices.add(new Random().nextInt(100));
         latch.countDown(); //Add price and latch down, I am done
     }
