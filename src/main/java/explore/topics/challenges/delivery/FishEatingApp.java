@@ -1,45 +1,23 @@
 package explore.topics.challenges.delivery;
 
+import org.junit.Test;
+
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
 
-public class DHApp {
-    public static void main(String[] args) {
-        DHApp app = new DHApp();
-        int[] solution = app.solution(1, 2);
-        System.out.println();
-    }
+import static org.junit.Assert.assertTrue;
 
-    public int[] solution(int X, int Y) {
-        List<Integer> res = new LinkedList<>();
-        for (int i = 0; i <= X; i++) {
-            if (4 * i > Y) continue;
-            int j = X - i;
-            if (4 * i + 2 * j == Y) {
+public class FishEatingApp {
 
-                res.add(j);
-                res.add(i);
-                return res.stream().mapToInt(k -> k).toArray();
-            }
-        }
-        return res.stream().mapToInt(k -> k).toArray();
-    }
-
-    public int solution2(String S) {
-        Map<Character, List<Character>> eatingMap = new HashMap<>();
-        eatingMap.put('A', Arrays.asList('B', 'C'));
-        eatingMap.put('B', Arrays.asList('D', 'C'));
-        eatingMap.put('C', Arrays.asList('D'));
-
+    public static int solution(String S) {
+        Map<Character, List<Character>> eatingMap = initDataFish();
         Stack<Character> fishStack = new Stack<Character>();
         while (true) {
             int length = S.length();
-            S = startEating(S, S.length(), fishStack, eatingMap);
+            S = startEating(S, fishStack, eatingMap);
             if(fishStack.size()==length) {
                 return fishStack.size();
             }
@@ -47,7 +25,14 @@ public class DHApp {
         }
     }
 
-    private String startEating(String s, int length, Stack<Character> fishStack
+    private static Map<Character, List<Character>> initDataFish() {
+        return Map.of('A', Arrays.asList('B', 'C'),
+                'B', Arrays.asList('D', 'C'),
+                'C', Arrays.asList('D'));
+
+    }
+
+    private static String startEating(String s, Stack<Character> fishStack
             , Map<Character, List<Character>> eatingMap) {
 
         for (char c : s.toCharArray()) {
@@ -67,5 +52,23 @@ public class DHApp {
         StringBuilder returnString = new StringBuilder();
         fishStack.stream().forEach(character -> returnString.append(character));
         return returnString.toString();
+    }
+
+    @Test
+    public void getSolution1() {
+        int solution = FishEatingApp.solution("ABCD");
+        assertTrue(solution==2);
+    }
+
+    @Test
+    public void getSolution2() {
+        int solution = FishEatingApp.solution("ACCD");
+        assertTrue(solution==2);
+    }
+
+    @Test
+    public void getSolution3() {
+        int solution = FishEatingApp.solution("BDC");
+        assertTrue(solution==1);
     }
 }
