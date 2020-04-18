@@ -1,31 +1,55 @@
 package explore.topics._dynamicprog;
 
-public class LongestIncreasingSubsequence {
-    public static void main(String[] args) {
-        int[] A = {10, 22, 9, 33, 21, 50, 41, 60, 80};
-        int[] A2 = {0, 8, 4, 12, 2, 10, 6, 14, 1, 3, 11, 7, 15};
-        LongestIncreasingSubsequence liSubsequence = new LongestIncreasingSubsequence();
-        System.out.println(liSubsequence.findMaxSubsequenceOn2(A, A.length));
-        System.out.println(liSubsequence.findMaxSubsequenceOn2(A2, A2.length));
-        System.out.println(liSubsequence.findMaxSubsequenceOLongN(A, A.length));
-        System.out.println(liSubsequence.findMaxSubsequenceOLongN(A2, A2.length));
-    }
+import org.junit.Test;
 
-    private int findMaxSubsequenceOLongN(int[] A, int size) {
-        int highest = 1;
-        int[] T = new int[size];
-        T[0] = A[0];
-        for (int i = 1; i < size; i++) {
-            if(A[i]<T[0]) {
-                T[0] = A[i];
-            } else if(A[i] > T[highest-1]) {
-                T[highest++] = A[i];
-            } else {
-                int ceil = ceilElementInArray(T, 0, highest, A[i]);
-                T[ceil] = A[i];
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
+
+public class LongestIncreasingSubsequence {
+    /**
+     * O(n*n) longest Increasing Sequence
+     * Will only print the LENGTH, Not the sequence
+     */
+    public static int[] longestIncreasingSubSequence(int[] arr) {
+        List<Integer> licList = new ArrayList<>();
+        int[] len = new int[arr.length];
+        Arrays.fill(len, 1);
+
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 0; j <= i; j++) {
+                if(arr[i] > arr[j]) {
+                    len[i] = Math.max(len[i], len[j]+1);
+                }
             }
         }
-        return highest;
+        int next = 0;
+        for (int i = 0; i < len.length; i++) {
+            if(len[i] == next + 1) {
+                licList.add(arr[i]);
+                next += 1;
+            }
+        }
+        return licList.stream().mapToInt(i-> i).toArray();
+    }
+
+    public static int[] LICLogN(int[] arr) {
+        int[] LIC = new int[arr.length];
+        LIC[0] = arr[0];
+        int max = 1;
+        for (int i = 1; i < arr.length; i++) {
+            if(arr[i] < LIC[0]) {
+                LIC[0] = arr[i];
+            } else if(arr[i] > LIC[max-1]) {
+                LIC[max++] = arr[i];
+            } else {
+                int ceiling = findPosition(LIC, 0, max, arr[i]);
+                LIC[ceiling] = arr[i];
+            }
+        }
+        return Arrays.stream(LIC).filter(n-> n!=0).toArray();
     }
 
     /**
@@ -35,34 +59,73 @@ public class LongestIncreasingSubsequence {
      than or equal to x, and the floor is the greatest element smaller than or equal to x.
      it requires log n time to find the ceiling
      */
-    private int ceilElementInArray(int A[],int start,int end,int key){
+    private static int findPosition(int[] LIC, int start, int end, int valueToInput) {
         while (end-start>1) {
-            int mid = start + (end-start)/2;
-            if(A[mid] >= key) {
+            int mid  = start + (end-start)/2;
+            if(LIC[mid]>=valueToInput) {
                 end = mid;
             } else {
                 start = mid;
             }
         }
         return end;
+
     }
 
-    private int findMaxSubsequenceOn2(int[] A, int length) {
-        int[] maxLen = new int[length];
-        for (int i = 0; i < length; i++) {
-            maxLen[i] = 1;
-        }
-        for (int i = 1; i < length; i++) {
-            for (int j = 0; j < i; j++) {
-                if(A[i]>A[j]) {
-                    maxLen[i] = Math.max(maxLen[j] + 1, maxLen[i]);
-                }
-            }
-        }
-        int max = 0;
-        for (int i = 0; i < length; i++) {
-            max = Math.max(max, maxLen[i]);
-        }
-        return max;
+
+    @Test
+    public void LICTest() {
+        int[] arr = {1, 3, 4, 5, 6, 5, 4, 7, 2, 7};
+        int[] solution = LongestIncreasingSubsequence.longestIncreasingSubSequence(arr);
+        assertTrue(solution.length==6);
+    }
+
+    @Test
+    public void LICTestLICLogN() {
+        int[] arr = {1, 3, 4, 5, 6, 5, 4, 7, 2, 7};
+        int[] solution = LongestIncreasingSubsequence.LICLogN(arr);
+        assertTrue(solution.length==6);
+    }
+
+    @Test
+    public void LICTestSingleElement() {
+        int[] arr = {1};
+        int solution[] = LongestIncreasingSubsequence.longestIncreasingSubSequence(arr);
+        assertTrue(solution.length==1);
+    }
+
+    @Test
+    public void LICTestSingleElementLogN() {
+        int[] arr = {1};
+        int solution[] = LongestIncreasingSubsequence.LICLogN(arr);
+        assertTrue(solution.length==1);
+    }
+
+    @Test
+    public void LICTestTwoElementDecreasing() {
+        int[] arr = {1, -1};
+        int solution[] = LongestIncreasingSubsequence.longestIncreasingSubSequence(arr);
+        assertTrue(solution.length==1);
+    }
+
+    @Test
+    public void LICTestTwoElementDecreasingLogN() {
+        int[] arr = {1, -1};
+        int solution[] = LongestIncreasingSubsequence.LICLogN(arr);
+        assertTrue(solution.length==1);
+    }
+
+    @Test
+    public void LICTestTwoElementIncreasing() {
+        int[] arr = {1, 2};
+        int solution[] = LongestIncreasingSubsequence.longestIncreasingSubSequence(arr);
+        assertTrue(solution.length==2);
+    }
+
+    @Test
+    public void LICTestTwoElementIncreasingLogN() {
+        int[] arr = {1, 2};
+        int solution[] = LongestIncreasingSubsequence.LICLogN(arr);
+        assertTrue(solution.length==2);
     }
 }
