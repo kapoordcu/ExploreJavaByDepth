@@ -14,6 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static org.junit.Assert.assertTrue;
 
 public class StringSortByCount {
@@ -47,20 +48,18 @@ public class StringSortByCount {
     }
 
     public static String featuredProductJava8(List<String> products) {
-        Set<String> results;
-
-        Map<String, Long> collect = products.stream()
-                .collect(Collectors.groupingBy(Function.identity(), counting()));
-        Optional<Long> max = collect.entrySet().stream().map(entry -> entry.getValue())
-                .max(Comparator.comparingInt(Long::intValue));
-        if(max.isPresent()) {
-            int maxValue = Math.toIntExact(max.get());
-            results = collect.entrySet()
+        Map<String, Long> groupByCount = products.stream()
+                .collect(groupingBy(Function.identity(), counting()));
+        Optional<Long> maxProduct = groupByCount.values().stream().max(Long::compareTo);
+        if(maxProduct.isPresent()) {
+            int nextDayPromotion = maxProduct.get().intValue();
+            TreeSet<String> promotionSet = groupByCount.entrySet()
                     .stream()
-                    .filter(entry -> entry.getValue() == maxValue)
+                    .filter(entry -> entry.getValue() == nextDayPromotion)
                     .map(entry -> entry.getKey())
-                    .collect(Collectors.toSet());
-            return (String) results.toArray()[results.size()-1];
+                    .collect(Collectors.toCollection(() -> new
+                            TreeSet<>(Comparator.comparing(String::valueOf))));
+            return promotionSet.last();
         }
         return null;
     }
