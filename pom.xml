@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>sql-native</module>
+        <module>hacker-rank</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

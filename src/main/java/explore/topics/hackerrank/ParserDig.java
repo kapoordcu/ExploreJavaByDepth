@@ -5,18 +5,20 @@ import java.util.*;
 public class ParserDig {
     public static void main(String[] args) {
         ParserDig pg = new ParserDig();
+        System.out.println(pg.countPalindrome("aaa"));
+        System.out.println(pg.countPalindrome("abccba"));
+        System.out.println(pg.countPalindrome("daata"));
         //System.out.println(pg.countPalindrome("tacocat"));
-        System.out.println(pg.carParkingRoof(Arrays.asList(6L, 2L, 12L, 7L), 3));
-        List<Integer> articles = Arrays.asList(2,2,3,4);
-        List<Integer> iv = Arrays.asList(2,4,4,5);
-
-        pg.maximumLearning(iv, articles, 15);
+//        System.out.println(pg.carParkingRoof(Arrays.asList(6L, 2L, 12L, 7L), 3));
+//        List<Integer> articles = Arrays.asList(2,2,3,4);
+//        List<Integer> iv = Arrays.asList(2,4,4,5);
+//
+//        pg.maximumLearning(iv, articles, 15);
 
     }
 
     public int countPalindrome(String s) {
         int count = 0;
-
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             for (int j = i + 1; j <= s.length(); j++) {
