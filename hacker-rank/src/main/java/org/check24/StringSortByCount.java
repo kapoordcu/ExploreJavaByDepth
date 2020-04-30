@@ -1,5 +1,6 @@
 package org.check24;
 
+import com.sun.source.tree.Tree;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -20,26 +21,25 @@ import static org.junit.Assert.assertTrue;
 public class StringSortByCount {
 
     public static String featuredProductSubmitted(List<String> products) {
-        Map<String, Integer> collection = new HashMap<String, Integer>();
+        Map<String, Integer> stringFrequencyCountMap = new HashMap<String, Integer>();
         int max = 0;
         Set<String> results = new TreeSet<String>();
         for(String product : products) {
-            if(collection.containsKey(product)) {
-                collection.put(product, collection.get(product)+1);
+            if(stringFrequencyCountMap.containsKey(product)) {
+                stringFrequencyCountMap.put(product, stringFrequencyCountMap.get(product)+1);
             }
             else {
-                collection.put(product,1);
+                stringFrequencyCountMap.put(product,1);
             }
         }
 
-        for (Map.Entry<String,Integer> entry : collection.entrySet()) {
-            if(entry.getValue() > max)
-            {
+        for (Map.Entry<String,Integer> entry : stringFrequencyCountMap.entrySet()) {
+            if(entry.getValue() > max) {
                 max = entry.getValue();
             }
         }
 
-        for(Map.Entry<String,Integer> entry : collection.entrySet()) {
+        for(Map.Entry<String,Integer> entry : stringFrequencyCountMap.entrySet()) {
             if(entry.getValue() == max) {
                 results.add(entry.getKey());
             }
