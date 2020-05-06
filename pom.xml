@@ -6,6 +6,7 @@
     <modules>
         <module>sql-native</module>
         <module>hacker-rank</module>
+        <module>array-problems</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
