@@ -1,4 +1,4 @@
-package explore.topics.design.decorator;
+package explore.topics.design.aDecorator;
 
 // Decorator is used to decorate individual objects at run-time. Adapter is used to add features to the class and therefore to ALL of its objects.
 public class ShapeAppDynamic {

@@ -1,4 +1,4 @@
-package explore.topics.design.singleton;
+package explore.topics.design.aSingleton;
 
 public class NotifySingleton {
     private static NotifySingleton instance;

@@ -1,4 +1,4 @@
-package explore.topics.design.singleton;
+package explore.topics.design.aSingleton;
 
 import org.junit.Assert;
 import org.junit.Test;
