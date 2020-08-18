@@ -6,16 +6,16 @@ import static org.junit.Assert.assertTrue;
 
 public class ReachNFromZero {
     public int steps(int n) {
-        int[] saveSteps = new int[n];
-        saveSteps[0]=1;
-        for (int i = 1; i < n; i++) {
-            if(i%2!=0) {
+        int[] saveSteps = new int[n+1];
+        saveSteps[0]=0;
+        for (int i = 1; i < n+1; i++) {
+            if(i%2==0) {
                 saveSteps[i] = Math.min(saveSteps[i-1], saveSteps[i/2]) + 1;
             } else {
                 saveSteps[i] = saveSteps[i-1] + 1;
             }
         }
-        return saveSteps[n-1];
+        return saveSteps[n];
     }
 
     @Test

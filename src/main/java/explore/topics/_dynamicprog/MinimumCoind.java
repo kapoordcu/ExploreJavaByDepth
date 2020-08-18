@@ -1,77 +1,81 @@
 package explore.topics._dynamicprog;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 
+import static org.junit.Assert.assertTrue;
+
 public class MinimumCoind {
-    private static int coinCount = 0;
-    public static void main(String[] args) {
-        MinimumCoind coins = new MinimumCoind();
-        int[] D1 = { 1, 2, 5, 10, 20, 50, 100, 200, 500};
-        coins.greedyApproach(D1, 43);
-        System.out.println(coinCount);
+    @Test
+    public void DP() {
+        int[] A0 = { 1, 5, 6, 8};
+        int[] A1 = { 1, 2, 5, 10, 20, 50, 100, 200, 500};
 
         int[] D2 = { 5, 9, 6, 1 };
         int[] D3 = { 4, 3, 1};
-        System.out.println(coins.findMinimumCoinsRandomArray(D2, 17));
-        System.out.println(coins.findMinimumCoinsRandomArray(D2, 11));
-        System.out.println(coins.findMinimumCoinsRandomArray(D2, 9));
-        System.out.println(coins.findMinimumCoinsRandomArray(D2, 10));
-        System.out.println(coins.findMinimumCoinsRandomArray(D3, 7));
 
+        int coins = selectByDP(A0, 11);
+        assertTrue(coins==2); // WRONG (6,5) not (8,1,1)
+
+        coins = selectByDP(A1, 43);
+        assertTrue(coins==4);
+
+        coins = selectByDP(D2, 9);
+        assertTrue(coins==1);
+
+        coins = selectByDP(D3, 10);
+        assertTrue(coins==3);
     }
 
-    private int findMinimumCoinsRandomArray(int[] coins, int amount) {
-        int V = amount + 1;
-        int table[] = new int[V];
+    private int selectByDP(int[] A, int amt) {
+        int w = amt + 1;
 
-        Arrays.fill(table, Integer.MAX_VALUE);
-        table[0] = 0;
-        for (int i = 1; i < V; i++) {
-            for (int j = 0; j < coins.length; j++) {
-                if (coins[j] <= i) {
-                    int sub_res = table[i - coins[j]];
-                    if (sub_res != Integer.MAX_VALUE
-                            && sub_res + 1 < table[i]) {
-                        table[i] = sub_res + 1;
+        int[] dp = new int[w];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 1; j < w; j++) {
+                if(A[i] <= j) {
+                    int res = dp[j - A[i]];
+                    if(res != Integer.MAX_VALUE && res + 1 < dp[j]) {
+                        dp[j] = res + 1;
                     }
                 }
             }
         }
-        return table[V-1];
+        return  dp[w-1];
     }
 
-    private int floor(int[] A, int value) {
-        int highest = Integer.MIN_VALUE;
 
-        for (int i = 0; i < A.length; i++) {
-            if(A[i] < value) {
-                highest = Math.max(highest, A[i]);
-            }
-        }
-        return highest;
+    @Test
+    public void greedy() {
+        int[] A0 = { 1, 5, 6, 8};
+        int[] A1 = { 1, 2, 5, 10, 20, 50, 100, 200, 500};
+
+        int coins = selectMaxGreedy(A0, A0.length - 1, 11);
+        assertTrue(coins==4); // WRONG (6,5) not (8,1,1)
+
+        coins = selectMaxGreedy(A1, A1.length - 1, 43);
+        assertTrue(coins==4);
     }
 
-    private void greedyApproach(int[] A, int amt) {
-        while(amt!=0) {
-            amt = selectMax(A, A.length - 1, 0, amt);
-        }
-    }
+    private int selectMaxGreedy(int[] A, int high, int amt) {
+        int coins = 0;
+        for (int i = high; i >= 0 ; i--) {
+            if(amt/A[i]!=0) {
+                int coinsCurrentDenomination = amt/A[i];
+                amt -= coinsCurrentDenomination*A[i];
 
-    private int selectMax(int[] A, int end, int start, int amt) {
-        int i = end;
-        while (i>=start) {
-            while (A[i] > amt) {
-                if(A[i]/amt==0) {
-                    coinCount = A[i]/amt;
-                    return 0;
-                } else {
-                    i--;
+                coins += coinsCurrentDenomination;
+                if(amt==0) {
+                    return coins;
                 }
             }
-            amt -= A[i];
-            coinCount++;
-            i=start-1;
         }
-        return amt;
+        return (amt!=0) ? -1 : coins;
     }
+
 }
