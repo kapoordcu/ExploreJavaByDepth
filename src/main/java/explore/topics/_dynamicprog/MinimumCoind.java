@@ -28,21 +28,18 @@ public class MinimumCoind {
         assertTrue(coins==3);
     }
 
-    private int selectByDP(int[] A, int amt) {
+    private int selectByDP(int[] coins, int amt) {
         int w = amt + 1;
 
         int[] dp = new int[w];
+        Arrays.sort(coins);
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
 
-
-        for (int i = 0; i < A.length; i++) {
+        for (int i = 0; i < coins.length; i++) {
             for (int j = 1; j < w; j++) {
-                if(A[i] <= j) {
-                    int res = dp[j - A[i]];
-                    if(res != Integer.MAX_VALUE && res + 1 < dp[j]) {
-                        dp[j] = res + 1;
-                    }
+                if(coins[i] <= j) {
+                    dp[j] = Math.min(1 + dp[j-coins[i]], dp[j]);
                 }
             }
         }
