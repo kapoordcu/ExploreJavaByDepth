@@ -2,6 +2,7 @@ package explore.topics._dynamicprog;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class LongestCommonSubstring {
@@ -11,39 +12,49 @@ public class LongestCommonSubstring {
      Time Complexity: O(m*n)
      Auxiliary Space: O(m*n)
      */
-    private int lcsubstr(char[] A, char[] B) {
-        int m = A.length + 1;
-        int n = B.length + 1;
-
-        int[][] memo = new int[m][n];
-        int max = Integer.MIN_VALUE;
-
-        for(int i=1; i < m; i++){
-            for(int j=1; j < n; j++){
-                if(A[i-1] == B[j-1]){
-                    memo[i][j] = memo[i-1][j-1] +1;
-                    if(memo[i][j] > max) {
-                        max = memo[i][j];
+    private String lcsubstr(char[] A, char[] B) {
+        int mX = A.length + 1;
+        int mY = B.length + 1;
+        int table[][] = new int[mX][mY];
+        int len = 0;
+        int row = 0, col = 0;
+        for (int i = 1; i < mX; i++) {
+            for (int j = 1; j < mY; j++) {
+                if(A[i-1]==B[j-1]) {
+                    table[i][j] = 1 + table[i-1][j-1];
+                    if (len < table[i][j]) {
+                        len = table[i][j];
+                        row = i;
+                        col = j;
                     }
                 }
             }
         }
-        return max;
+        String resultStr = new String();
+        while (table[row][col] != 0) {
+            resultStr = A[row-1] + resultStr;
+            --len;
+            row--;
+            col--;
+        }
+        return resultStr;
     }
 
     @Test
     public void test1() {
         String a = "ABCDGH";
         String b = "ACDGHR";
-        int lcs = lcsubstr(a.toCharArray(), b.toCharArray());
-        assertEquals(4, lcs);
+        String lcs = lcsubstr(a.toCharArray(), b.toCharArray());
+        assertTrue(lcs.equals("CDGH"));
+        assertEquals(4, lcs.length());
     }
 
     @Test
     public void test2() {
         String a = "abcdaf";
         String b = "zbcdf";
-        int lcs = lcsubstr(a.toCharArray(), b.toCharArray());
-        assertEquals(3, lcs);
+        String lcs = lcsubstr(a.toCharArray(), b.toCharArray());
+        assertTrue(lcs.equals("bcd"));
+        assertEquals(3, lcs.length());
     }
 }
