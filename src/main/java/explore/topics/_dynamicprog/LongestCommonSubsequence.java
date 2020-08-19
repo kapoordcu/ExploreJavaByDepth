@@ -1,14 +1,10 @@
 package explore.topics._dynamicprog;
 
-public class LongestCommonSubsequence {
-    public static void main(String[] args) {
-        LongestCommonSubsequence commonSubsequence = new LongestCommonSubsequence();
-        String A = "abcdefghij";
-        String B = "ecdgi";
-        System.out.println(commonSubsequence.LCSUsingRecursion(A, B, 0, 0));
-        System.out.println(commonSubsequence.LCSUsingDP(A, B, A.length(), B.length()));
-    }
+import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
+public class LongestCommonSubsequence {
     /**
      *
         Exponential Time taking problem
@@ -27,7 +23,10 @@ public class LongestCommonSubsequence {
      *
      Dynamic Programminhg
      */
-    private int LCSUsingDP(String A, String B, int m, int n) {
+    private String LCSUsingDP(String A, String B) {
+        int m = A.length();
+        int n = B.length();
+
         int[][] memo = new int[m + 1][n + 1];
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
@@ -38,8 +37,7 @@ public class LongestCommonSubsequence {
                 }
             }
         }
-        System.out.println(findSubSequence(memo, A, B, m, n));
-        return memo[A.length() - 1][B.length() - 1];
+        return findSubSequence(memo, A, B, m, n);
     }
 
     private String findSubSequence(int[][] memo, String A, String B, int m, int n) {
@@ -58,5 +56,21 @@ public class LongestCommonSubsequence {
             }
         }
         return builder.reverse().toString();
+    }
+
+    @Test
+    public void test1() {
+        String A = "abcdefghij";
+        String B = "ecdgi";
+        String lcsubseq = LCSUsingDP(A, B);
+        assertTrue("cdgi".equals(lcsubseq));
+    }
+
+    @Test
+    public void test2() {
+        String A = "acdfgjkn";
+        String B = "cdgfjkn";
+        String lcsubseq = LCSUsingDP(A, B);
+        assertTrue("dgjkn".equals(lcsubseq));
     }
 }

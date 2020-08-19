@@ -4,23 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class LongestPalindromeSubstring {
-    public int len = 0;
-    public int indexStart = 0;
-    public static void main(String[] args) {
-        LongestPalindromeSubstring substring = new LongestPalindromeSubstring();
-        String str = "abaabc";
-        String str2 = "jingolnkiddikng";
-
-        substring.findPalidromeSubstringN2ON(str);
-        System.out.println();
-        substring.findPalidromeSubstringN2O1(str2);
-        System.out.println();
-        substring.findPalidromeSubstringN2ON(str);
-        System.out.println();
-        substring.findPalidromeSubstringN2O1(str2);
-        System.out.println();
-
-    }
+    public int index = 0;
+    public int lcsubstrLen = 0;
 
     @Test
     public void test1() {
@@ -32,29 +17,38 @@ public class LongestPalindromeSubstring {
         String a2 = "geekskeeg";
         String lps2 = longestPalidromeSubstr(a2);
         assertTrue(lps2.equals("geekskeeg"));
+
+        String a3 = "abaabc";
+        String lps3 = longestPalidromeSubstr(a3);
+        assertTrue(lps3.equals("baab"));
+
+        String a4 = "jingolnkiddikng";
+        String lps4 = longestPalidromeSubstr(a4);
+        assertTrue(lps4.equals("nkiddikn"));
     }
 
-    private String longestPalidromeSubstr(String str) {
-        if(str==null || str.length() < 2) {
-            return str;
+    private String longestPalidromeSubstr(String S) {
+        lcsubstrLen = 0;
+        index = 0;
+        if(S==null || S.length()<2) {
+            return S;
         }
-
-        for (int start = 0; start < str.length()-1; start++) {
-            expandRange(str, start, start);
-            expandRange(str, start, start+1);
+        for (int start = 0; start < S.length()-1; start++) {
+            expandRange(S, start, start);
+            expandRange(S, start, start+1);
         }
-        return str.substring(indexStart, indexStart+len);
+        return S.substring(index, index + lcsubstrLen);
     }
 
-    private void expandRange(String str, int begin, int end) {
-        while(begin>=0 && end<=str.length() &&
-                str.charAt(begin)==str.charAt(end)) {
+    private void expandRange(String S, int begin, int end) {
+        while (begin>=0 && end<=S.length() &&
+                S.charAt(begin)==S.charAt(end)) {
             --begin;
             ++end;
         }
-        if(len < end-begin-1) {
-            len = end-begin-1;
-            indexStart = begin +1;
+        if(lcsubstrLen < end-begin-1) {
+            lcsubstrLen = end-begin-1;
+            index = begin +1;
         }
     }
 
