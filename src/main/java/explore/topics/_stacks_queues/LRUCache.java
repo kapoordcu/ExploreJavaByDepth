@@ -1,58 +1,61 @@
 package explore.topics._stacks_queues;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class LRUCache {
-    private List<Entry> entries;
+    private int capacity = 3;
+    Set<Integer> cache = new LinkedHashSet<>();
 
-    public LRUCache(int capacity) {
-        entries = new ArrayList<>(capacity);
+    @Test
+    public void lru() {
+        push(7);
+        push(0);
+        push(1);
+        push(2);
+        push(0);
+        push(3);
+        push(0);
+        push(4);
+        push(2);
+        push(3);
+        push(0);
+        push(3);
+        push(2);
+        push(1);
+        push(2);
+
+        boolean peek0 = hit(0);
+        boolean peek1 = hit(1);
+        boolean peek2 = hit(2);
+        boolean peek3 = hit(3);
+        boolean peek4 = hit(4);
+        boolean peek5 = hit(7);
+        assertFalse(peek0);
+        assertTrue(peek1);
+        assertTrue(peek2);
+        assertTrue(peek3);
+        assertFalse(peek4);
+        assertFalse(peek5);
     }
 
-    public static void main(String[] args) {
-        LRUCache lru = new LRUCache(5);
-        lru.set(1, 101);
-        lru.set(2, 202);
-        lru.set(3, 303);
-        lru.set(4, 404);
-        lru.set(5, 505);
-        lru.set(6, 606);
-        lru.set(7, 707);
-        lru.set(8, 808);
-        lru.set(9, 909);
-        lru.set(10, 1001);
-
-
+    private boolean hit(int key) {
+        return cache.contains(key);
     }
 
-    private void set(int key, int value) {
-        Entry set = new Entry(key);
-        set.value = value;
-        set.accessCount++;
-        if(entries.size() > 5) {
-
+    private void push(int key) {
+        if (cache.contains(key)) {
+            cache.remove(key);
         }
-        entries.add(set);
-    }
-
-    private int get(int key) {
-        for (int i = 0; i < entries.size(); i++) {
-            if(entries.get(i).key==key) {
-                return entries.get(i).value;
-            }
+        if (cache.size() == capacity) {
+            int firstKey = cache.iterator().next();
+            cache.remove(firstKey);
         }
-        return -1;
-    }
-
-    static class Entry {
-        public Integer key;
-        public Integer value;
-        public Integer accessCount;
-
-        public Entry(Integer key) {
-            this.key = key;
-        }
-
+        cache.add(key);
     }
 }
