@@ -1,4 +1,4 @@
-package explore.topics._dynamicprog;
+package org.dp.problems;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -7,12 +7,14 @@ public class LongestPalindromeSubstring {
     public int index = 0;
     public int lcsubstrLen = 0;
 
+
     @Test
     public void test1() {
         String a = "geeksforgeeks";
         String lps = longestPalidromeSubstr(a);
         assertTrue(lps.equals("ee"));
 
+        new StringBuilder("ka").reverse();
 
         String a2 = "geekskeeg";
         String lps2 = longestPalidromeSubstr(a2);

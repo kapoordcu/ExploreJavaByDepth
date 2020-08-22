@@ -1,6 +1,4 @@
-package explore.topics._dynamicprog;
-
-import java.util.Arrays;
+package org.dp.problems;
 
 public class Knapsack0_1 {
     public static void main(String[] args) {

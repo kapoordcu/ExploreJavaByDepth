@@ -1,4 +1,4 @@
-package explore.topics._dynamicprog;
+package org.dp.problems;
 
 public class MinimumOperations {
     public static void main(String[] args) {

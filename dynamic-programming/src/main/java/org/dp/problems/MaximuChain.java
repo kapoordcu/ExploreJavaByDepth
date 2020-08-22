@@ -1,4 +1,4 @@
-package explore.topics._dynamicprog;
+package org.dp.problems;
 
 import java.util.Arrays;
 import java.util.Comparator;
