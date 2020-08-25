@@ -8,7 +8,8 @@
         <module>hacker-rank</module>
         <module>array-problems</module>
         <module>dynamic-programming</module>
-    </modules>
+		<module>data-struct</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

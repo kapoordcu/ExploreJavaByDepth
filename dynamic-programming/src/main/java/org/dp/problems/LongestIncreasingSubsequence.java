@@ -13,7 +13,7 @@ public class LongestIncreasingSubsequence {
     /**
      * O(n*n) longest Increasing Sequence
      */
-    public int[] calculateLIS(int[] arr) {
+    public List<List<Integer>> calculateLIS(int[] arr) {
         int[] subsequenceDP = new int[arr.length];
         Arrays.fill(subsequenceDP, 1);
 
@@ -24,19 +24,19 @@ public class LongestIncreasingSubsequence {
                 }
             }
         }
-        int maxIndex = 0;
-        int maxValue = 1;
+        int maxlengthOfSubsequence = 1;
         for (int i = 0; i < subsequenceDP.length; i++) {
-            if(subsequenceDP[i] > maxValue) {
-                maxValue = subsequenceDP[i];
-                maxIndex = i;
+            if(subsequenceDP[i] > maxlengthOfSubsequence) {
+                maxlengthOfSubsequence = subsequenceDP[i];
             }
         }
-        int[] subsequenceLIC = findSubsequence(arr, subsequenceDP, maxIndex, maxValue);
+        List<List<Integer>> subsequenceLIC = findSubsequence(arr, subsequenceDP, maxlengthOfSubsequence);
         return subsequenceLIC;
     }
 
-    private int[] findSubsequence(int[] arr, int[] subsequenceDP, int maxIndex, int maxValue) {
+    private List<List<Integer>> findSubsequence(int[] arr, int[] subsequenceDP, int maxlengthOfSubsequence) {
+        List<List<Integer>> subseqList = new ArrayList<>();
+
         List<Integer> licList = new ArrayList<>();
         int next = 0;
         for (int i = 0; i < subsequenceDP.length; i++) {
@@ -45,7 +45,7 @@ public class LongestIncreasingSubsequence {
                 next += 1;
             }
         }
-        return licList.stream().mapToInt(i-> i).toArray();
+        return new ArrayList<>();
     }
 
     public static int[] LICLogN(int[] arr) {
@@ -90,8 +90,8 @@ public class LongestIncreasingSubsequence {
     @Test
     public void LICTest1() {
         int[] arr = {-2, 1, 0, 5, 6, 2, 3};
-        int[] subsequence = calculateLIS(arr);
-        assertTrue(subsequence.length==4);
+        List<List<Integer>> subsequence = calculateLIS(arr);
+        assertTrue(subsequence.get(0).size()==4);
     }
 
     @Test
@@ -104,8 +104,8 @@ public class LongestIncreasingSubsequence {
     @Test
     public void LICTest2() {
         int[] arr = {1, 3, 4, 5, 6, 5, 4, 7, 2, 7};
-        int[] solution = calculateLIS(arr);
-        assertTrue(solution.length==6);
+        List<List<Integer>> solution = calculateLIS(arr);
+        assertTrue(solution.get(0).size()==6);
     }
 
     @Test
@@ -118,8 +118,8 @@ public class LongestIncreasingSubsequence {
     @Test
     public void LICTestSingleElement() {
         int[] arr = {1};
-        int solution[] = calculateLIS(arr);
-        assertTrue(solution.length==1);
+        List<List<Integer>> solution = calculateLIS(arr);
+        assertTrue(solution.get(0).size()==1);
     }
 
     @Test
@@ -132,8 +132,8 @@ public class LongestIncreasingSubsequence {
     @Test
     public void LICTestTwoElementDecreasing() {
         int[] arr = {1, -1};
-        int solution[] = calculateLIS(arr);
-        assertTrue(solution.length==1);
+        List<List<Integer>> solution = calculateLIS(arr);
+        assertTrue(solution.get(0).size()==1);
     }
 
     @Test
@@ -146,8 +146,8 @@ public class LongestIncreasingSubsequence {
     @Test
     public void LICTestTwoElementIncreasing() {
         int[] arr = {1, 2};
-        int solution[] = calculateLIS(arr);
-        assertTrue(solution.length==2);
+        List<List<Integer>> solution = calculateLIS(arr);
+        assertTrue(solution.get(0).size()==2);
     }
 
     @Test
