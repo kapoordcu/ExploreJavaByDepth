@@ -70,14 +70,12 @@ public class BST {
     private TreeNode insertBST(TreeNode node, int value) {
         if(node==null) {
             node = new TreeNode(value);
-        } else {
-            if(value<node.value) {
+        } else if(value<node.value) {
                 node.left = insertBST(node.left, value);
-            } else if(value>node.value) {
+        } else if(value>node.value) {
                 node.right = insertBST(node.right, value);
-            } else {
+        } else {
                 node.value = value;
-            }
         }
         return node;
     }
