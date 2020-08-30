@@ -21,6 +21,10 @@ public class TopKMostElements {
         List<Integer> topK = topKElementsInArraySimpleHashMap(arr, k);
         assertTrue(topK.contains(4));
         assertTrue(topK.contains(1));
+
+        List<Integer> topKPQ = topKElementsInArrayPriorityQueue(arr, k);
+        assertTrue(topKPQ.contains(4));
+        assertTrue(topKPQ.contains(1));
     }
 
     @Test
@@ -32,9 +36,15 @@ public class TopKMostElements {
         assertTrue(topK.contains(7));
         assertTrue(topK.contains(11));
         assertTrue(topK.contains(5));
+
+        List<Integer> topKPQ = topKElementsInArrayPriorityQueue(arr, k);
+        assertTrue(topKPQ.contains(10));
+        assertTrue(topKPQ.contains(7));
+        assertTrue(topKPQ.contains(11));
+        assertTrue(topKPQ.contains(5));
     }
 
-    /*
+    /**
     Time Complexity: O(d log d), where d is the count of distinct elements in the array.
     To sort the array O(d log d) time is needed.
     Auxiliary Space: O(d), where d is the count of distinct elements in the array.
@@ -43,11 +53,7 @@ public class TopKMostElements {
     private List<Integer> topKElementsInArraySimpleHashMap(int[] arr, int k) {
         Map<Integer, Integer> mapCount = new HashMap<>();
         for (int elem:   arr) {
-            if(mapCount.containsKey(elem)) {
-                mapCount.put(elem, mapCount.get(elem)+1);
-            } else {
-                mapCount.put(elem, 1);
-            }
+            mapCount.put(elem, mapCount.getOrDefault(elem, 0) + 1);
         }
         return mapCount.entrySet()
                 .stream()
@@ -55,5 +61,32 @@ public class TopKMostElements {
                 .map(Map.Entry::getKey)
                 .limit(k)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     Complexity Analysis:
+     Time Complexity: O(k log d + d), where d is the count of distinct elements in the array.
+     To remove the top of priority queue O(log d) time is required, so if k elements are removed then O(k log d) time is required and to traverse the distinct elements O(d) time is required.
+     Auxiliary Space: O(d), where d is the count of distinct elements in the array.
+     To store the elements in HashMap O(d) space complexity is needed.
+     */
+    private List<Integer> topKElementsInArrayPriorityQueue(int[] arr, int k) {
+        List<Integer> topK = new ArrayList<>();
+
+        Map<Integer, Integer> mapCount = new HashMap<>();
+        for (int elem:   arr) {
+            mapCount.put(elem, mapCount.getOrDefault(elem, 0) + 1);
+        }
+        PriorityQueue<Map.Entry<Integer, Integer> > pq =
+                new PriorityQueue<>(
+                        (a, b) -> a.getValue().equals(b.getValue()) ?
+                                Integer.compare(b.getKey(), a.getKey()) :
+                                Integer.compare(b.getValue(), a.getValue()));
+        mapCount.entrySet()
+                .forEach(entry -> pq.offer(entry));
+        for (int i = 0; i < k; i++) {
+            topK.add(pq.poll().getKey());
+        }
+        return topK;
     }
 }
