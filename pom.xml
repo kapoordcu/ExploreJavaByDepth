@@ -8,7 +8,9 @@
         <module>hacker-rank</module>
         <module>array-problems</module>
         <module>dynamic-programming</module>
-		<module>data-struct</module>
+		<module>self-data-struct</module>
+        <module>greedy-algorithms</module>
+		<module>2020</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
