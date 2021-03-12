@@ -20,13 +20,9 @@ public class OpenBank {
                 if(!"-".equals(income)) {
                     if(Integer.parseInt(income)==customerId &&
                             dateWithin6Months(depositOpeningDate, txSingle[5].trim())) {
-                        
-                        if(accountMap.containsKey(customerId)) {
-                            accountMap.put(customerId,
-                                    accountMap.get(customerId) + Integer.parseInt(txSingle[4].trim()));
-                        } else {
-                            accountMap.put(customerId, Integer.parseInt(txSingle[4].trim()));
-                        }
+                        accountMap.compute(customerId, (key, value) -> value==null ?
+                                Integer.parseInt(txSingle[4].trim()):
+                                value + Integer.parseInt(txSingle[4].trim()));
                     } else if(!"-".equals(outcome) && Integer.parseInt(outcome)==customerId && dateWithin6Months(depositOpeningDate, txSingle[5].trim())) {
                         accountMap.put(customerId,
                                 accountMap.get(customerId) - Integer.parseInt(txSingle[4].trim()));;
