@@ -1,4 +1,4 @@
-package org.tests.glovo;
+package org.tests;
 
 import org.junit.Test;
 
