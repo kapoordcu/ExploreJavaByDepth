@@ -31,15 +31,10 @@ public class RiceBags {
             for (int j = 0; j < primeFactorList.size(); j++) {
                 Integer primeFactor = primeFactorList.get(j);
                 if(number % primeFactor == 0) {
-                    if(riceBagGroup.containsKey(primeFactor)) {
-                        List<Integer> smallList = riceBagGroup.get(primeFactor);
-                        smallList.add(number);
-                        riceBagGroup.put(primeFactor, smallList);
-                    } else {
-                        riceBagGroup.put(primeFactor, new ArrayList<Integer>(){{
-                            add(number);
-                        }});
-                    }
+                    riceBagGroup.merge(primeFactor,
+                            new ArrayList<>() {{add(number);}},
+                            (small, big) -> { small.add(number); return small;}
+                    );
                 }
              }
 
