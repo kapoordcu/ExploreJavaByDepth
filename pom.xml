@@ -11,11 +11,12 @@
 		<module>self-data-struct</module>
         <module>greedy-algorithms</module>
 		<module>2020</module>
+		<module>SpanishCoder</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.1.RELEASE</version>
+		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>explore.java.deep</groupId>
@@ -39,6 +40,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.javatuples/javatuples -->
 		<dependency>
 			<groupId>org.javatuples</groupId>
