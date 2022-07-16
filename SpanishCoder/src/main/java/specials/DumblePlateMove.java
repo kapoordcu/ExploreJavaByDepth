@@ -59,6 +59,12 @@ public class DumblePlateMove {
         }
     }
 
+    @Test
+    public void testOne23() {
+        List<Integer> products = List.of(1,2,3);
+        int combis = DumblePlateMove.getMinMovesRight(products);
+        assertTrue(combis==0);
+    }
 
     @Test
     public void testOne() {
