@@ -19,7 +19,7 @@ public class MaxIncreasingSubArray {
     public void testOne2() {
         List<Integer> products = List.of(6,2,9,4,7,5,2);
         long combis = MaxIncreasingSubArray.findMaxProducts(products);
-        assertTrue(combis==12);
+        assertTrue(combis==17);
     }
 
     public static long findMaxProducts(List<Integer> products) {
