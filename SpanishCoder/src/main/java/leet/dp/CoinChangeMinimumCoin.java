@@ -9,38 +9,43 @@ import static org.junit.Assert.assertTrue;
 
 public class CoinChangeMinimumCoin {
     public static int coinChangeTwoDim(int[] coins, int amount) {
-        int[][] DP = new int[coins.length][amount+1];
-        for (int i = 0; i < coins.length; i++) {
-            DP[i][0] = 0;
-        }
-        for (int j = 1; j <= amount; j++) {
-            if(j % coins[0] != 0){
-                DP[0][j] = -1;
-            }else{
-                DP[0][j] = j /coins[0];
-            }
-        }
-
-        for (int i = 1; i < coins.length; i++) {
-            for (int j = 1; j < amount+1; j++) {
-                if(coins[i] > j){
-                    DP[i][j] = DP[i-1][j];
+        int n = coins.length;
+        int[][] memorize = new int[n][amount+1];
+        initializeBasicMem(coins, amount, n, memorize);
+        for (int j = 1; j <= amount ; j++) {
+            for (int i = 1; i < n; i++) {
+                if(coins[i] > j) {
+                    memorize[i][j] = memorize[i-1][j];
                 } else {
-                    int valueAbove = DP[i-1][j];
-                    int newDifference = DP[i][j-coins[i]];
-
-                    if(newDifference == -1){
-                        DP[i][j] = DP[i-1][j];
-                    } else if(valueAbove == -1) {
-                        DP[i][j] = 1 + newDifference;
+                    int prev = memorize[i-1][j];
+                    int newSumAfterTakingACoin = memorize[i][j-coins[i]];
+                    if(newSumAfterTakingACoin == -1) {
+                        memorize[i][j] = memorize[i-1][j];
+                    } else if(prev == -1) {
+                        memorize[i][j] = 1 + newSumAfterTakingACoin;
                     } else {
-                        DP[i][j] = Math.min(DP[i-1][j],1+DP[i][j-coins[i]]);
+                        memorize[i][j] = Math.min(memorize[i-1][j], 1 + newSumAfterTakingACoin) ;
                     }
                 }
             }
         }
-        return DP[coins.length-1][amount];
+        return memorize[coins.length-1][amount];
     }
+
+    private static void initializeBasicMem(int[] coins, int amount, int n, int[][] memorize) {
+        for (int j = 0; j <= amount; j++) {
+            if(j % coins[0] == 0) {
+                memorize[0][j] = j / coins[0];
+            } else {
+                memorize[0][j] = -1;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            memorize[i][0] = 0;
+        }
+    }
+
     public static int coinChangeOneDim(int[] coins, int amount) {
         int[] dpSum = new int[amount+1];
         Arrays.sort(coins);
