@@ -11,48 +11,49 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class WordBreak {
-    Set<String> collect = new HashSet<>();
+    Set<String> dictionary = new HashSet<>();
     @Test
     public void Example0() {
         String s = "abcd";
-        String[] wordDict = {"a","b","c","ab","bc","bcd"};
-        assertTrue(wordBreakPossible(s, 0, wordDict));
+        String[] wordDict = {"a","b","c","ab","bc","abc"};
+        assertFalse(wordBreakPossibleRecursion(s, 0, wordDict));
+    }
+
+    private boolean wordBreakPossibleRecursion(String s, int pos, String[] wordDict) {
+        dictionary = Stream.of(wordDict).collect(Collectors.toSet());
+        String word = s.substring(pos);
+        if(word.isEmpty()) {
+            return true;
+        }
+        for (int i = pos; i < s.length(); i++) {
+            word = s.substring(pos, i+1);
+            if(dictionary.contains(word) &&
+                    wordBreakPossibleRecursion(s, i+1, wordDict)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Test
     public void Example1() {
         String s = "leetcode";
         String[] wordDict = {"leet","code"};
-        assertTrue(wordBreakPossible(s, 0, wordDict));
+        assertTrue(wordBreakPossibleRecursion(s, 0, wordDict));
     }
 
     @Test
     public void Example2() {
         String s = "applepenapple";
         String[] wordDict = {"apple","pen"};
-        assertTrue(wordBreakPossible(s, 0, wordDict));
+        assertTrue(wordBreakPossibleRecursion(s, 0, wordDict));
     }
 
     @Test
     public void Example3() {
         String s = "catsandog";
         String[] wordDict = {"cats","dog","sand","and","cat"};
-        assertFalse(wordBreakPossible(s, 0, wordDict));
-    }
-
-    private boolean wordBreakPossible(String s, int start, String[] wordDict) {
-        collect = Stream.of(wordDict).collect(Collectors.toSet());
-        if (start == s.length()) {
-            return true;
-        }
-        for (int i = start + 1; i <= s.length(); i++) {
-            String word = s.substring(start, i);
-            if (collect.contains(word) &&
-                    wordBreakPossible(s, i, wordDict)) {
-                return true;
-            }
-        }
-        return false;
+        assertFalse(wordBreakPossibleRecursion(s, 0, wordDict));
     }
 
 }
