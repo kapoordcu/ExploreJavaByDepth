@@ -33,6 +33,20 @@ public class MakeSquareFromSticks {
         assertEquals(solution, 2);
     }
 
+    @Test
+    public void test4() {
+        MakeSquareFromSticks s = new MakeSquareFromSticks();
+        int solution = s.sticksmakingSquare(3, 8);
+        assertEquals(solution, 2);
+    }
+
+    @Test
+    public void test5() {
+        MakeSquareFromSticks s = new MakeSquareFromSticks();
+        int solution = s.sticksmakingSquare(3, 9);
+        assertEquals(solution, 3);
+    }
+
     public int sticksmakingSquare(int A, int B) {
         int max = Math.max(A, B);
         int[][] save = new int[2][max];
