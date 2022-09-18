@@ -10,20 +10,17 @@ import static org.junit.Assert.assertTrue;
 public class ArrayProblems {
 
     public int maxSubArray(int[] nums) {
-        int max_so_far = Integer.MIN_VALUE;
-        int currentSum = 0;
+        int maxSoFar = Integer.MIN_VALUE;
+        int sum = 0;
         for (int i = 0; i < nums.length; i++) {
-            currentSum += nums[i];
-            if(currentSum > max_so_far) {
-                max_so_far = currentSum;
+            sum += nums[i];
+            if(maxSoFar < sum) {
+                maxSoFar = sum;
             }
-            if(currentSum < 0) {
-                currentSum = 0;
-            }
+            sum = sum < 0 ? 0 : sum;
         }
-        return max_so_far;
+        return maxSoFar;
     }
-
 
     @Test
     public void testMaxSubArray1() {
