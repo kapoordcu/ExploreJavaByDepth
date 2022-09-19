@@ -9,6 +9,32 @@ import static org.junit.Assert.assertTrue;
 public class LCSProblem {
 
     @Test
+    public void testMinimumInsertionAndDeletion() {
+        String a = "abcab";
+        String b = "aecb";
+        int minimumInsertion = convertS1toS2(a, b);
+        assertTrue(minimumInsertion==3);
+    }
+
+    @Test
+    public void testminLengthOfSuperSequence() {
+        String a = "abcab";
+        String b = "aecb";
+        int minimumInsertion = minLengthOfSuperSequence(a, b);
+        assertTrue(minimumInsertion==6);
+    }
+
+    private int convertS1toS2(String a, String b) {
+        int lcs = lcsBottomUpnWithDPSpaceOptimized(a, b, a.length(), b.length());
+        return a.length() - lcs + b.length() - lcs;
+    }
+
+    private int minLengthOfSuperSequence(String a, String b) {
+        int lcs = lcsBottomUpnWithDPSpaceOptimized(a, b, a.length(), b.length());
+        return lcs +  a.length() - lcs + b.length() - lcs;
+    }
+
+    @Test
     public void testLCSProblem() {
         String a = "abcab";
         String b = "aecb";

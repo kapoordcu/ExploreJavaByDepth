@@ -9,48 +9,71 @@ import static org.junit.Assert.assertTrue;
 
 public class ArrayProblems {
 
-    public int maxSubArray(int[] nums) {
-        int maxSoFar = Integer.MIN_VALUE;
+    public int maxSubArrayProduct(int[] nums) {
+        int max = 0;
+        int prod = 0;
+        for (int i = 0; i < nums.length; i++) {
+            prod = nums[i];
+            for (int j = i+1; j < nums.length; j++) {
+                prod = prod * nums[j];
+                if(prod >= max) {
+                    max = prod;
+                }
+            }
+        }
+        return Math.max(max, prod);
+    }
+
+    @Test
+    public void testMaxSubArrayProduct1() {
+        ArrayProblems subarray = new ArrayProblems();
+        int[] nums0 = {-2,0,-1};
+        int[] nums = {2,3, 2,-4};
+        int[] nums1 = {6, -3, -10, 0, 2};
+        int[] nums2 = {-1, -3, -10, 0, 60};
+        int[] nums3 = {-2, -40, 0, -2, -3};
+
+        assertTrue(subarray.maxSubArrayProduct(nums0)==0);
+        assertTrue(subarray.maxSubArrayProduct(nums)==12);
+        assertTrue(subarray.maxSubArrayProduct(nums1)==180);
+        assertTrue(subarray.maxSubArrayProduct(nums2)==60);
+        assertTrue(subarray.maxSubArrayProduct(nums3)==80);
+    }
+
+    public int maxSubArraySum(int[] nums) {
+        int max = 0;
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
-            if(maxSoFar < sum) {
-                maxSoFar = sum;
+            if(sum > max) {
+                max = sum;
             }
-            sum = sum < 0 ? 0 : sum;
+            if(sum < 0) {
+                sum = 0;
+            }
         }
-        return maxSoFar;
+        return max;
     }
 
     @Test
     public void testMaxSubArray1() {
         ArrayProblems subarray = new ArrayProblems();
         int[] nums = {-5, 4, 6, -3, 8, -1};
-        int sum = subarray.maxSubArray(nums);
+        int[] nums1 = {-2,1,-3,4,-1,2,1,-5,4};
+        int[] nums2 = {1};
+        int sum = subarray.maxSubArraySum(nums);
+        int sum1 = subarray.maxSubArraySum(nums1);
+        int sum2 = subarray.maxSubArraySum(nums2);
         assertTrue(sum==15);
-    }
-
-    @Test
-    public void testMaxSubArray2() {
-        ArrayProblems subarray = new ArrayProblems();
-        int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
-        int sum = subarray.maxSubArray(nums);
-        assertTrue(sum==6);
-    }
-
-    @Test
-    public void testMaxSubArray3() {
-        ArrayProblems subarray = new ArrayProblems();
-        int[] nums = {1};
-        int sum = subarray.maxSubArray(nums);
-        assertTrue(sum==1);
+        assertTrue(sum1==6);
+        assertTrue(sum2==1);
     }
 
     @Test
     public void testMaxSubArray4() {
         ArrayProblems subarray = new ArrayProblems();
         int[] nums = {5,4,-1,7,8};
-        int sum = subarray.maxSubArray(nums);
+        int sum = subarray.maxSubArraySum(nums);
         assertTrue(sum==23);
     }
 
