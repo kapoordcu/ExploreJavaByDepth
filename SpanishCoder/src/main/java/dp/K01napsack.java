@@ -2,6 +2,9 @@ package dp;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 public class K01napsack {
@@ -12,7 +15,8 @@ public class K01napsack {
         int[] profits = {20, 30, 10, 50};
         int W = 10;
 
-        int profit = knapSack(W, weights, profits);
+        List<Integer> types = new LinkedList<>();
+        int profit = knapSack(W, weights, profits, types);
         assertTrue(profit==100);
     }
 
@@ -22,7 +26,8 @@ public class K01napsack {
         int[] profits = {10, 20, 30};
         int W = 2;
 
-        int profit = knapSack(W, weights, profits);
+        List<Integer> types = new LinkedList<>();
+        int profit = knapSack(W, weights, profits, types);
         assertTrue(profit==50);
     }
 
@@ -31,12 +36,12 @@ public class K01napsack {
         int[] weights = {1, 2, 3};
         int[] profits = {10, 15, 40};
         int W = 6;
-
-        int profit = knapSack(W, weights, profits);
+        List<Integer> types = new LinkedList<>();
+        int profit = knapSack(W, weights, profits, types);
         assertTrue(profit==65);
     }
 
-    static int knapSack(int W, int weights[], int profits[]) {
+    static int knapSack(int W, int weights[], int profits[], List<Integer> types) {
         int[][] dp = new int[weights.length+1][W+1];
         for (int i = 1; i <= weights.length; i++) {
             for (int j = 1; j <= W ; j++) {
