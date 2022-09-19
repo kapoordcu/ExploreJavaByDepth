@@ -7,27 +7,25 @@ import java.util.Arrays;
 import static org.junit.Assert.assertTrue;
 
 public class MinCoin {
-    static int minCoins(int a[], int total, int[] dp) {
-        if(total==0) {
-            return 0;
-        }
-        int answer = Integer.MAX_VALUE;
+    static int minCoins(int coins[], int total, int[] dp) {
+        if(total == 0) return 0;
+        int ans = Integer.MAX_VALUE;
 
-        for (int i = 0; i < a.length; i++) {
-            if(total - a[i] >= 0) {
-                int subAns = 0;
-                if(dp[total-a[i]] != -1) {
-                    subAns = dp[total-a[i]];
+        for (int i = 0; i < coins.length; i++) {
+            if(total - coins[i] >= 0) {
+                int subAnswer = 0;
+                if(dp[total-coins[i]] != -1) {
+                    subAnswer = dp[total-coins[i]];
                 } else {
-                    subAns = minCoins(a, total-a[i], dp);
+                    subAnswer = minCoins(coins, total - coins[i], dp);
                 }
-                if(subAns != Integer.MAX_VALUE
-                        && subAns + 1 < answer) {
-                    answer = subAns + 1;
+                if(subAnswer != Integer.MAX_VALUE &&
+                        subAnswer + 1 < ans) {
+                    ans = subAnswer + 1;
                 }
             }
         }
-        return dp[total] = answer;
+        return dp[total] = ans;
     }
 
     @Test
