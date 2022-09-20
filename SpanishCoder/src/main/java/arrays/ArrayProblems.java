@@ -9,7 +9,44 @@ import static org.junit.Assert.assertTrue;
 
 public class ArrayProblems {
 
-    public int maxSubArrayProduct(int[] nums) {
+    private int maxSubArrayProduct(int[] numss) {
+        if(numss.length == 0) {
+            return 0;
+        }
+        int maxSoFar = numss[0];
+        int minSoFar = numss[0];
+        int result = numss[0];
+
+        for (int i = 1; i < numss.length; i++) {
+            int current = numss[i];
+            int choice1 = maxSoFar*current;
+            int choice2 = minSoFar*current;
+            minSoFar = Math.min(current, Math.min(choice1, choice2));
+            maxSoFar = Math.max(current, Math.max(choice1, choice2));
+            result = Math.max(result, maxSoFar);
+        }
+        return result;
+    }
+
+    @Test
+    public void testMaxSubArrayProduct2() {
+        ArrayProblems subarray = new ArrayProblems();
+        int[] nums0 = {-2,0,-1};
+        int[] nums = {2,3, 2,-4};
+        int[] nums1 = {6, -3, -10, 0, 2};
+        int[] nums2 = {-1, -3, -10, 0, 60};
+        int[] nums3 = {-2, -40, 0, -2, -3};
+        int[] nums4 = {-2};
+
+//        assertTrue(subarray.maxSubArrayProduct(nums0)==0);
+//        assertTrue(subarray.maxSubArrayProduct(nums)==12);
+//        assertTrue(subarray.maxSubArrayProduct(nums1)==180);
+        assertTrue(subarray.maxSubArrayProduct(nums2)==60);
+//        assertTrue(subarray.maxSubArrayProduct(nums3)==80);
+//        assertTrue(subarray.maxSubArrayProduct(nums4)==-2);
+    }
+
+    public int maxSubArrayProductOn2(int[] nums) {
         int max = 0;
         int prod = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -23,7 +60,6 @@ public class ArrayProblems {
         }
         return Math.max(max, prod);
     }
-
     @Test
     public void testMaxSubArrayProduct1() {
         ArrayProblems subarray = new ArrayProblems();
@@ -33,11 +69,11 @@ public class ArrayProblems {
         int[] nums2 = {-1, -3, -10, 0, 60};
         int[] nums3 = {-2, -40, 0, -2, -3};
 
-        assertTrue(subarray.maxSubArrayProduct(nums0)==0);
-        assertTrue(subarray.maxSubArrayProduct(nums)==12);
-        assertTrue(subarray.maxSubArrayProduct(nums1)==180);
-        assertTrue(subarray.maxSubArrayProduct(nums2)==60);
-        assertTrue(subarray.maxSubArrayProduct(nums3)==80);
+        assertTrue(subarray.maxSubArrayProductOn2(nums0)==0);
+        assertTrue(subarray.maxSubArrayProductOn2(nums)==12);
+        assertTrue(subarray.maxSubArrayProductOn2(nums1)==180);
+        assertTrue(subarray.maxSubArrayProductOn2(nums2)==60);
+        assertTrue(subarray.maxSubArrayProductOn2(nums3)==80);
     }
 
     public int maxSubArraySum(int[] nums) {
