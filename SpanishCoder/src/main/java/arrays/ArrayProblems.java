@@ -1,13 +1,52 @@
 package arrays;
 
 import org.junit.jupiter.api.Test;
-import java.util.HashSet;
-import java.util.Set;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ArrayProblems {
+
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        int l = 0;
+        int r = height.length - 1;
+        while (l < r) {
+            int lenL = height[l];
+            int lenR = height[r];
+            maxArea = Math.max(Math.min(lenL, lenR) * (r-l), maxArea);
+            if(lenL < lenR) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+        return maxArea;
+    }
+
+    @Test
+    public void testWaterTrap0() {
+        int[] height = {2, 3, 1, 4, 0};
+        int level = maxArea(height);
+        assertTrue(level==6);
+    }
+    @Test
+    public void testWaterTrap1() {
+        int[] height = {1,8,6,2,5,4,8,3,7};
+        int level = maxArea(height);
+        assertTrue(level==49);
+    }
+
+    @Test
+    public void testWaterTrap2() {
+        int[] height = {1,1};
+        int level = maxArea(height);
+        assertTrue(level==1);
+    }
 
     private int maxSubArrayProduct(int[] numss) {
         if(numss.length == 0) {
@@ -38,12 +77,12 @@ public class ArrayProblems {
         int[] nums3 = {-2, -40, 0, -2, -3};
         int[] nums4 = {-2};
 
-//        assertTrue(subarray.maxSubArrayProduct(nums0)==0);
-//        assertTrue(subarray.maxSubArrayProduct(nums)==12);
-//        assertTrue(subarray.maxSubArrayProduct(nums1)==180);
+        assertTrue(subarray.maxSubArrayProduct(nums0)==0);
+        assertTrue(subarray.maxSubArrayProduct(nums)==12);
+        assertTrue(subarray.maxSubArrayProduct(nums1)==180);
         assertTrue(subarray.maxSubArrayProduct(nums2)==60);
-//        assertTrue(subarray.maxSubArrayProduct(nums3)==80);
-//        assertTrue(subarray.maxSubArrayProduct(nums4)==-2);
+        assertTrue(subarray.maxSubArrayProduct(nums3)==80);
+        assertTrue(subarray.maxSubArrayProduct(nums4)==-2);
     }
 
     public int maxSubArrayProductOn2(int[] nums) {
@@ -191,26 +230,16 @@ public class ArrayProblems {
     }
 
     public int[] twoSum(int[] nums, int target) {
-        Set<Integer> uniques = new HashSet<>();
+        Map<Integer, Integer> uniques = new HashMap<>();
         int[] returnArr = new int[2];
         for (int i = 0; i < nums.length; i++) {
-            if(uniques.contains(nums[i])) {
-                returnArr[0] = indexof(nums, target - nums[i]);
-                returnArr[1] = i;
-                return returnArr;
+            int complement = target - nums[i];
+            if(uniques.containsKey(complement)) {
+                return new int[] {uniques.get(complement), i};
             }
-            uniques.add(target - nums[i]);
+            uniques.put(nums[i], i);
         }
         return returnArr;
-    }
-
-    private Integer indexof(int[] nums, int number) {
-        for (int i = 0; i < nums.length; i++) {
-            if(number == nums[i]) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     @Test
@@ -250,5 +279,47 @@ public class ArrayProblems {
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], result[i]);
         }
+    }
+
+    @Test
+    public void testTwoSum4() {
+        ArrayProblems sum = new ArrayProblems();
+        int[] nums = {3, 2, 3};
+        int target = 6;
+        int[]  expected = {0,2};
+        int[] result  = sum.twoSum(nums, target);
+        assertTrue(expected.length == result.length);
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], result[i]);
+        }
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        return new ArrayList<>();
+    }
+
+    @Test
+    public void testThreeSum1() {
+        List<Integer> tuple1 = List.of(-1,-1,2);
+        List<Integer> tuple2 = List.of(-1,0,1);
+        int[] nums = {-1,0,1,2,-1,-4};
+        List<List<Integer>> tuples = threeSum(nums);
+        assertTrue(tuples.contains(tuple1));
+        assertTrue(tuples.contains(tuple2));
+    }
+
+    @Test
+    public void testThreeSum2() {
+        int[] nums = {0,1,1};
+        List<List<Integer>> tuples = threeSum(nums);
+        assertTrue(tuples.isEmpty());
+    }
+
+    @Test
+    public void testThreeSum3() {
+        int[] nums = {0,0,0};
+        List<Integer> tuple = List.of(0,0,0);
+        List<List<Integer>> tuples = threeSum(nums);
+        assertTrue(tuples.contains(tuple));
     }
 }
