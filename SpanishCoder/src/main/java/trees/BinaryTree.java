@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 
 public class BinaryTree {
     TreeNode root;
-
     public TreeNode createBinaryTree(Integer[] arr, int i) {
         TreeNode node = null;
         if(i < arr.length) {
@@ -24,11 +23,11 @@ public class BinaryTree {
     public void testUnbalancedTree() {
         TreeNode root1 = createUnbalancedTree(8);
         int maxDepth = maxDepth(root1);
-        assertTrue(maxDepth==3);
+        assertTrue(maxDepth==4);
 
         TreeNode root2 = createSmallestTree();
         int maxDepth2 = maxDepth(root2);
-        assertTrue(maxDepth2==0);
+        assertTrue(maxDepth2==1);
     }
 
     @Test
@@ -76,7 +75,7 @@ public class BinaryTree {
     // https://leetcode.com/problems/maximum-depth-of-binary-tree/
     public int maxDepth(TreeNode root) {
         if(root == null) {
-            return -1;
+            return 0;
         }
         return Math.max(maxDepth(root.left), maxDepth((root.right))) + 1;
     }
@@ -84,13 +83,11 @@ public class BinaryTree {
     //Same Tree -
     // https://leetcode.com/problems/same-tree/
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        if(p != null && q != null)  {
-            return p.value == q.value &&
-                    isSameTree(p.left, q.left) &&
-                    isSameTree(p.right, q.right);
-        } else if(p == null && q == null){
-            return true;
-        }
+        if(p==null && q==null) return true;
+        if(p!=null && q!=null &&
+                p.value==q.value &&
+                isSameTree(p.left, q.left) &&
+                isSameTree(p.right, q.right))  return true;
         return false;
     }
 
@@ -134,15 +131,21 @@ public class BinaryTree {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         return null;
     }
-}
 
-class TreeNode {
-    int value;
-    TreeNode left;
-    TreeNode right;
+    public void inOrder(TreeNode root) {
+        if(root!=null) {
+            return;
+        }
+        inOrder(root.left);
+        System.out.println(root.value);
+        inOrder(root.right);
+    }
 
-    public TreeNode(int value) {
-        this.value = value;
-        this.left = this.right = null;
+    @Test
+    public void testInorder() {
+        TreeNode root = createUnbalancedTree(12);
+        inOrder(root);
     }
 }
+
+
