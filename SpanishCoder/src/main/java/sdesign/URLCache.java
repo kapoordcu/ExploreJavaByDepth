@@ -10,7 +10,7 @@ public class URLCache {
         return urlCache.getOrDefault(longURL, null);
     }
 
-    public void insertIntoCache(String longURL, String shortURL) {
+    public synchronized void insertIntoCache(String longURL, String shortURL) {
         urlCache.putIfAbsent(longURL, shortURL);
     }
 
