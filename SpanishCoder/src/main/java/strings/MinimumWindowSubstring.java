@@ -28,7 +28,7 @@ public class MinimumWindowSubstring {
         for (r = 0; r < s.length(); r++) {
            char c = s.charAt(r);
            window.compute(c, (k,v) -> v==null? 1 : v+1);
-           if(countT.containsKey(c) && window.get(c)==countT.get(c)) {
+           if(countT.containsKey(c) && window.get(c)<=countT.get(c)) {
                have++;
            }
            while (have == need) {
@@ -51,8 +51,11 @@ public class MinimumWindowSubstring {
         assertTrue(l1.equals("BANC"));
         String l2 = minWindow("a", "a");
         assertTrue(l2.equals("a"));
-
         String l3 = minWindow("a", "aa");
         assertTrue(l3.equals(""));
+        String l4 = minWindow("aa", "aa");
+        assertTrue(l4.equals("aa"));
+        String l5 = minWindow("aaaaaa", "aa");
+        assertTrue(l5.equals("aa"));
     }
 }
