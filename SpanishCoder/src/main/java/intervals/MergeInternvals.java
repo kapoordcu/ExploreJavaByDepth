@@ -10,6 +10,9 @@ import static org.junit.Assert.assertTrue;
 public class MergeInternvals {
     public int[][] merge(int[][] intervals) {
         List<Interval> invervalSorted = sortIntervalsByFirstTime(intervals);
+        if(invervalSorted.size()==1) {
+            return listArrayTo2D(invervalSorted);
+        }
         List<Interval> result = new ArrayList<>();
         Interval merged = new Interval(0, 0);
         for (int i = 1; i < invervalSorted.size(); i++) {
@@ -64,6 +67,18 @@ public class MergeInternvals {
         int[][] intervals = {{1,4},{4,5}};
         int[][]  actual = merge(intervals);
         int[][] results =  {{1,5}};
+        for (int i = 0; i < actual.length; i++) {
+            for (int j = 0; j < actual[i].length; j++) {
+                assertTrue(actual[i][j]==results[i][j]);
+            }
+        }
+    }
+
+    @Test
+    public void test03() {
+        int[][] intervals = {{1, 4},{1,4}};
+        int[][]  actual = merge(intervals);
+        int[][] results =  {{1,4}};
         for (int i = 0; i < actual.length; i++) {
             for (int j = 0; j < actual[i].length; j++) {
                 assertTrue(actual[i][j]==results[i][j]);
