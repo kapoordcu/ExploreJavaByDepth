@@ -10,6 +10,38 @@ import static org.junit.Assert.assertTrue;
 public class MergeInternvals {
     public int[][] merge(int[][] intervals) {
         List<Interval> invervalSorted = sortIntervalsByFirstTime(intervals);
+        Stack<Interval> intervalStack = new Stack<>();
+        for (Interval interval:         invervalSorted) {
+            if(intervalStack.isEmpty()) {
+                intervalStack.push(interval);
+            } else {
+                Interval topOfStack = intervalStack.peek();
+                if(interval.start > topOfStack.end) {
+                    intervalStack.push(interval);
+                } else {
+                    Interval merged = intervalStack.pop();
+                    Interval newItem = new Interval(Math.min(merged.start, interval.start), Math.max(merged.end, interval.end));
+                    intervalStack.push(newItem);
+                }
+            }
+        }
+        return convertToIntervals(intervalStack);
+
+    }
+
+    private int[][] convertToIntervals(Stack<Interval> intervalStack) {
+        int[][] nonmappingIntervals = new int[intervalStack.size()][2];
+        int i = 0;
+        for (Interval in:         intervalStack) {
+            nonmappingIntervals[i][0] = in.start;
+            nonmappingIntervals[i++][1] = in.end;
+        }
+        return nonmappingIntervals;
+    }
+
+
+    public int[][] merge2(int[][] intervals) {
+        List<Interval> invervalSorted = sortIntervalsByFirstTime(intervals);
         if(invervalSorted.size()==1) {
             return listArrayTo2D(invervalSorted);
         }
