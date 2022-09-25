@@ -4,7 +4,9 @@ import org.junit.Test;
 
 import java.util.*;
 
-public class MergeIntervals {
+import static org.junit.Assert.assertEquals;
+
+public class InsertIntervals {
 
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> result = new ArrayList<>();
@@ -54,7 +56,7 @@ public class MergeIntervals {
         int[] newInterval ={2,5};
         int[][] actual = insert(intervals, newInterval);
         int[][] expected = {{1,5},{6,9}};
-        actual.equals(expected);
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -63,7 +65,7 @@ public class MergeIntervals {
         int[] newInterval ={4,8};
         int[][] actual = insert(intervals, newInterval);
         int[][] expected = {{1,2},{3,10},{12,16}};
-        actual.equals(expected);
+        assertEquals(actual, expected);
     }
 
 }
