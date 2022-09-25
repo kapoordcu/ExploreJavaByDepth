@@ -37,8 +37,4 @@ public class ParenthesisChecker {
         }
         return false;
     }
-
-    public boolean ifSame(Character inStack, Character matchingChar) {
-        return false;
-    }
 }
