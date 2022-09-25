@@ -66,9 +66,7 @@ public class MergeInternvals {
     private List<Interval> sortIntervalsByFirstTime(int[][] intervals) {
         Set<Interval> pairs = new HashSet<>();
         for (int i = 0; i < intervals.length; i++) {
-            for (int j = 0; j < intervals[i].length; j++) {
-                pairs.add(new Interval(intervals[i][0], intervals[i][1]));
-            }
+            pairs.add(new Interval(intervals[i][0], intervals[i][1]));
         }
         return pairs.stream().sorted(Comparator.comparing(Interval::getStart)).collect(Collectors.toList());
     }
