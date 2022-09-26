@@ -2,6 +2,12 @@ package sdesign;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertTrue;
 
 public class URLShortner {
@@ -9,6 +15,19 @@ public class URLShortner {
     String base62Str = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     char[] base62 = base62Str.toCharArray();
     private URLCache urlCache = new URLCache();
+
+    @Test
+    public void test1000() throws InterruptedException {
+        Set<String> urlsGenerated = new HashSet<>();
+        String longURL = "http://randomjsajhkjkdoaskd/jijdj";
+        ExecutorService executorService = Executors.newFixedThreadPool(100);
+        executorService.submit(() -> {
+            urlsGenerated.add(createShortURL(longURL));
+        });
+        executorService.awaitTermination(1, TimeUnit.SECONDS);
+        executorService.shutdown();
+        assertTrue(urlsGenerated.size()==1);
+    }
 
     @Test
     public void test0() {
