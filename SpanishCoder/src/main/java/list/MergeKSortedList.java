@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.PriorityQueue;
 
+import static list.ListNode.*;
 import static org.junit.Assert.assertTrue;
 
 public class MergeKSortedList {
@@ -46,40 +47,4 @@ public class MergeKSortedList {
         assertTrue(isSorted(mergedHead));
     }
 
-    private boolean isSorted(ListNode head) {
-        ListNode prev = head;
-        ListNode node = head;
-        while (node!=null) {
-            prev = node;
-            node = node.next;
-            if(node!= null && node.val < prev.val) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private ListNode createList(int[] arr) {
-        ListNode  head = null;
-        ListNode  node = null;
-        for (int i = 0; i < arr.length; i++) {
-            if(head==null) {
-                head = new ListNode(arr[i]);
-                node = head;
-            } else {
-                node.next = new ListNode(arr[i]);
-                node = node.next;
-            }
-        }
-        return head;
-    }
-
-    private int sizeOf(ListNode mergedK) {
-        int size = 0;
-        while (mergedK!=null) {
-            size++;
-            mergedK = mergedK.next;
-        }
-        return size;
-    }
 }
