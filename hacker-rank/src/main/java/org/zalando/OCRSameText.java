@@ -11,8 +11,15 @@ public class OCRSameText {
 
     @Test
     public void test01() {
-        String S = "A2Le";
-        String T = "2pL1";
+        String S = "A2Le"; // A _ _ L e
+        String T = "2pL1"; // _ _ p L _
+        assertTrue(OCRSameText.solution(S, T));
+    }
+
+    @Test
+    public void test011() {
+        String S = "A1Le"; // A _ L e
+        String T = "2L1";  // _ _ L _
         assertTrue(OCRSameText.solution(S, T));
     }
 
@@ -33,19 +40,19 @@ public class OCRSameText {
     @Test
     public void test04() {
         String S = "3x2x";
-        String T = "8";
-        assertFalse(OCRSameText.solution(S, T));
+        String T = "7";
+        assertTrue(OCRSameText.solution(S, T));
     }
 
     public static boolean solution(String S, String T) {
         if(S.isEmpty() || T.isEmpty()) {
             return false;
         }
-        if(S.length() != T.length()) {
-            return false;
-        }
         List<Character> first = createPlaceHolderList(S);
         List<Character> second = createPlaceHolderList(T);
+        if(first.size() != second.size()) {
+            return false;
+        }
         for (int i = 0; i < first.size(); i++) {
             if(Character.isLetter(first.get(i)) &&
                     Character.isLetter(second.get(i))) {
